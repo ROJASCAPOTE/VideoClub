@@ -8,8 +8,6 @@ package com.makila.videoclub.servisios;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -49,10 +47,11 @@ public class ConnectionBD {
         }
     }
 
+    
+    
     public static ConnectionBD getInstance() {
         //Esto servira para que solo se haga una vez garantizando el patron singleton
         if (instance == null) {
-            System.out.println("com.makila.videoclub.servisios.ConnectionBD.getInstance()");
             instance = new ConnectionBD();
         }
 
@@ -63,4 +62,5 @@ public class ConnectionBD {
     public Connection getConexion() {
         return conexion;
     }
+    
 }

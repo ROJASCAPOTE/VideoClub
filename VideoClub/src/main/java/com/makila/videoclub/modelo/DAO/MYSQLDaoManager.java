@@ -15,7 +15,7 @@ public class MYSQLDaoManager implements DAOManager {
 
     private CityDAO city;
     private CountryDAO country;
-    private ConnectionBD conn;
+    private ConnectionBD conn=null;
 
     public MYSQLDaoManager(ConnectionBD conn) {
         this.conn = conn;

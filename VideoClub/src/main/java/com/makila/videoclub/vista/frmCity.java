@@ -26,7 +26,6 @@ public class frmCity extends javax.swing.JInternalFrame {
         return Integer.parseInt(textCodigo.getText().trim());
     }
 
-
     public Date getTextLastUpdate() {
         return textLastUpdate.getDate();
     }
@@ -38,13 +37,13 @@ public class frmCity extends javax.swing.JInternalFrame {
         }
         combCountry.setModel(modelo);
     }
-    
+
     public void tableCity(Object[][] dtCity) {
         String[] columNames = {"Id", "City", "Country", "Last update"};
         DefaultTableModel datos = new DefaultTableModel(dtCity, columNames);
         tableCity.setModel(datos);
     }
-    
+
     public void gestionMensajes(String mensaje, String titulo, int icono) {
         JOptionPane.showMessageDialog(this, mensaje, titulo, icono);
     }
@@ -145,6 +144,11 @@ public class frmCity extends javax.swing.JInternalFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Controller", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
 
         jButton1.setText("Nuevo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Modificar");
 
@@ -251,6 +255,10 @@ public class frmCity extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
