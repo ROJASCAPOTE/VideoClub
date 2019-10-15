@@ -5,9 +5,9 @@
  */
 package Principal;
 
-import com.makila.videoclub.modelo.DAO.MYSQLDaoManager;
-import com.makila.videoclub.servisios.ConnectionBD;
-import com.makila.videoclub.vista.FrmPrincipal;
+import Modelo.Dao.MYSQLDaoManager;
+import Servisios.ConnectionBD;
+import Vista.FrmPrincipal;
 
 /**
  *
