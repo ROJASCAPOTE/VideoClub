@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Events.City;
+package Events.Country;
 
-import Controlador.CityController;
+import Controlador.CountryListViewController;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -13,16 +13,17 @@ import java.awt.event.MouseEvent;
  *
  * @author ACER E5
  */
-public class CityMouseListener extends MouseAdapter {
+public class ContryMouseListener extends MouseAdapter {
 
-    private CityController controlador;
+    private CountryListViewController controlador;
 
-    public CityMouseListener(CityController controlador) {
+    public ContryMouseListener(CountryListViewController controlador) {
         this.controlador = controlador;
     }
 
     @Override
     public void mouseClicked(MouseEvent evento) {
-//        controlador.seleccionarCity();
+        controlador.obtenerDatosPais();
+        controlador.cerrarAction();
     }
 }

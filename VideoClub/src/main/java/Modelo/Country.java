@@ -23,6 +23,12 @@ public class Country {
         this.lastUpdate = null;
     }
 
+    public Country(int country_id, String country, Date lastUpdate) {
+        this.country_id = country_id;
+        this.country = country;
+        this.lastUpdate = lastUpdate;
+    }
+
     public int getCountry_id() {
         return country_id;
     }

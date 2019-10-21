@@ -6,6 +6,7 @@
 package Vista;
 
 import Controlador.CityController;
+import Controlador.CountryController;
 import Modelo.Dao.DAOManager;
 import Modelo.DesktopConFondo;
 
@@ -21,7 +22,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(FrmPrincipal.MAXIMIZED_BOTH);
         this.manager = manager;
-//        ((DesktopConFondo) jDesktopPane).setImagen(ruta);
+        ((DesktopConFondo) jDesktopPane).setImagen("/fondo.jpg");
     }
 
     @SuppressWarnings("unchecked")
@@ -72,6 +73,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
             jDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 509, Short.MAX_VALUE)
         );
+
+        menuBar.setBackground(new java.awt.Color(153, 153, 153));
 
         fileMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Data.png"))); // NOI18N
         fileMenu.setMnemonic('f');
@@ -228,6 +231,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         FrmCountry frmCountry = new FrmCountry();
+        CountryController countryController = new CountryController(frmCountry, manager);
+        frmCountry.setManager(manager);
         int x = (jDesktopPane.getWidth() / 2) - frmCountry.getWidth() / 2;
         int y = (jDesktopPane.getHeight() / 2) - frmCountry.getHeight() / 2;
 
@@ -291,7 +296,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
-    private javax.swing.JDesktopPane jDesktopPane;
+    public static javax.swing.JDesktopPane jDesktopPane;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
