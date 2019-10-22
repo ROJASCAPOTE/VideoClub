@@ -63,6 +63,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jDesktopPane.setBackground(new java.awt.Color(153, 153, 153));
+
         javax.swing.GroupLayout jDesktopPaneLayout = new javax.swing.GroupLayout(jDesktopPane);
         jDesktopPane.setLayout(jDesktopPaneLayout);
         jDesktopPaneLayout.setHorizontalGroup(
@@ -74,7 +76,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             .addGap(0, 509, Short.MAX_VALUE)
         );
 
-        menuBar.setBackground(new java.awt.Color(153, 153, 153));
+        menuBar.setBackground(new java.awt.Color(255, 255, 255));
 
         fileMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Data.png"))); // NOI18N
         fileMenu.setMnemonic('f');
@@ -84,7 +86,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         openMenuItem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         openMenuItem.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\java\\Imagenes\\Customer.png")); // NOI18N
         openMenuItem.setMnemonic('o');
-        openMenuItem.setText("Cliente");
+        openMenuItem.setText("Customer");
         openMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 openMenuItemActionPerformed(evt);
@@ -98,6 +100,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         saveMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Address.png"))); // NOI18N
         saveMenuItem.setMnemonic('s');
         saveMenuItem.setText("Address");
+        saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveMenuItemActionPerformed(evt);
+            }
+        });
         fileMenu.add(saveMenuItem);
         fileMenu.add(jSeparator2);
 
@@ -246,7 +253,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
+        FrmCustomer customer = new FrmCustomer();
 
+        int x = (jDesktopPane.getWidth() / 2) - customer.getWidth() / 2;
+        int y = (jDesktopPane.getHeight() / 2) - customer.getHeight() / 2;
+
+        if (customer.isShowing()) {
+            customer.setLocation(x, y);
+        } else {
+            jDesktopPane.add(customer);
+            customer.setLocation(x, y);
+            customer.setVisible(true);
+        }
     }//GEN-LAST:event_openMenuItemActionPerformed
 
 
@@ -257,6 +275,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void saveAsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsMenuItemActionPerformed
         frmCity cityView = new frmCity();
         CityController cityController = new CityController(cityView, manager);
+        cityView.setManager(manager);
         int x = (jDesktopPane.getWidth() / 2) - cityView.getWidth() / 2;
         int y = (jDesktopPane.getHeight() / 2) - cityView.getHeight() / 2;
 
@@ -278,12 +297,37 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_pasteMenuItemActionPerformed
 
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
-        // TODO add your handling code here:
+        FrmStore frmStore = new FrmStore();
+
+        int x = (jDesktopPane.getWidth() / 2) - frmStore.getWidth() / 2;
+        int y = (jDesktopPane.getHeight() / 2) - frmStore.getHeight() / 2;
+
+        if (frmStore.isShowing()) {
+            frmStore.setLocation(x, y);
+        } else {
+            jDesktopPane.add(frmStore);
+            frmStore.setLocation(x, y);
+            frmStore.setVisible(true);
+        }
     }//GEN-LAST:event_aboutMenuItemActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
+        FrmAddess frmAddess = new FrmAddess();
+        int x = (jDesktopPane.getWidth() / 2) - frmAddess.getWidth() / 2;
+        int y = (jDesktopPane.getHeight() / 2) - frmAddess.getHeight() / 2;
+
+        if (frmAddess.isShowing()) {
+            frmAddess.setLocation(x, y);
+        } else {
+            jDesktopPane.add(frmAddess);
+            frmAddess.setLocation(x, y);
+            frmAddess.setVisible(true);
+        }
+    }//GEN-LAST:event_saveMenuItemActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

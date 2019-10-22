@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Events.Country;
+package Event.Store;
 
+import Controlador.StoreController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -12,13 +13,17 @@ import java.awt.event.ActionListener;
  *
  * @author ACER E5
  */
-public class CountryListenerGuardar implements ActionListener {
+public class StoreListener implements ActionListener {
 
-   
+    private StoreController controller;
+
+    public StoreListener(StoreController controller) {
+        this.controller = controller;
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+
     }
 
 }

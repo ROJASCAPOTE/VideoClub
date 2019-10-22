@@ -20,7 +20,6 @@ public class CountryController {
     private FrmCountry vista;
     private DAOManager modelo;
     private int pos = 0;
-
     public CountryController(FrmCountry vista, DAOManager modelo) {
         this.vista = vista;
         this.modelo = modelo;
@@ -34,6 +33,8 @@ public class CountryController {
         pos = 0;
         countryIndex(pos);
     }
+    
+    
 
     public void obtenerUltimo() {
         Country country = modelo.getCountryDAO().getCountry();

@@ -15,7 +15,8 @@ public class MYSQLDaoManager implements DAOManager {
 
     private CityDAO city;
     private CountryDAO country;
-    private ConnectionBD conn=null;
+    private AddressDAO address;
+    private ConnectionBD conn = null;
 
     public MYSQLDaoManager(ConnectionBD conn) {
         this.conn = conn;
@@ -35,6 +36,14 @@ public class MYSQLDaoManager implements DAOManager {
             country = new CountryDAO(conn);
         }
         return country;
+    }
+
+    @Override
+    public AddressDAO getAddressDAO() {
+        if (address == null) {
+            address = new AddressDAO(conn);
+        }
+        return address;
     }
 
 }

@@ -8,6 +8,9 @@ package Principal;
 import Modelo.Dao.MYSQLDaoManager;
 import Servisios.ConnectionBD;
 import Vista.FrmPrincipal;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -23,7 +26,15 @@ public class Principal {
         con = ConnectionBD.getInstance();
         MYSQLDaoManager manager = new MYSQLDaoManager(con);
         FrmPrincipal frmPrincipal = new FrmPrincipal(manager);
-        frmPrincipal.setVisible(true);
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+            SwingUtilities.updateComponentTreeUI(frmPrincipal);
+            frmPrincipal.setLocationRelativeTo(null);
+            frmPrincipal.setTitle("Control de Inventario-peliculas");
+            frmPrincipal.setVisible(true);
+        } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+        }
+
     }
 
 }

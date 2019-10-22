@@ -15,28 +15,27 @@ import java.awt.event.ActionListener;
  */
 public class CityListener implements ActionListener {
 
-    private CityController controlador = null;
+    private CityController controller = null;
 
     public CityListener(CityController controlador) {
-        this.controlador = controlador;
+        this.controller = controlador;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        if (e.getActionCommand().equalsIgnoreCase("Nuevo")) {
-//            controlador.actionNuevoRegistro();
-//        } else if (e.getActionCommand().equalsIgnoreCase("Guardar")) {
-//            controlador.registrarCity();
-//        } else if (e.getActionCommand().equalsIgnoreCase("Editar")) {
-//            controlador.modificarCity();
-//        } else if (e.getActionCommand().equalsIgnoreCase("Eliminar")) {
-//            controlador.borrarCity();
-//        } else if (e.getActionCommand().equalsIgnoreCase("Buscar")) {
-//        } else if (e.getActionCommand().equalsIgnoreCase("Cancelar")) {
-//            controlador.actionCancelar();
-//        } else if (e.getActionCommand().equalsIgnoreCase("Salir")) {
-//           controlador.actionCerrar();
-//        }
+        if (e.getActionCommand().equalsIgnoreCase("Nuevo")) {
+            controller.nuevoAction();
+        } else if (e.getActionCommand().equalsIgnoreCase("cancelar")) {
+            controller.nuevoAction();
+        } else if (e.getActionCommand().equalsIgnoreCase("Grabar")) {
+            controller.registrarCity();
+        } else if (e.getActionCommand().equalsIgnoreCase("Actualizar")) {
+           controller.modificarCity();
+        } else if (e.getActionCommand().equalsIgnoreCase("Eliminar")) {
+            controller.borrarCity();
+        } else if (e.getActionCommand().equalsIgnoreCase("Salir")) {
+            controller.cerrarAction();
+        }
     }
 
 }

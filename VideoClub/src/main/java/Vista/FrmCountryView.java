@@ -42,8 +42,8 @@ public class FrmCountryView extends javax.swing.JInternalFrame {
         tableCountry.setModel(datos);
     }
     
-    public void addMouseListenerCity(MouseListener mouseCity) {
-        tableCountry.addMouseListener(mouseCity);
+    public void addMouseListenerCountry(MouseListener keyListenerCountry) {
+        tableCountry.addMouseListener(keyListenerCountry);
     }
     
     public void addaddKeyListener(KeyListener keyListenerCountry) {

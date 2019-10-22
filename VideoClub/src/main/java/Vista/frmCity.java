@@ -5,28 +5,34 @@
  */
 package Vista;
 
+import Controlador.CityListViewController;
 import Controlador.CountryListViewController;
 import Modelo.Country;
 import Modelo.Dao.DAOManager;
+import com.toedter.calendar.JDateChooser;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 public class frmCity extends javax.swing.JInternalFrame {
 
     private DAOManager manager;
+
     public frmCity() {
         initComponents();
     }
 
-    public void setTextCodigo(String codigo) {
-        textCodigo.setText(codigo);
+    public void setTextCodigo(int codigo) {
+        texCityCodigo.setText(codigo + "");
     }
 
     public String getTextCodigo() {
-        return textCodigo.getText();
+        return texCityCodigo.getText();
     }
 
     public void setTextCity(String city) {
@@ -41,6 +47,10 @@ public class frmCity extends javax.swing.JInternalFrame {
         return textLastUpdate.getDate();
     }
 
+    public void setTextLastUpdate(Date textLastUpdate) {
+        this.textLastUpdate.setDate(textLastUpdate);
+    }
+
     public JComboBox<String> getCombCountry() {
         return combCountry;
     }
@@ -52,12 +62,6 @@ public class frmCity extends javax.swing.JInternalFrame {
     public void setManager(DAOManager manager) {
         this.manager = manager;
     }
-    
-    
-
-//    public JTable getTableCity() {
-//        return tableCity;
-//    }
 
     public void cargarCountry(ArrayList<Country> ListCountry) {
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
@@ -67,145 +71,105 @@ public class frmCity extends javax.swing.JInternalFrame {
         combCountry.setModel(modelo);
     }
 
-//    public void tableCity(Object[][] dtCity) {
-//        String[] columNames = {"Id", "City", "Country", "Last update"};
-//        DefaultTableModel datos = new DefaultTableModel(dtCity, columNames);
-//        tableCity.setModel(datos);
-//    }
-
     public void gestionMensajes(String mensaje, String titulo, int icono) {
         JOptionPane.showMessageDialog(this, mensaje, titulo, icono);
     }
 
-    public void activarControles(boolean estado) {
-        textCodigo.setEnabled(estado);
-        textCity.setEnabled(estado);
-        combCountry.setEnabled(estado);
-        textLastUpdate.setEnabled(estado);
-//        btnGuardar.setEnabled(estado);
-//        btnModificar.setEnabled(estado);
-//        btnEliminar.setEnabled(estado);
-//        tableCity.setEnabled(estado);
-//        btnCancelar.setEnabled(estado);
-//        btnSalir.setEnabled(!estado);
-//        tableCity.setEnabled(!estado);
+    public void addListenerNuevo(ActionListener listenerCity) {
+        btnNuevo.addActionListener(listenerCity);
     }
 
-    public void campos(boolean estado) {
-        textCity.setEnabled(estado);
-        combCountry.setEnabled(estado);
-        textLastUpdate.setEnabled(estado);
+    public void addListenerBtnBorrar(ActionListener listenerCity) {
+        btnEliminar.addActionListener(listenerCity);
+    }
 
+    public void addListenerBtnModificar(ActionListener listenerCity) {
+        btnModificar.addActionListener(listenerCity);
+    }
+
+    public void addListenerCerrar(ActionListener listenerCountry) {
+        btnSalir.addActionListener(listenerCountry);
     }
 
     public void limpiarCampos() {
-        textCodigo.setText("");
+        texCityCodigo.setText("");
         textCity.setText("");
         combCountry.setSelectedIndex(0);
         textLastUpdate.setDate(null);
     }
 
-//    public void activarBotonesCRUD(boolean activo) {
-//        this.btnEliminar.setEnabled(activo);
-//        this.btnModificar.setEnabled(activo);
-//        btnGuardar.setEnabled(false);
-//        textCodigo.setEnabled(false);
-//        campos(activo);
-//        activarNuevo(!activo);
-//        activarCancelar(activo);
-//    }
-//
-//    void activarBotonesGuardar(boolean activo) {
-//        this.btnGuardar.setEnabled(activo);
-//        this.btnCancelar.setEnabled(activo);
-//    }
+    public void activarControles(boolean estado) {
+        texCityCodigo.setEnabled(estado);
+        textCity.setEnabled(estado);
+        combCountry.setEnabled(estado);
+        textLastUpdate.setEnabled(estado);
+        btnModificar.setEnabled(estado);
+        btnEliminar.setEnabled(estado);
+    }
 
-//    public void activarNuevo(boolean estado) {
-//        btnNuevo.setEnabled(estado);
-//    }
-//
-//    public void activarCancelar(boolean estado) {
-//        btnCancelar.setEnabled(estado);
-//    }
-//
-//    public void activarEditar(boolean estado) {
-//        btnModificar.setEnabled(estado);
-//        btnEliminar.setEnabled(estado);
-//    }
-//
-//    public void addListenerBtnNuevo(ActionListener listenCity) {
-//        btnNuevo.addActionListener(listenCity);
-//    }
-//
-//    public void addListenerBtnGuardar(ActionListener listenCity) {
-//        btnGuardar.addActionListener(listenCity);
-//    }
-//
-//    public void addListenerBtnModificar(ActionListener listenCity) {
-//        btnModificar.addActionListener(listenCity);
-//    }
-//    
-//    public void addListenerBtnEliminar(ActionListener listenCity) {
-//        btnEliminar.addActionListener(listenCity);
-//    }
-//
-//    public void addListenerBtnCancelar(ActionListener listenCity) {
-//        btnCancelar.addActionListener(listenCity);
-//    }
-//
-//    public void addListenerBtnCerrar(ActionListener listenCity) {
-//        btnSalir.addActionListener(listenCity);
-//    }
-//
-//    public void addMouseListenerCity(MouseListener mouseCity) {
-//        tableCity.addMouseListener(mouseCity);
-//    }
+    public void activarControlesModificar(boolean estado) {
+        texCityCodigo.setEnabled(!estado);
+        textCity.setEnabled(estado);
+        combCountry.setEnabled(estado);
+        textLastUpdate.setEnabled(estado);
+        btnModificar.setEnabled(estado);
+        btnEliminar.setEnabled(estado);
+
+    }
+
+    public void nuevoAction() {
+        if (btnNuevo.getText().equals("Nuevo")) {
+            texCityCodigo.setText("");
+            textCity.setText("");
+            combCountry.setSelectedIndex(0);
+            textLastUpdate.setDate(null);
+            activarControles(true);
+            btnNuevo.setText("Grabar");
+            btnNuevo.setActionCommand("Grabar");
+            btnModificar.setText("Cancelar");
+            btnModificar.setActionCommand("Cancelar");
+            btnEliminar.setEnabled(false);
+            btnNuevo.setIcon(new ImageIcon(getClass().
+                    getResource("/Save.png"))); // NOI18N
+            btnModificar.setIcon(new ImageIcon(getClass().
+                    getResource("/Cancel.png"))); // NOI18N
+            texCityCodigo.requestFocusInWindow();
+
+        } else {
+            activarControles(false);
+            btnNuevo.setText("Nuevo");
+            btnNuevo.setActionCommand("Nuevo");
+            btnModificar.setText("Modificar");
+            btnModificar.setActionCommand("Modificar");
+            btnNuevo.requestFocusInWindow();
+            btnNuevo.setIcon(new ImageIcon(getClass().
+                    getResource("/New.png"))); // NOI18N
+            btnModificar.setIcon(new ImageIcon(getClass().
+                    getResource("/Modify.png"))); // NOI18N
+        }
+    }
+
+    public void modificarAction() {
+        activarControlesModificar(true);
+        btnNuevo.setText("Actualizar");
+        btnNuevo.setActionCommand("Actualizar");
+        btnModificar.setText("Cancelar");
+        btnModificar.setActionCommand("Cancelar");
+        btnNuevo.setIcon(new ImageIcon(getClass().
+                getResource("/Modify.png"))); // NOI18N
+        btnModificar.setIcon(new ImageIcon(getClass().
+                getResource("/Cancel.png"))); // NOI18N
+        texCityCodigo.requestFocusInWindow();
+
+    }
 
     public void cerrarAction() {
         dispose();
     }
 
-//    public void nuevoAction() {
-//        textCodigo.setEnabled(true);
-//        textCodigo.setText("");
-//        textCity.setText("");
-//        combCountry.setSelectedIndex(0);
-//        textLastUpdate.setDate(null);
-//        activarBotonesGuardar(true);
-//        btnNuevo.requestFocusInWindow();
-//        textCodigo.requestFocusInWindow();
-//        activarNuevo(false);
-//        campos(true);
-//        btnNuevo.setActionCommand("Nuevo");
-//
-//    }
-//
-//    public void modificarAction() {
-//        activarBotonesCRUD(false);
-//        activarBotonesGuardar(false);
-//        activarControles(false);
-//        activarNuevo(true);
-//
-//    }
-//
-//    public void guardarAction() {
-//        activarBotonesCRUD(false);
-//        activarBotonesGuardar(false);
-//        activarControles(false);
-//        activarNuevo(true);
-//    }
-//
-//    public void cancelarAction() {
-//        activarBotonesCRUD(false);
-//        activarBotonesGuardar(false);
-//        activarControles(false);
-//        activarNuevo(true);
-//        limpiarCampos();
-//    }
-
     public void camposObligatorios() {
         if (getTextCodigo().equals("")) {
-            textCodigo.requestFocusInWindow();
+            texCityCodigo.requestFocusInWindow();
             return;
         }
 
@@ -222,15 +186,19 @@ public class frmCity extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        textCodigo = new javax.swing.JTextField();
+        texCityCodigo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         textCity = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         combCountry = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         textLastUpdate = new com.toedter.calendar.JDateChooser();
-        jButton1 = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
+        btnNuevo = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -260,10 +228,10 @@ public class frmCity extends javax.swing.JInternalFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Lasp update");
 
-        jButton1.setText(".....");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setText(".....");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
 
@@ -281,13 +249,13 @@ public class frmCity extends javax.swing.JInternalFrame {
                 .addGap(27, 27, 27)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(textCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(texCityCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(combCountry, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(textCity)
                     .addComponent(textLastUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(188, Short.MAX_VALUE))
+                .addContainerGap(113, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -295,8 +263,8 @@ public class frmCity extends javax.swing.JInternalFrame {
                 .addGap(55, 55, 55)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(textCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(texCityCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
                 .addGap(15, 15, 15)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -315,15 +283,43 @@ public class frmCity extends javax.swing.JInternalFrame {
         jPanel5.setBackground(new java.awt.Color(102, 102, 102));
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Controles", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
 
+        btnNuevo.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\New.png")); // NOI18N
+        btnNuevo.setText("Nuevo");
+
+        btnModificar.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\Modify.png")); // NOI18N
+        btnModificar.setText("Modificar");
+
+        btnEliminar.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\Remove.png")); // NOI18N
+        btnEliminar.setText("Eliminar");
+
+        btnSalir.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\Get out.png")); // NOI18N
+        btnSalir.setText("Salir");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnNuevo)
+                .addGap(18, 18, 18)
+                .addComponent(btnModificar)
+                .addGap(18, 18, 18)
+                .addComponent(btnEliminar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSalir)
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 74, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNuevo)
+                    .addComponent(btnModificar)
+                    .addComponent(btnEliminar)
+                    .addComponent(btnSalir))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -361,25 +357,30 @@ public class frmCity extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        FrmCountryView frmInsertarCountry = new FrmCountryView();
-        CountryListViewController controller = new CountryListViewController(frmInsertarCountry, manager);
-        int x = (FrmPrincipal.jDesktopPane.getWidth() / 2) - frmInsertarCountry.getWidth() / 2;
-        int y = (FrmPrincipal.jDesktopPane.getHeight() / 2) - frmInsertarCountry.getHeight() / 2;
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        FrmCityView cityView = new FrmCityView();
+        CityListViewController controller = new CityListViewController(cityView, getManager());
+        controller.setCity(this);
+        int x = (FrmPrincipal.jDesktopPane.getWidth() / 2) - cityView.getWidth() / 2;
+        int y = (FrmPrincipal.jDesktopPane.getHeight() / 2) - cityView.getHeight() / 2;
 
-        if (frmInsertarCountry.isShowing()) {
-            frmInsertarCountry.setLocation(x, y);
+        if (cityView.isShowing()) {
+            cityView.setLocation(x, y);
         } else {
-            FrmPrincipal.jDesktopPane.add(frmInsertarCountry);
-            frmInsertarCountry.setLocation(x, y);
-            frmInsertarCountry.setVisible(true);
+            FrmPrincipal.jDesktopPane.add(cityView);
+            cityView.setLocation(x, y);
+            cityView.setVisible(true);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> combCountry;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -387,8 +388,8 @@ public class frmCity extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JTextField texCityCodigo;
     private javax.swing.JTextField textCity;
-    private javax.swing.JTextField textCodigo;
     private com.toedter.calendar.JDateChooser textLastUpdate;
     // End of variables declaration//GEN-END:variables
 

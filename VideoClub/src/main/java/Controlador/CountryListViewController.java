@@ -18,7 +18,7 @@ public class CountryListViewController {
     public CountryListViewController(FrmCountryView vista, DAOManager modelo) {
         this.vista = vista;
         this.modelo = modelo;
-        vista.addMouseListenerCity(new ContryMouseListener(this));
+        vista.addMouseListenerCountry(new ContryMouseListener(this));
         vista.addaddKeyListener(new CountryEventoTecladoCountry(this));
         this.dtCountry = modelo.getCountryDAO().getTableCountry("");
         this.vista.tableCountry(dtCountry);

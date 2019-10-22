@@ -3,17 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Modelo.Dao;
+package Event.Address;
 
 /**
  *
  * @author ACER E5
  */
-public interface DAOManager {
-
-    CityDAO getCityDAO();
-
-    CountryDAO getCountryDAO();
-
-    AddressDAO getAddressDAO();
+public class AddressMouseListener {
+    
 }

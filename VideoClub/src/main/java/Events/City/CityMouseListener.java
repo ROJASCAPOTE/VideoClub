@@ -5,7 +5,7 @@
  */
 package Events.City;
 
-import Controlador.CityController;
+import Controlador.CityListViewController;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -15,14 +15,16 @@ import java.awt.event.MouseEvent;
  */
 public class CityMouseListener extends MouseAdapter {
 
-    private CityController controlador;
+    private CityListViewController controlador;
 
-    public CityMouseListener(CityController controlador) {
+    public CityMouseListener(CityListViewController controlador) {
         this.controlador = controlador;
     }
 
     @Override
     public void mouseClicked(MouseEvent evento) {
-//        controlador.seleccionarCity();
+        controlador.obtenerDatosCity();
+        controlador.cerrarAction();
+
     }
 }
