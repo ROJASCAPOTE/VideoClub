@@ -5,7 +5,7 @@
  */
 package Events.Country;
 
-import Controlador.CountryListViewController;
+import Controlador.CountryListController;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -15,9 +15,9 @@ import java.awt.event.KeyEvent;
  */
 public class CountryEventoTecladoCountry extends KeyAdapter {
 
-    private CountryListViewController controller;
+    private CountryListController controller;
 
-    public CountryEventoTecladoCountry(CountryListViewController controller) {
+    public CountryEventoTecladoCountry(CountryListController controller) {
         this.controller = controller;
     }
 

@@ -7,6 +7,7 @@ package Vista;
 
 import Controlador.CityController;
 import Controlador.CountryController;
+import Controlador.StoreController;
 import Modelo.Dao.DAOManager;
 import Modelo.DesktopConFondo;
 
@@ -198,6 +199,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         contentMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Staff.png"))); // NOI18N
         contentMenuItem.setMnemonic('c');
         contentMenuItem.setText("Staff");
+        contentMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contentMenuItemActionPerformed(evt);
+            }
+        });
         helpMenu.add(contentMenuItem);
         helpMenu.add(jSeparator7);
 
@@ -298,7 +304,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
         FrmStore frmStore = new FrmStore();
-
+        StoreController controller=new StoreController(frmStore, manager);
+        frmStore.setManager(manager);
         int x = (jDesktopPane.getWidth() / 2) - frmStore.getWidth() / 2;
         int y = (jDesktopPane.getHeight() / 2) - frmStore.getHeight() / 2;
 
@@ -328,6 +335,20 @@ public class FrmPrincipal extends javax.swing.JFrame {
             frmAddess.setVisible(true);
         }
     }//GEN-LAST:event_saveMenuItemActionPerformed
+
+    private void contentMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contentMenuItemActionPerformed
+        FrmStaffView frmStaffView = new FrmStaffView();
+        int x = (jDesktopPane.getWidth() / 2) - frmStaffView.getWidth() / 2;
+        int y = (jDesktopPane.getHeight() / 2) - frmStaffView.getHeight() / 2;
+
+        if (frmStaffView.isShowing()) {
+            frmStaffView.setLocation(x, y);
+        } else {
+            jDesktopPane.add(frmStaffView);
+            frmStaffView.setLocation(x, y);
+            frmStaffView.setVisible(true);
+        }
+    }//GEN-LAST:event_contentMenuItemActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

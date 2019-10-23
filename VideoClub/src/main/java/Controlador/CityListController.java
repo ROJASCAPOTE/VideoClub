@@ -4,18 +4,18 @@ import Events.City.CityMouseListener;
 import Modelo.City;
 import Modelo.Country;
 import Modelo.Dao.DAOManager;
-import Vista.FrmCityView;
+import Vista.FrmListCity;
 import Vista.frmCity;
 import javax.swing.DefaultComboBoxModel;
 
-public class CityListViewController {
+public class CityListController {
 
-    private FrmCityView vista;
+    private FrmListCity vista;
     private DAOManager modelo;
     private frmCity city;
     private Object[][] dtCity;
 
-    public CityListViewController(FrmCityView vista, DAOManager modelo) {
+    public CityListController(FrmListCity vista, DAOManager modelo) {
         this.vista = vista;
         this.modelo = modelo;
         vista.addMouseListenerCity(new CityMouseListener(this));

@@ -23,7 +23,10 @@ public class StoreListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getActionCommand().equalsIgnoreCase("Nuevo")) {
+            controller.registrarTienda();
+        }
+        
     }
 
 }

@@ -5,7 +5,7 @@
  */
 package Vista;
 
-import Controlador.CountryListViewController;
+import Controlador.CountryListController;
 import Modelo.Dao.DAOManager;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
@@ -348,8 +348,8 @@ public class FrmCountry extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        FrmCountryView frmCountryView = new FrmCountryView();
-        CountryListViewController controller = new CountryListViewController(frmCountryView, manager);
+        FrmListCountry frmCountryView = new FrmListCountry();
+        CountryListController controller = new CountryListController(frmCountryView, manager);
         controller.setFrmCountry(this);
         int x = (FrmPrincipal.jDesktopPane.getWidth() / 2) - frmCountryView.getWidth() / 2;
         int y = (FrmPrincipal.jDesktopPane.getHeight() / 2) - frmCountryView.getHeight() / 2;

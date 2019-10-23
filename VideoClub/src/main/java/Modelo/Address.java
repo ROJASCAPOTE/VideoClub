@@ -15,12 +15,16 @@ public class Address {
 
     private Short addressId;
     private City city;
+    private int city_id;
     private String address;
     private String address2;
     private String district;
     private String postalCode;
     private String phone;
     private Date lastUpdate;
+
+    public Address() {
+    }
 
     public Address(Short addressId, City city, String address, String address2, String district, String postalCode, String phone, Date lastUpdate) {
         this.addressId = addressId;
@@ -47,6 +51,14 @@ public class Address {
 
     public void setCity(City city) {
         this.city = city;
+    }
+
+    public int getCity_id() {
+        return city_id;
+    }
+
+    public void setCity_id(int city_id) {
+        this.city_id = city_id;
     }
 
     public String getAddress() {
@@ -95,6 +107,11 @@ public class Address {
 
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    @Override
+    public String toString() {
+        return address;
     }
 
 }

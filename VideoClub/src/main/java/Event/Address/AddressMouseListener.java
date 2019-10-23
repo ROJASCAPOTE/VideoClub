@@ -5,10 +5,25 @@
  */
 package Event.Address;
 
+import Controlador.AddressListController;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 /**
  *
  * @author ACER E5
  */
-public class AddressMouseListener {
-    
+public class AddressMouseListener extends MouseAdapter {
+
+    private AddressListController controller;
+
+    public AddressMouseListener(AddressListController controller) {
+        this.controller = controller;
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent evento) {
+        controller.obtenerDatosDireccion();
+        controller.cerrarAction();
+    }
 }

@@ -5,13 +5,10 @@
  */
 package Vista;
 
-import Controlador.CityListViewController;
-import Controlador.CountryListViewController;
+import Controlador.CityListController;
 import Modelo.Country;
 import Modelo.Dao.DAOManager;
-import com.toedter.calendar.JDateChooser;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
@@ -358,8 +355,8 @@ public class frmCity extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        FrmCityView cityView = new FrmCityView();
-        CityListViewController controller = new CityListViewController(cityView, getManager());
+        FrmListCity cityView = new FrmListCity();
+        CityListController controller = new CityListController(cityView, getManager());
         controller.setCity(this);
         int x = (FrmPrincipal.jDesktopPane.getWidth() / 2) - cityView.getWidth() / 2;
         int y = (FrmPrincipal.jDesktopPane.getHeight() / 2) - cityView.getHeight() / 2;

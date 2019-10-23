@@ -9,12 +9,12 @@ package Vista;
  *
  * @author ACER E5
  */
-public class FrmStoreListView extends javax.swing.JInternalFrame {
+public class FrmListStore extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form FrmStoreListView
      */
-    public FrmStoreListView() {
+    public FrmListStore() {
         initComponents();
     }
 

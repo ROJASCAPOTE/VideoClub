@@ -16,4 +16,8 @@ public interface DAOManager {
     CountryDAO getCountryDAO();
 
     AddressDAO getAddressDAO();
+
+    StoreDAO getStoreDAO();
+
+    StaffDAO getStaffDAO();
 }

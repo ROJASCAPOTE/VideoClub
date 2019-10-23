@@ -5,7 +5,7 @@
  */
 package Events.Country;
 
-import Controlador.CountryListViewController;
+import Controlador.CountryListController;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -15,9 +15,9 @@ import java.awt.event.MouseEvent;
  */
 public class ContryMouseListener extends MouseAdapter {
 
-    private CountryListViewController controlador;
+    private CountryListController controlador;
 
-    public ContryMouseListener(CountryListViewController controlador) {
+    public ContryMouseListener(CountryListController controlador) {
         this.controlador = controlador;
     }
 

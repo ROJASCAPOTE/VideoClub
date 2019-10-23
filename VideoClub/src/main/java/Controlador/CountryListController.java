@@ -6,16 +6,16 @@ import Events.Country.CountryEventoTecladoCountry;
 import Modelo.Country;
 import Modelo.Dao.DAOManager;
 import Vista.FrmCountry;
-import Vista.FrmCountryView;
+import Vista.FrmListCountry;
 
-public class CountryListViewController {
+public class CountryListController {
 
-    private FrmCountryView vista;
+    private FrmListCountry vista;
     private DAOManager modelo;
     private FrmCountry frmCountry;
     private Object[][] dtCountry;
 
-    public CountryListViewController(FrmCountryView vista, DAOManager modelo) {
+    public CountryListController(FrmListCountry vista, DAOManager modelo) {
         this.vista = vista;
         this.modelo = modelo;
         vista.addMouseListenerCountry(new ContryMouseListener(this));

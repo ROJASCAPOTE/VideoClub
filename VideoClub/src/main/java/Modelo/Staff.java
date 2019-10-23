@@ -1,5 +1,6 @@
 package Modelo;
 
+import java.awt.Image;
 import java.util.Date;
 
 public class Staff {
@@ -8,7 +9,8 @@ public class Staff {
     private String first_name;
     private String last_name;
     private int addressId;
-    private byte[] picture;
+    private Image imagen;
+    private String ruta;
     private String email;
     private int store_id;
     private boolean active;
@@ -17,20 +19,18 @@ public class Staff {
     private Date last_update;
 
     public Staff() {
-    }
-
-    public Staff(int staff_id, String first_name, String last_name, int addressId, byte[] picture, String email, int store_id, boolean active, String username, String password, Date last_update) {
-        this.staff_id = staff_id;
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.addressId = addressId;
-        this.picture = picture;
-        this.email = email;
-        this.store_id = store_id;
-        this.active = active;
-        this.username = username;
-        this.password = password;
-        this.last_update = last_update;
+        staff_id = 0;
+        first_name = "";
+        last_name = "";
+        addressId = 0;
+        imagen = null;
+        ruta = "";
+        email = "";
+        store_id = 0;
+        active = true;
+        username = "";
+        password = "";
+        last_update = null;
     }
 
     public int getStaff_id() {
@@ -65,12 +65,20 @@ public class Staff {
         this.addressId = addressId;
     }
 
-    public byte[] getPicture() {
-        return picture;
+    public Image getImagen() {
+        return imagen;
     }
 
-    public void setPicture(byte[] picture) {
-        this.picture = picture;
+    public void setImagen(Image imagen) {
+        this.imagen = imagen;
+    }
+
+    public String getRuta() {
+        return ruta;
+    }
+
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
     }
 
     public String getEmail() {
@@ -120,7 +128,5 @@ public class Staff {
     public void setLast_update(Date last_update) {
         this.last_update = last_update;
     }
-
-   
 
 }

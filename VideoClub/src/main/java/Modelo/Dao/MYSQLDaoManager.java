@@ -16,6 +16,8 @@ public class MYSQLDaoManager implements DAOManager {
     private CityDAO city;
     private CountryDAO country;
     private AddressDAO address;
+    private StoreDAO store;
+    private StaffDAO staff;
     private ConnectionBD conn = null;
 
     public MYSQLDaoManager(ConnectionBD conn) {
@@ -44,6 +46,22 @@ public class MYSQLDaoManager implements DAOManager {
             address = new AddressDAO(conn);
         }
         return address;
+    }
+
+    @Override
+    public StoreDAO getStoreDAO() {
+        if (store == null) {
+            store = new StoreDAO(conn);
+        }
+        return store;
+    }
+
+    @Override
+    public StaffDAO getStaffDAO() {
+        if (staff == null) {
+            staff = new StaffDAO(conn);
+        }
+        return staff;
     }
 
 }

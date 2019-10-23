@@ -5,7 +5,6 @@
  */
 package Vista;
 
-import Controlador.CityListViewController;
 import Modelo.Dao.DAOManager;
 
 /**
@@ -260,7 +259,7 @@ public class FrmAddess extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        FrmAddressListView addressListView = new FrmAddressListView();
+        FrmListAddress addressListView = new FrmListAddress();
         int x = (FrmPrincipal.jDesktopPane.getWidth() / 2) - addressListView.getWidth() / 2;
         int y = (FrmPrincipal.jDesktopPane.getHeight() / 2) - addressListView.getHeight() / 2;
 
