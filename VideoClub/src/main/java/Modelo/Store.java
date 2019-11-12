@@ -8,6 +8,8 @@ public class Store {
     private Staff manager_staff;
     private Address address_id;
     private Date last_update;
+    private int manager_id;
+    private int codigo_address;
 
     public Store() {
         this.store_id = 0;
@@ -53,6 +55,27 @@ public class Store {
 
     public void setLast_update(Date last_update) {
         this.last_update = last_update;
+    }
+
+    public int getManager_id() {
+        return manager_id;
+    }
+
+    public void setManager_id(int manager_id) {
+        this.manager_id = manager_id;
+    }
+
+    public int getCodigo_address() {
+        return codigo_address;
+    }
+
+    public void setCodigo_address(int codigo_address) {
+        this.codigo_address = codigo_address;
+    }
+
+    @Override
+    public String toString() {
+        return getStore_id() + "";
     }
 
 }

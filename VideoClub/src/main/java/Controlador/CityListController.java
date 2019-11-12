@@ -1,6 +1,6 @@
 package Controlador;
 
-import Events.City.CityMouseListener;
+import Eventos.CityMouseListener;
 import Modelo.City;
 import Modelo.Country;
 import Modelo.Dao.DAOManager;

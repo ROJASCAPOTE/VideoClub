@@ -10,7 +10,8 @@ public class Staff {
     private String last_name;
     private int addressId;
     private Image imagen;
-    private String ruta;
+    private byte[] picture;
+    private String ruta = "/Manager.png";
     private String email;
     private int store_id;
     private boolean active;
@@ -71,6 +72,14 @@ public class Staff {
 
     public void setImagen(Image imagen) {
         this.imagen = imagen;
+    }
+
+    public byte[] getPicture() {
+        return picture;
+    }
+
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
     }
 
     public String getRuta() {

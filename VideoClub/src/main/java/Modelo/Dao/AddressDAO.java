@@ -19,13 +19,13 @@ import javax.swing.JOptionPane;
  * @author ACER E5
  */
 public class AddressDAO {
-    
+
     private ConnectionBD con;
-    
+
     public AddressDAO(ConnectionBD con) {
         this.con = con;
     }
-    
+
     public Address consultarDireccion(int codigo) {
         String sql = "SELECT address_id, address FROM address WHERE address_id =" + codigo + "";
         ResultSet resultado = null;
@@ -34,7 +34,7 @@ public class AddressDAO {
         try {
             st = con.getConexion().createStatement();
             resultado = st.executeQuery(sql);
-            
+
             if (resultado.next()) {
                 address = new Address();
                 address.setAddressId(resultado.getShort(1));
@@ -58,7 +58,7 @@ public class AddressDAO {
         }
         return address;
     }
-    
+
     public ArrayList<Address> listadoAddress() {
         PreparedStatement pstm = null;
         ResultSet rs = null;
@@ -80,7 +80,7 @@ public class AddressDAO {
                 address.setLastUpdate(rs.getDate(8));
                 listado.add(address);
             }
-            
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Código : "
                     + ex.getErrorCode() + "\nError :" + ex.getMessage());
@@ -99,11 +99,18 @@ public class AddressDAO {
         }
         return listado;
     }
-    
-    public Object[][] getTableAddress() {
+
+    public Object[][] getTableAddress(String direccion) {
         int registros = 0;
-        String sql = "SELECT a.address_id, a.address, a.address2, a.district, c.city, a.postal_code, a.phone, Date(a.last_update) FROM address a, city c"
-                + " WHERE a.city_id=c.city_id ORDER BY address_id ASC";
+
+        String sql = "";
+        if (direccion.equals("")) {
+            sql = "SELECT * FROM address";
+        } else {
+            sql = "SELECT a.address_id, a.address, a.address2, a.district, c.city, a.postal_code, a.phone, Date(a.last_update) FROM address a, city c"
+                    + " WHERE a.city_id=c.city_id and address like '%" + direccion + "%'  ORDER BY address_id ASC";
+        }
+
         String cantidad = "Select count(*) as total from address";
         PreparedStatement pstm = null;
         ResultSet res = null;
@@ -117,7 +124,7 @@ public class AddressDAO {
         } catch (SQLException e) {
             System.out.println(e);
         }
-        
+
         Object[][] data = new String[registros][8];
         PreparedStatement pst = null;
         ResultSet resp = null;

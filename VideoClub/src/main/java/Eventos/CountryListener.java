@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Events.Country;
+package Eventos;
 
 import Controlador.CountryController;
 import java.awt.event.ActionEvent;

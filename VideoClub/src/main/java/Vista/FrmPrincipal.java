@@ -7,6 +7,7 @@ package Vista;
 
 import Controlador.CityController;
 import Controlador.CountryController;
+import Controlador.StaffController;
 import Controlador.StoreController;
 import Modelo.Dao.DAOManager;
 import Modelo.DesktopConFondo;
@@ -304,8 +305,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
         FrmStore frmStore = new FrmStore();
-        StoreController controller=new StoreController(frmStore, manager);
+        StoreController controller = new StoreController(frmStore, manager);
+        StaffController staffController = new StaffController();
         frmStore.setManager(manager);
+        staffController.setFrmStore(frmStore);
+        staffController.setModelo(manager);
         int x = (jDesktopPane.getWidth() / 2) - frmStore.getWidth() / 2;
         int y = (jDesktopPane.getHeight() / 2) - frmStore.getHeight() / 2;
 
@@ -337,7 +341,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_saveMenuItemActionPerformed
 
     private void contentMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contentMenuItemActionPerformed
-        FrmStaffView frmStaffView = new FrmStaffView();
+        FrmStaff frmStaffView = new FrmStaff();
+        StaffController controller = new StaffController(frmStaffView, manager);
+        frmStaffView.setManager(manager);
         int x = (jDesktopPane.getWidth() / 2) - frmStaffView.getWidth() / 2;
         int y = (jDesktopPane.getHeight() / 2) - frmStaffView.getHeight() / 2;
 

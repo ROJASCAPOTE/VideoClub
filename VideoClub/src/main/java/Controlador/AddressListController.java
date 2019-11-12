@@ -5,11 +5,13 @@
  */
 package Controlador;
 
-import Event.Address.AddressMouseListener;
+import Eventos.AddressMouseListener;
+import Eventos.StoreEventoTeclado;
 import Modelo.Address;
 import Modelo.Dao.DAOManager;
 import Vista.FrmListAddress;
 import Vista.FrmStore;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -26,7 +28,8 @@ public class AddressListController {
         this.vista = vista;
         this.manager = manager;
         vista.addMouseListenerAddress(new AddressMouseListener(this));
-        dtAddress = manager.getAddressDAO().getTableAddress();
+        vista.addaddKeyListener(new StoreEventoTeclado(this));
+        dtAddress = manager.getAddressDAO().getTableAddress("");
         vista.tableAddress(dtAddress);
     }
 
@@ -35,9 +38,23 @@ public class AddressListController {
     }
 
     public void obtenerDatosDireccion() {
+
+        DefaultComboBoxModel modeloCombAddressStore;
+        modeloCombAddressStore = (DefaultComboBoxModel) vistaStore.getCombAddressStore().getModel();
+        
         int id = Integer.parseInt((String) vista.getTablaAddress().getValueAt(vista.getTablaAddress().getSelectedRow(), 0));
         Address address = manager.getAddressDAO().consultarDireccion(id);
-        vistaStore.setAddress(address);
+        modeloCombAddressStore.setSelectedItem(address);
+    }
+
+    public void buscarAddress() {
+        if (!vista.getTextBuscarAddress().equals("")) {
+            dtAddress = manager.getAddressDAO().getTableAddress(vista.getTextBuscarAddress());
+            vista.tableAddress(dtAddress);
+        } else {
+            dtAddress = manager.getAddressDAO().getTableAddress("");
+            vista.tableAddress(dtAddress);
+        }
     }
 
     public void cerrarAction() {

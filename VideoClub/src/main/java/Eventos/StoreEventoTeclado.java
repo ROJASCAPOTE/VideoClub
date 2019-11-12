@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Events.Country;
+package Eventos;
 
-import Controlador.CountryListController;
+import Controlador.AddressListController;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -13,16 +13,16 @@ import java.awt.event.KeyEvent;
  *
  * @author ACER E5
  */
-public class CountryEventoTecladoCountry extends KeyAdapter {
+public class StoreEventoTeclado extends KeyAdapter {
 
-    private CountryListController controller;
+    private AddressListController controller;
 
-    public CountryEventoTecladoCountry(CountryListController controller) {
+    public StoreEventoTeclado(AddressListController controller) {
         this.controller = controller;
     }
-
+    
     @Override
     public void keyReleased(KeyEvent evento) {
-        controller.buscarPais();
+        controller.buscarAddress();
     }
 }

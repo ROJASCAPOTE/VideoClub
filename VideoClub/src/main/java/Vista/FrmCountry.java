@@ -248,6 +248,7 @@ public class FrmCountry extends javax.swing.JInternalFrame {
     }
     
     public void addListenerPrimero(ActionListener listenerCountry) {
+        
     }
     
     public void addListenerAnterior(ActionListener listenerCountry) {

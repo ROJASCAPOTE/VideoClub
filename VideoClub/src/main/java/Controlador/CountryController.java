@@ -5,7 +5,7 @@
  */
 package Controlador;
 
-import Events.Country.CountryListener;
+import Eventos.CountryListener;
 import Modelo.Country;
 import Modelo.Dao.DAOManager;
 import Vista.FrmCountry;

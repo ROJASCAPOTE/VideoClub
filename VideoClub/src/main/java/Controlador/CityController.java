@@ -1,6 +1,6 @@
 package Controlador;
 
-import Events.City.CityListener;
+import Eventos.CityListener;
 import Modelo.City;
 import Modelo.Country;
 import Modelo.Dao.DAOManager;
@@ -96,7 +96,7 @@ public class CityController {
 
                 vista.activarControles(false);
                 vista.nuevoAction();
-                vista.modificarAction();
+                vista.limpiarCampos();
 
             } else {
                 vista.gestionMensajes(

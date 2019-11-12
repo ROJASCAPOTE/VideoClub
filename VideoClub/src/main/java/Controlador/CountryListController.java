@@ -1,9 +1,7 @@
 package Controlador;
 
-import Events.City.CityMouseListener;
-import Events.Country.ContryMouseListener;
-import Events.Country.CountryEventoTecladoCountry;
-import Modelo.Country;
+import Eventos.ContryMouseListener;
+import Eventos.CountryEventoTecladoCountry;
 import Modelo.Dao.DAOManager;
 import Vista.FrmCountry;
 import Vista.FrmListCountry;

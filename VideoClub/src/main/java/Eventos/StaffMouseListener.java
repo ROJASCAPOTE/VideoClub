@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Event.Address;
+package Eventos;
 
-import Controlador.AddressListController;
+import Controlador.StaffListController;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -13,17 +13,17 @@ import java.awt.event.MouseEvent;
  *
  * @author ACER E5
  */
-public class AddressMouseListener extends MouseAdapter {
+public class StaffMouseListener extends MouseAdapter {
 
-    private AddressListController controller;
+    private StaffListController controller;
 
-    public AddressMouseListener(AddressListController controller) {
+    public StaffMouseListener(StaffListController controller) {
         this.controller = controller;
     }
 
     @Override
     public void mouseClicked(MouseEvent evento) {
-        controller.obtenerDatosDireccion();
+        controller.obtenerDatosStaff();
         controller.cerrarAction();
     }
 }
