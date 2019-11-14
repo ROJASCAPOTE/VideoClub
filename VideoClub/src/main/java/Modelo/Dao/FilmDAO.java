@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Eventos;
+package Modelo.Dao;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import Servisios.ConnectionBD;
 
 /**
  *
  * @author ACER E5
  */
-public class AddressListener implements ActionListener{
+public class FilmDAO {
+    private ConnectionBD con;
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-          
+    public FilmDAO(ConnectionBD con) {
+        this.con = con;
     }
+    
     
 }

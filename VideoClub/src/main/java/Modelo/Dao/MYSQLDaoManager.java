@@ -18,6 +18,7 @@ public class MYSQLDaoManager implements DAOManager {
     private AddressDAO address;
     private StoreDAO store;
     private StaffDAO staff;
+    private FilmDAO film;
     private ConnectionBD conn = null;
 
     public MYSQLDaoManager(ConnectionBD conn) {
@@ -62,6 +63,14 @@ public class MYSQLDaoManager implements DAOManager {
             staff = new StaffDAO(conn);
         }
         return staff;
+    }
+
+    @Override
+    public FilmDAO getFilmDAO() {
+        if (film == null) {
+            film = new FilmDAO(conn);
+        }
+        return film;
     }
 
 }

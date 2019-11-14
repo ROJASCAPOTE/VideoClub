@@ -26,10 +26,6 @@ public class StaffListController {
         this.vista = vista;
         this.modelo = modelo;
         vista.addMouseListenerStore(new StaffMouseListener(this));
-        ArrayList<Store> listadoStore;
-        listadoStore = modelo.getStoreDAO().listadoStore();
-        vista.cargarListStore(listadoStore);
-
         dtStaff = this.modelo.getStaffDAO().getTableStaff(0, "");
         this.vista.tableStaff(dtStaff);
     }
@@ -68,24 +64,10 @@ public class StaffListController {
         frmStaff.setTexLastName(staff.getLast_name());
         address = obtenerSeleccionAddress();
         modelocbxaAddress.setSelectedItem(address);
-        try {
-            byte[] bi = staff.getPicture();
-            BufferedImage image = null;
-            InputStream in = new ByteArrayInputStream(bi);
-            image = ImageIO.read(in);
-            frmStaff.setLabelFoto(image);
-
-        } catch (NullPointerException ex) {
-        }
         frmStaff.setTexEmail(staff.getEmail());
 
         store = obtenerSeleccionStore();
         modelocbxaStore.setSelectedItem(store);
-        if (staff.isActive()) {
-            frmStaff.setRadSi(true);
-        } else {
-            frmStaff.setRadNo(true);
-        }
         frmStaff.modificarAction();
     }
 

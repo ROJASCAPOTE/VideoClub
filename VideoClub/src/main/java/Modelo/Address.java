@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class Address {
 
-    private Short addressId;
+    private int addressId;
     private City city;
     private int city_id;
     private String address;
@@ -26,7 +26,7 @@ public class Address {
     public Address() {
     }
 
-    public Address(Short addressId, City city, String address, String address2, String district, String postalCode, String phone, Date lastUpdate) {
+    public Address(int addressId, City city, String address, String address2, String district, String postalCode, String phone, Date lastUpdate) {
         this.addressId = addressId;
         this.city = city;
         this.address = address;
@@ -37,11 +37,11 @@ public class Address {
         this.lastUpdate = lastUpdate;
     }
 
-    public Short getAddressId() {
+    public int getAddressId() {
         return addressId;
     }
 
-    public void setAddressId(Short addressId) {
+    public void setAddressId(int addressId) {
         this.addressId = addressId;
     }
 

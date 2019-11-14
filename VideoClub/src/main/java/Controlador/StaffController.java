@@ -13,7 +13,6 @@ import Modelo.Store;
 import Vista.FrmStaff;
 import Vista.FrmStore;
 import java.util.ArrayList;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -44,7 +43,6 @@ public class StaffController {
         listaTiendas = modelo.getStoreDAO().listadoStore();
         vista.cargarTiendas(listaTiendas);
         vista.codigoStaff(false);
-        vista.setRadSi(true);
         vista.activarControles(false);
         getCodigoStaff();
     }
@@ -75,14 +73,9 @@ public class StaffController {
             staff.setLast_name(vista.getTexLastName());
             address = (Address) vista.getCombAddress().getSelectedItem();
             staff.setAddressId(address.getAddressId());
-            staff.setRuta(vista.getTexRutaFoto());
             staff.setEmail(vista.getTexEmail());
             store = (Store) vista.getCmbStore().getSelectedItem();
             staff.setStore_id(store.getStore_id());
-            if (vista.getRadSi()) {
-                active = true;
-            }
-            staff.setActive(active);
             staff.setUsername(vista.getTexUserName());
             staff.setPassword(vista.getTexPassword());
             staff.setLast_update(vista.getTextLastUpdate());
@@ -111,7 +104,6 @@ public class StaffController {
             Staff staff = new Staff();
             Address address = null;
             Store store = null;
-            boolean active = false;
             int staff_id;
             int codigo = Integer.parseInt(vista.getTexCodigoStaff());
             staff.setStaff_id(codigo);
@@ -119,14 +111,9 @@ public class StaffController {
             staff.setLast_name(vista.getTexLastName());
             address = (Address) vista.getCombAddress().getSelectedItem();
             staff.setAddressId(address.getAddressId());
-            staff.setRuta(vista.getTexRutaFoto());
             staff.setEmail(vista.getTexEmail());
             store = (Store) vista.getCmbStore().getSelectedItem();
             staff.setStore_id(store.getStore_id());
-            if (vista.getRadSi()) {
-                active = true;
-            }
-            staff.setActive(active);
             staff.setUsername(vista.getTexUserName());
             staff.setPassword(vista.getTexPassword());
             staff.setLast_update(vista.getTextLastUpdate());

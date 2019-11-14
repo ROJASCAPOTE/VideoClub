@@ -5,7 +5,6 @@ import Controlador.StoreListController;
 import Modelo.Address;
 import Modelo.Dao.DAOManager;
 import Modelo.Staff;
-import Modelo.Store;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
@@ -15,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class FrmStore extends javax.swing.JInternalFrame {
 
@@ -44,6 +44,12 @@ public class FrmStore extends javax.swing.JInternalFrame {
     public void setTextIdStore(String textIdStore) {
         this.textIdStore.setText(textIdStore);
     }
+
+    public void setTextAdministrador(JTextField textAdministrador) {
+        this.textAdministrador = textAdministrador;
+    }
+    
+    
 
     public JComboBox<String> getCombAddressStore() {
         return combAddressStore;
@@ -93,12 +99,6 @@ public class FrmStore extends javax.swing.JInternalFrame {
         Address address = (Address) getCombAddresManager().getSelectedItem();
         staff.setAddressId(address.getAddressId());
         staff.setEmail(textEamil.getText());
-        if (radioSi.isSelected()) {
-            staff.setActive(true);
-        }
-        if (radioNo.isSelected()) {
-            staff.setActive(false);
-        }
         staff.setUsername(textUserName.getText());
         staff.setPassword(textPassword.getText());
         staff.setLast_update(textLastUpdateManager.getDate());
@@ -107,6 +107,8 @@ public class FrmStore extends javax.swing.JInternalFrame {
     public Staff getStaff() {
         return staff;
     }
+   
+    
 
     public void gestionMensajes(String mensaje, String titulo, int icono) {
         JOptionPane.showMessageDialog(this, mensaje, titulo, icono);
@@ -127,35 +129,47 @@ public class FrmStore extends javax.swing.JInternalFrame {
         }
         combAddressStore.setModel(modelo);
     }
-    
+
     public void limpiarCampos() {
-        
+
     }
 
     public void activarControlesModificar(boolean estado) {
         textIdStore.setEnabled(!estado);
-        combAddressStore.setEnabled(estado);
         textAdministrador.setEnabled(estado);
+        combAddressStore.setEnabled(estado);
+        textFirstName.setEnabled(estado);
+        textLastName.setEnabled(estado);
+        combAddresManager.setEnabled(estado);
+        textEamil.setEnabled(estado);
+        textUserName.setEnabled(estado);
+        textPassword.setEnabled(estado);
+        textLastUpdateManager.setEnabled(estado);
         textLastUpdateStore.setEnabled(estado);
         btnModificar.setEnabled(estado);
 
     }
 
     public void activarControles(boolean estado) {
-        textIdStore.setEnabled(estado);
+        textIdStore.setEnabled(false);
         combAddressStore.setEnabled(estado);
-        textAdministrador.setEnabled(estado);
         textLastUpdateStore.setEnabled(estado);
+        textAdministrador.setEnabled(false);
+        textFirstName.setEnabled(estado);
+        textLastName.setEnabled(estado);
+        combAddresManager.setEnabled(estado);
+        
+        textEamil.setEnabled(estado);
+        textUserName.setEnabled(estado);
+        textPassword.setEnabled(estado);
+        textLastUpdateManager.setEnabled(estado);
         btnModificar.setEnabled(estado);
         btnBuscarAddressStore.setEnabled(estado);
-        btnBuscarStaff.setEnabled(estado);
     }
 
     public void nuevoAction() {
         if (btnNuevo.getText().equals("Nuevo")) {
-            textIdStore.setText("");
             combAddressStore.setSelectedIndex(0);
-            textAdministrador.setText("");
             textLastUpdateStore.setDate(null);
             BtnBuscarStore.setEnabled(false);
             activarControles(true);
@@ -190,7 +204,6 @@ public class FrmStore extends javax.swing.JInternalFrame {
         btnNuevo.setActionCommand("Actualizar");
         btnModificar.setText("Cancelar");
         btnModificar.setActionCommand("Cancelar");
-        btnBuscarStaff.setEnabled(true);
         btnNuevo.setIcon(new ImageIcon(getClass().
                 getResource("/Modify.png"))); // NOI18N
         btnModificar.setIcon(new ImageIcon(getClass().
@@ -219,11 +232,9 @@ public class FrmStore extends javax.swing.JInternalFrame {
         btnModificar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         textAdministrador = new javax.swing.JTextField();
-        btnBuscarStaff = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         textFirstName = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -232,16 +243,12 @@ public class FrmStore extends javax.swing.JInternalFrame {
         combAddresManager = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         textEamil = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        radioSi = new javax.swing.JRadioButton();
-        radioNo = new javax.swing.JRadioButton();
         jLabel9 = new javax.swing.JLabel();
         textUserName = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         textPassword = new javax.swing.JPasswordField();
         jLabel11 = new javax.swing.JLabel();
         textLastUpdateManager = new com.toedter.calendar.JDateChooser();
-        btnBuscarAddressStore1 = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -312,7 +319,7 @@ public class FrmStore extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(115, 115, 115)
+                .addGap(171, 171, 171)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
@@ -331,12 +338,12 @@ public class FrmStore extends javax.swing.JInternalFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(BtnBuscarStore, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnBuscarAddressStore, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(249, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(19, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textIdStore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
@@ -351,7 +358,7 @@ public class FrmStore extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
                     .addComponent(textLastUpdateStore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel6.setBackground(new java.awt.Color(102, 102, 102));
@@ -373,8 +380,11 @@ public class FrmStore extends javax.swing.JInternalFrame {
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Administrador.png"))); // NOI18N
         jButton3.setText("Manager");
-
-        jButton1.setText("Address");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -385,9 +395,7 @@ public class FrmStore extends javax.swing.JInternalFrame {
                 .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -396,14 +404,13 @@ public class FrmStore extends javax.swing.JInternalFrame {
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnModificar)
-                        .addComponent(btnSalir))
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 11, Short.MAX_VALUE))
+                        .addComponent(btnSalir)))
+                .addGap(0, 8, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(102, 102, 102));
@@ -412,14 +419,6 @@ public class FrmStore extends javax.swing.JInternalFrame {
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Manager");
-
-        btnBuscarStaff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/buscar.png"))); // NOI18N
-        btnBuscarStaff.setBorder(null);
-        btnBuscarStaff.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarStaffActionPerformed(evt);
-            }
-        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -445,20 +444,6 @@ public class FrmStore extends javax.swing.JInternalFrame {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Email");
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Active");
-
-        radioSi.setBackground(new java.awt.Color(102, 102, 102));
-        radioSi.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        radioSi.setForeground(new java.awt.Color(255, 255, 255));
-        radioSi.setText("Si");
-
-        radioNo.setBackground(new java.awt.Color(102, 102, 102));
-        radioNo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        radioNo.setForeground(new java.awt.Color(255, 255, 255));
-        radioNo.setText("No");
-
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("User Name");
@@ -471,51 +456,32 @@ public class FrmStore extends javax.swing.JInternalFrame {
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Last Update");
 
-        btnBuscarAddressStore1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dir.png"))); // NOI18N
-        btnBuscarAddressStore1.setBorder(null);
-        btnBuscarAddressStore1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarAddressStore1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(156, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel11)
                     .addComponent(jLabel10)
                     .addComponent(jLabel9)
-                    .addComponent(jLabel8)
                     .addComponent(jLabel7)
                     .addComponent(jLabel6)
                     .addComponent(jLabel5)
                     .addComponent(jLabel4)
                     .addComponent(jLabel14))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(radioSi)
-                        .addGap(18, 18, 18)
-                        .addComponent(radioNo))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(textLastUpdateManager, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
-                            .addComponent(textPassword, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textUserName, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textFirstName, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textAdministrador, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textLastName)
-                            .addComponent(combAddresManager, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(textEamil))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnBuscarStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscarAddressStore1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(187, 187, 187))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(textLastUpdateManager, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
+                    .addComponent(textPassword, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(textUserName, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(textFirstName, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(textAdministrador, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(textLastName)
+                    .addComponent(combAddresManager, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(textEamil))
+                .addGap(248, 248, 248))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -524,9 +490,7 @@ public class FrmStore extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel14)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textAdministrador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscarStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(textAdministrador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(textFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -536,20 +500,13 @@ public class FrmStore extends javax.swing.JInternalFrame {
                             .addComponent(textLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(combAddresManager, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel6))
-                            .addComponent(btnBuscarAddressStore1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(combAddresManager, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(textEamil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(radioSi)
-                    .addComponent(radioNo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -562,7 +519,7 @@ public class FrmStore extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11)
                     .addComponent(textLastUpdateManager, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -586,7 +543,7 @@ public class FrmStore extends javax.swing.JInternalFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10))
+                .addGap(21, 21, 21))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -647,31 +604,24 @@ public class FrmStore extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void btnBuscarStaffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarStaffActionPerformed
-
-    }//GEN-LAST:event_btnBuscarStaffActionPerformed
-
     private void textFirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFirstNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textFirstNameActionPerformed
 
-    private void btnBuscarAddressStore1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarAddressStore1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnBuscarAddressStore1ActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+       
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnBuscarStore;
     private javax.swing.JButton btnBuscarAddressStore;
-    private javax.swing.JButton btnBuscarAddressStore1;
-    private javax.swing.JButton btnBuscarStaff;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> combAddresManager;
     private javax.swing.JComboBox<String> combAddressStore;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -683,14 +633,11 @@ public class FrmStore extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JRadioButton radioNo;
-    private javax.swing.JRadioButton radioSi;
     private javax.swing.JTextField textAdministrador;
     private javax.swing.JTextField textEamil;
     private javax.swing.JTextField textFirstName;
@@ -702,5 +649,4 @@ public class FrmStore extends javax.swing.JInternalFrame {
     private javax.swing.JTextField textUserName;
     // End of variables declaration//GEN-END:variables
 
-    
 }

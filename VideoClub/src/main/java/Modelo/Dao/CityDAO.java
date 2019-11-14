@@ -5,12 +5,14 @@
  */
 package Modelo.Dao;
 
+import Modelo.Address;
 import Modelo.City;
 import Servisios.ConnectionBD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,13 +20,13 @@ import javax.swing.JOptionPane;
  * @author ACER E5
  */
 public class CityDAO {
-
+    
     private ConnectionBD con;
-
+    
     public CityDAO(ConnectionBD con) {
         this.con = con;
     }
-
+    
     public int grabarCity(City c) {
         PreparedStatement pstm;
         pstm = null;
@@ -33,7 +35,7 @@ public class CityDAO {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String last_update = sdf.format(c.getLast_update());
         try {
-
+            
             String sql = "INSERT INTO city values (?,?,?,?)";
             pstm = con.getConexion().prepareStatement(sql);
             pstm.setInt(1, c.getCity_id());
@@ -47,7 +49,7 @@ public class CityDAO {
         }
         return rtdo;
     }
-
+    
     public int modificarCity(City c) {
         PreparedStatement pstm;
         pstm = null;
@@ -70,7 +72,7 @@ public class CityDAO {
         }
         return rtdo;
     }
-
+    
     public int borrarCity(int city_id) {
         PreparedStatement pstm = null;
         int rtdo;
@@ -87,7 +89,43 @@ public class CityDAO {
         }
         return rtdo;
     }
-
+    
+    public ArrayList<City> listadoCity() {
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        ArrayList<City> listado = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM city ORDER BY city";
+            pstm = con.getConexion().prepareStatement(sql);
+            rs = pstm.executeQuery();
+            City city = null;
+            while (rs.next()) {
+                city = new City();
+                city.setCity_id(rs.getInt(1));
+                city.setCity(rs.getString(2));
+                city.setLast_update(rs.getDate(3));
+                listado.add(city);
+            }
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Código : "
+                    + ex.getErrorCode() + "\nError :" + ex.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstm != null) {
+                    pstm.close();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Código : "
+                        + ex.getErrorCode() + "\nError :" + ex.getMessage());
+            }
+        }
+        return listado;
+    }
+    
     public Object[][] getTableCity() {
         int registros = 0;
         String sql = "SELECT ci.city_id, ci.city, co.country, Date(ci.last_update) FROM city ci, country co"
@@ -105,7 +143,7 @@ public class CityDAO {
         } catch (SQLException e) {
             System.out.println(e);
         }
-
+        
         Object[][] data = new String[registros][4];
         PreparedStatement pst = null;
         ResultSet resp = null;
@@ -126,5 +164,5 @@ public class CityDAO {
         }
         return data;
     }
-
+    
 }

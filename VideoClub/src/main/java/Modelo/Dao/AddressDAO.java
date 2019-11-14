@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -24,6 +25,32 @@ public class AddressDAO {
 
     public AddressDAO(ConnectionBD con) {
         this.con = con;
+    }
+
+    public int grabarAddress(Address address) {
+        PreparedStatement pstm;
+        pstm = null;
+        int rtdo;
+        rtdo = 0;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String last_update = sdf.format(address.getLastUpdate());
+        try {
+            String sql = "INSERT INTO Address values (?,?,?,?,?,?,?,?)";
+            pstm = con.getConexion().prepareStatement(sql);
+            pstm.setInt(1, address.getAddressId());
+            pstm.setString(2, address.getAddress());
+            pstm.setString(3, address.getAddress2());
+            pstm.setString(4, address.getDistrict());
+            pstm.setInt(5, address.getCity().getCity_id());
+            pstm.setString(6, address.getPostalCode());
+            pstm.setString(7, address.getPhone());
+            pstm.setString(8, last_update);
+            rtdo = pstm.executeUpdate();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Código : "
+                    + ex.getErrorCode() + "\nError :" + ex.getMessage());
+        }
+        return rtdo;
     }
 
     public Address consultarDireccion(int codigo) {

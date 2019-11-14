@@ -5,6 +5,7 @@
  */
 package Vista;
 
+import Controlador.AddressController;
 import Controlador.CityController;
 import Controlador.CountryController;
 import Controlador.StaffController;
@@ -157,6 +158,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         cutMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Category.png"))); // NOI18N
         cutMenuItem.setMnemonic('t');
         cutMenuItem.setText("Category");
+        cutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cutMenuItemActionPerformed(evt);
+            }
+        });
         editMenu.add(cutMenuItem);
         editMenu.add(jSeparator4);
 
@@ -188,6 +194,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         deleteMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Actor.png"))); // NOI18N
         deleteMenuItem.setMnemonic('d');
         deleteMenuItem.setText("Actor");
+        deleteMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteMenuItemActionPerformed(evt);
+            }
+        });
         editMenu.add(deleteMenuItem);
 
         menuBar.add(editMenu);
@@ -296,7 +307,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_saveAsMenuItemActionPerformed
 
     private void copyMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyMenuItemActionPerformed
-        // TODO add your handling code here:
+        FrmFilm frmFilm = new FrmFilm();
+
+        int x = (jDesktopPane.getWidth() / 2) - frmFilm.getWidth() / 2;
+        int y = (jDesktopPane.getHeight() / 2) - frmFilm.getHeight() / 2;
+
+        if (frmFilm.isShowing()) {
+            frmFilm.setLocation(x, y);
+        } else {
+            jDesktopPane.add(frmFilm);
+            frmFilm.setLocation(x, y);
+            frmFilm.setVisible(true);
+        }
     }//GEN-LAST:event_copyMenuItemActionPerformed
 
     private void pasteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pasteMenuItemActionPerformed
@@ -328,6 +350,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
         FrmAddess frmAddess = new FrmAddess();
+        AddressController controller = new AddressController(frmAddess, manager);
         int x = (jDesktopPane.getWidth() / 2) - frmAddess.getWidth() / 2;
         int y = (jDesktopPane.getHeight() / 2) - frmAddess.getHeight() / 2;
 
@@ -355,6 +378,36 @@ public class FrmPrincipal extends javax.swing.JFrame {
             frmStaffView.setVisible(true);
         }
     }//GEN-LAST:event_contentMenuItemActionPerformed
+
+    private void deleteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteMenuItemActionPerformed
+        FrmActor frmActor = new FrmActor();
+
+        int x = (jDesktopPane.getWidth() / 2) - frmActor.getWidth() / 2;
+        int y = (jDesktopPane.getHeight() / 2) - frmActor.getHeight() / 2;
+
+        if (frmActor.isShowing()) {
+            frmActor.setLocation(x, y);
+        } else {
+            jDesktopPane.add(frmActor);
+            frmActor.setLocation(x, y);
+            frmActor.setVisible(true);
+        }
+    }//GEN-LAST:event_deleteMenuItemActionPerformed
+
+    private void cutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cutMenuItemActionPerformed
+        FrmCategory frmCategory = new FrmCategory();
+
+        int x = (jDesktopPane.getWidth() / 2) - frmCategory.getWidth() / 2;
+        int y = (jDesktopPane.getHeight() / 2) - frmCategory.getHeight() / 2;
+
+        if (frmCategory.isShowing()) {
+            frmCategory.setLocation(x, y);
+        } else {
+            jDesktopPane.add(frmCategory);
+            frmCategory.setLocation(x, y);
+            frmCategory.setVisible(true);
+        }
+    }//GEN-LAST:event_cutMenuItemActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

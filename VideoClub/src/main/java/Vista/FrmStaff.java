@@ -29,122 +29,83 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author ACER E5
  */
 public class FrmStaff extends javax.swing.JInternalFrame {
-    
+
     File fichero = null;
     private JPanel contentPane;
     private DAOManager manager;
-    
+
     public FrmStaff() {
         initComponents();
     }
-    
+
     public String getTexCodigoStaff() {
         return texCodigoStaff.getText();
     }
-    
+
     public void setTexCodigoStaff(String texCodigoStaff) {
         this.texCodigoStaff.setText(texCodigoStaff);
     }
-    
+
     public String getTextFirstName() {
         return textFirstName.getText();
     }
-    
+
     public void setTextFirstName(String textFirstName) {
         this.textFirstName.setText(textFirstName);
     }
-    
+
     public String getTexLastName() {
         return texLastName.getText();
     }
-    
+
     public void setTexLastName(String texLastName) {
         this.texLastName.setText(texLastName);
     }
-    
+
     public JComboBox<String> getCombAddress() {
         return combAddress;
     }
-    
-    public String getTexRutaFoto() {
-        return texRutaFoto.getText();
-    }
-    
-    public void setTexRutaFoto(String texRutaFoto) {
-        this.texRutaFoto.setText(texRutaFoto);
-    }
-    
+
     public String getTexEmail() {
         return texEmail.getText();
     }
-    
+
     public void setTexEmail(String texEmail) {
         this.texEmail.setText(texEmail);
     }
-    
+
     public JComboBox<String> getCmbStore() {
         return cmbStore;
     }
-    
-    public boolean getRadSi() {
-        return radSi.isSelected();
-    }
-    
-    public void setRadSi(boolean radSi) {
-        this.radSi.setSelected(radSi);
-        this.texRutaFoto.setEnabled(!radSi);
-    }
-    
-    public boolean getRadNo() {
-        return radNo.isSelected();
-    }
-    
-    public void setRadNo(boolean radNo) {
-        this.radNo.setSelected(radNo);
-    }
-    
+
     public String getTexUserName() {
         return texUserName.getText();
     }
-    
+
     public void setTexUserName(String texUserName) {
         this.texUserName.setText(texUserName);
     }
-    
+
     public String getTexPassword() {
         return texPassword.getText();
     }
-    
+
     public void setTexPassword(String texPassword) {
         this.texPassword.setText(texPassword);
     }
-    
+
     public Date getTextLastUpdate() {
         return textLastUpdate.getDate();
     }
-    
+
     public void setTextLastUpdate(Date textLastUpdate) {
         this.textLastUpdate.setDate(textLastUpdate);
     }
-    
-    public String getLabelFoto(String foto) {
-        return labelFoto.getText();
-    }
-    
-    public void setLabelFoto(Image imagen) {
-        if (imagen != null) {
-            Icon icono = new ImageIcon(imagen.getScaledInstance(labelFoto.getWidth(), labelFoto.getHeight(), Image.SCALE_DEFAULT));
-            labelFoto.setText("");
-            labelFoto.setIcon(icono);
-        } else {
-            cargaImagen();
-        }
-    }
-    
+
     public void setManager(DAOManager manager) {
         this.manager = manager;
     }
-    
+
     public void cargarTiendas(ArrayList<Store> ListaTiendas) {
         DefaultComboBoxModel mod = new DefaultComboBoxModel();
         for (Object tiendas : ListaTiendas) {
@@ -152,11 +113,11 @@ public class FrmStaff extends javax.swing.JInternalFrame {
         }
         cmbStore.setModel(mod);
     }
-    
+
     public void codigoStaff(boolean estado) {
         texCodigoStaff.setEnabled(estado);
     }
-    
+
     public void cargarDirecciones(ArrayList<Address> ListAddress) {
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         for (Object direcciones : ListAddress) {
@@ -164,32 +125,29 @@ public class FrmStaff extends javax.swing.JInternalFrame {
         }
         combAddress.setModel(modelo);
     }
-    
+
     public void addListenerNuevo(ActionListener listenerStaff) {
         btnNuevo.addActionListener(listenerStaff);
     }
-    
+
     public void addListenerBtnBorrar(ActionListener listenerStaff) {
         btnEliminar.addActionListener(listenerStaff);
     }
-    
+
     public void addListenerBtnModificar(ActionListener listenerStaff) {
         btnModificar.addActionListener(listenerStaff);
     }
-    
+
     public void gestionMensajes(String mensaje, String titulo, int icono) {
         JOptionPane.showMessageDialog(this, mensaje, titulo, icono);
     }
-    
-     public void activarControlesModificar(boolean estado) {
+
+    public void activarControlesModificar(boolean estado) {
         textFirstName.setEnabled(estado);
         texLastName.setEnabled(estado);
         combAddress.setEnabled(estado);
-        texRutaFoto.setEnabled(estado);
         texEmail.setEnabled(estado);
         cmbStore.setEnabled(estado);
-        radSi.setEnabled(estado);
-        radNo.setEnabled(estado);
         texUserName.setEnabled(estado);
         texPassword.setEnabled(estado);
         textLastUpdate.setEnabled(estado);
@@ -198,47 +156,39 @@ public class FrmStaff extends javax.swing.JInternalFrame {
         btnEliminar.setEnabled(estado);
 
     }
-    
+
     public void activarControles(boolean estado) {
         textFirstName.setEnabled(estado);
         texLastName.setEnabled(estado);
         combAddress.setEnabled(estado);
         texEmail.setEnabled(estado);
         cmbStore.setEnabled(estado);
-        radSi.setEnabled(estado);
-        radNo.setEnabled(estado);
         texUserName.setEnabled(estado);
         texPassword.setEnabled(estado);
         textLastUpdate.setEnabled(estado);
-        btnFoto.setEnabled(estado);
         btnModificar.setEnabled(estado);
         btnEliminar.setEnabled(estado);
-        
+
     }
-    
+
     public void limpiarCampos() {
         textFirstName.setText("");
         texLastName.setText("");
         combAddress.setSelectedIndex(0);
-        texRutaFoto.setText("");
         texEmail.setText("");
         cmbStore.setSelectedIndex(0);
-        radSi.setSelected(true);
         texUserName.setText("");
         texPassword.setText("");
         textLastUpdate.setDate(null);
-        cargaImagen();
     }
-    
+
     public void nuevoAction() {
         if (btnNuevo.getText().equals("Nuevo")) {
             textFirstName.setText("");
             texLastName.setText("");
             combAddress.setSelectedIndex(0);
-            texRutaFoto.setText("");
             texEmail.setText("");
             cmbStore.setSelectedIndex(0);
-            radSi.setSelected(true);
             texUserName.setText("");
             texPassword.setText("");
             textLastUpdate.setDate(null);
@@ -254,7 +204,7 @@ public class FrmStaff extends javax.swing.JInternalFrame {
             btnModificar.setIcon(new ImageIcon(getClass().
                     getResource("/Cancel.png"))); // NOI18N
             textFirstName.requestFocusInWindow();
-            
+
         } else {
             activarControles(false);
             btnNuevo.setText("Nuevo");
@@ -269,15 +219,13 @@ public class FrmStaff extends javax.swing.JInternalFrame {
                     getResource("/Modify.png"))); // NOI18N
         }
     }
-    
-    
+
     public void modificarAction() {
         activarControlesModificar(true);
         btnNuevo.setText("Actualizar");
         btnNuevo.setActionCommand("Actualizar");
         btnModificar.setText("Cancelar");
         btnModificar.setActionCommand("Cancelar");
-        btnFoto.setEnabled(true);
         btnNuevo.setIcon(new ImageIcon(getClass().
                 getResource("/Modify.png"))); // NOI18N
         btnModificar.setIcon(new ImageIcon(getClass().
@@ -285,15 +233,7 @@ public class FrmStaff extends javax.swing.JInternalFrame {
         textFirstName.requestFocusInWindow();
 
     }
-    
-    public void cargaImagen() {
-        ImageIcon icon = new ImageIcon(getClass().getResource("/Manager.png"));
-        Icon icono = new ImageIcon(icon.getImage().getScaledInstance(labelFoto.getWidth(), labelFoto.getHeight(), Image.SCALE_FAST));
-        labelFoto.setText("");
-        labelFoto.setIcon(icono);
-        
-    }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -312,9 +252,6 @@ public class FrmStaff extends javax.swing.JInternalFrame {
         texEmail = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         cmbStore = new javax.swing.JComboBox<>();
-        jLabel7 = new javax.swing.JLabel();
-        radSi = new javax.swing.JRadioButton();
-        radNo = new javax.swing.JRadioButton();
         jLabel8 = new javax.swing.JLabel();
         texUserName = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -322,18 +259,12 @@ public class FrmStaff extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         textLastUpdate = new com.toedter.calendar.JDateChooser();
         jButton3 = new javax.swing.JButton();
-        jLabel12 = new javax.swing.JLabel();
-        texRutaFoto = new javax.swing.JTextField();
         combAddress = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
-        labelFoto = new javax.swing.JLabel();
-        btnFoto = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -388,20 +319,6 @@ public class FrmStaff extends javax.swing.JInternalFrame {
 
         cmbStore.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Active");
-
-        radSi.setBackground(new java.awt.Color(102, 102, 102));
-        buttonGroup1.add(radSi);
-        radSi.setForeground(new java.awt.Color(255, 255, 255));
-        radSi.setText("Si");
-
-        radNo.setBackground(new java.awt.Color(102, 102, 102));
-        buttonGroup1.add(radNo);
-        radNo.setForeground(new java.awt.Color(255, 255, 255));
-        radNo.setText("No");
-
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("User Name");
@@ -409,6 +326,12 @@ public class FrmStaff extends javax.swing.JInternalFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Password");
+
+        texPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                texPasswordActionPerformed(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -421,10 +344,6 @@ public class FrmStaff extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Ruta");
-
         combAddress.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -432,30 +351,23 @@ public class FrmStaff extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(89, 89, 89)
+                .addGap(124, 124, 124)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel10)
                     .addComponent(jLabel9)
-                    .addComponent(jLabel7)
                     .addComponent(jLabel6)
                     .addComponent(jLabel5)
                     .addComponent(jLabel4)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel12))
+                    .addComponent(jLabel8))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(radSi)
-                        .addGap(18, 18, 18)
-                        .addComponent(radNo))
                     .addComponent(texPassword, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(texUserName, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cmbStore, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(texEmail, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(texRutaFoto, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(combAddress, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(texLastName, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(textFirstName, javax.swing.GroupLayout.Alignment.LEADING)
@@ -463,13 +375,13 @@ public class FrmStaff extends javax.swing.JInternalFrame {
                         .addComponent(texCodigoStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton3))
-                    .addComponent(textLastUpdate, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(119, Short.MAX_VALUE))
+                    .addComponent(textLastUpdate, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(155, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(73, 73, 73)
+                .addGap(45, 45, 45)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -489,36 +401,25 @@ public class FrmStaff extends javax.swing.JInternalFrame {
                     .addComponent(combAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(texRutaFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(texEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(texEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbStore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(cmbStore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(radSi)
-                            .addComponent(radNo))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(texUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))))
+                    .addComponent(texUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(texPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(texPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addComponent(textLastUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(textLastUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(102, 102, 102));
@@ -572,58 +473,6 @@ public class FrmStaff extends javax.swing.JInternalFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(102, 102, 102));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Foto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
-
-        jPanel5.setBackground(new java.awt.Color(102, 102, 102));
-        jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelFoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelFoto, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        btnFoto.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\Imagenes.png")); // NOI18N
-        btnFoto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFotoActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(btnFoto)
-                        .addGap(0, 198, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -634,20 +483,17 @@ public class FrmStaff extends javax.swing.JInternalFrame {
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -664,29 +510,8 @@ public class FrmStaff extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFotoActionPerformed
-        JFileChooser file = new JFileChooser();
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
-        file.setFileFilter(filtro);
-        
-        int seleccion = file.showOpenDialog(contentPane);
-        //Si el usuario, pincha en aceptar
-        if (seleccion == JFileChooser.APPROVE_OPTION) {
-            //Seleccionamos el fichero
-            fichero = file.getSelectedFile();
-            //Ecribe la ruta del fichero seleccionado en el campo de texto
-            texRutaFoto.setText(fichero.getAbsolutePath());
-            ImageIcon icon = new ImageIcon(fichero.toString());
-            System.out.println(fichero.getName());
-            Icon icono = new ImageIcon(icon.getImage().getScaledInstance(labelFoto.getWidth(), labelFoto.getHeight(), Image.SCALE_DEFAULT));
-            labelFoto.setText(null);
-            labelFoto.setIcon(icono);
-            
-        }
-    }//GEN-LAST:event_btnFotoActionPerformed
-
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
-        cargaImagen();
+
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
@@ -708,10 +533,13 @@ public class FrmStaff extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void texPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_texPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_texPasswordActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnFoto;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -721,28 +549,20 @@ public class FrmStaff extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JLabel labelFoto;
-    private javax.swing.JRadioButton radNo;
-    private javax.swing.JRadioButton radSi;
     private javax.swing.JTextField texCodigoStaff;
     private javax.swing.JTextField texEmail;
     private javax.swing.JTextField texLastName;
     private javax.swing.JPasswordField texPassword;
-    private javax.swing.JTextField texRutaFoto;
     private javax.swing.JTextField texUserName;
     private javax.swing.JTextField textFirstName;
     private com.toedter.calendar.JDateChooser textLastUpdate;

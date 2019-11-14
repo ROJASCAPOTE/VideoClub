@@ -9,17 +9,6 @@ package Modelo.Dao;
  *
  * @author ACER E5
  */
-public interface DAOManager {
-
-    CityDAO getCityDAO();
-
-    CountryDAO getCountryDAO();
-
-    AddressDAO getAddressDAO();
-
-    StoreDAO getStoreDAO();
-
-    StaffDAO getStaffDAO();
-
-    FilmDAO getFilmDAO();
+public class LanguageDAO {
+    
 }
