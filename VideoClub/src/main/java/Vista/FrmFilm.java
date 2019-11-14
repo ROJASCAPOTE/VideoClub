@@ -15,18 +15,18 @@ public class FrmFilm extends javax.swing.JInternalFrame {
 
     public void cargarLanguaje(ArrayList<Language> ListLanguage) {
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
-        for (Object municipio : ListLanguage) {
-            modelo.addElement(municipio);
-        }
+        ListLanguage.forEach((Language) -> {
+            modelo.addElement(Language);
+        });
         combLanguage.setModel(modelo);
     }
     
     
     public void cargarLanguageOriginal(ArrayList<Language> ListLanguageOriginal){
          DefaultComboBoxModel modelo = new DefaultComboBoxModel();
-        for (Object municipio : ListLanguageOriginal) {
-            modelo.addElement(municipio);
-        }
+         ListLanguageOriginal.forEach((laguageOriginal) -> {
+             modelo.addElement(laguageOriginal);
+        });
         combLanguageOriginal.setModel(modelo);
     }
 
@@ -261,10 +261,11 @@ public class FrmFilm extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(texIdFilm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(texIdFilm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)

@@ -58,6 +58,7 @@ public class StoreController {
         Address address = null;
         address = (Address) vista.getCombAddressStore().getSelectedItem();
         store.setAddress_id(address);
+        store.setManager_staff(vista.getStaff());
         store.setLast_update(vista.getTextLastUpdateStore());
 
         int resulStaff = 0, resultadoStore = 0;

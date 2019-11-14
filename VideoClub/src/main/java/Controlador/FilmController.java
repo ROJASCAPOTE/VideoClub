@@ -6,7 +6,9 @@
 package Controlador;
 
 import Modelo.Dao.DAOManager;
+import Modelo.Language;
 import Vista.FrmFilm;
+import java.util.ArrayList;
 
 public class FilmController {
 
@@ -16,8 +18,20 @@ public class FilmController {
     public FilmController(FrmFilm vista, DAOManager modelo) {
         this.vista = vista;
         this.modelo = modelo;
+        language();
+        languageOrginal();
     }
-    
-    
-    
+
+    public void language() {
+        ArrayList<Language> listadoLanguage;
+        listadoLanguage = modelo.getLanguageDAO().listLanguage();
+        this.vista.cargarLanguaje(listadoLanguage);
+    }
+
+    public void languageOrginal() {
+        ArrayList<Language> listadoLanguage;
+        listadoLanguage = modelo.getLanguageDAO().listOriginalLanguage();
+        this.vista.cargarLanguageOriginal(listadoLanguage);
+    }
+
 }

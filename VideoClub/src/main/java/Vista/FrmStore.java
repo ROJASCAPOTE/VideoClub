@@ -99,6 +99,7 @@ public class FrmStore extends javax.swing.JInternalFrame {
         Address address = (Address) getCombAddresManager().getSelectedItem();
         staff.setAddressId(address.getAddressId());
         staff.setEmail(textEamil.getText());
+        staff.setStore_id(Integer.parseInt(textIdStore.getText()));
         staff.setUsername(textUserName.getText());
         staff.setPassword(textPassword.getText());
         staff.setLast_update(textLastUpdateManager.getDate());

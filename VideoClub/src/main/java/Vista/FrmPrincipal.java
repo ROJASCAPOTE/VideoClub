@@ -8,6 +8,7 @@ package Vista;
 import Controlador.AddressController;
 import Controlador.CityController;
 import Controlador.CountryController;
+import Controlador.FilmController;
 import Controlador.StaffController;
 import Controlador.StoreController;
 import Modelo.Dao.DAOManager;
@@ -308,7 +309,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     private void copyMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyMenuItemActionPerformed
         FrmFilm frmFilm = new FrmFilm();
-
+        FilmController controller = new FilmController(frmFilm, manager);
         int x = (jDesktopPane.getWidth() / 2) - frmFilm.getWidth() / 2;
         int y = (jDesktopPane.getHeight() / 2) - frmFilm.getHeight() / 2;
 

@@ -5,7 +5,6 @@
  */
 package Modelo.Dao;
 
-import Modelo.Address;
 import Modelo.City;
 import Servisios.ConnectionBD;
 import java.sql.PreparedStatement;

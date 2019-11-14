@@ -31,6 +31,7 @@ public class StoreDAO {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String last_update = sdf.format(store.getLast_update());
         try {
+            System.out.println("Modelo.Dao.StoreDAO.grabarStore()" + store.getManager_staff().getStaff_id());
             String sql = "INSERT INTO store values (?,?,?,?)";
             pstm = con.getConexion().prepareStatement(sql);
             pstm.setInt(1, store.getStore_id());

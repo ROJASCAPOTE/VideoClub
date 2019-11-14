@@ -19,6 +19,7 @@ public class MYSQLDaoManager implements DAOManager {
     private StoreDAO store;
     private StaffDAO staff;
     private FilmDAO film;
+    private LanguageDAO language;
     private ConnectionBD conn = null;
 
     public MYSQLDaoManager(ConnectionBD conn) {
@@ -71,6 +72,14 @@ public class MYSQLDaoManager implements DAOManager {
             film = new FilmDAO(conn);
         }
         return film;
+    }
+
+    @Override
+    public LanguageDAO getLanguageDAO() {
+        if (language == null) {
+            language = new LanguageDAO(conn);
+        }
+        return language;
     }
 
 }

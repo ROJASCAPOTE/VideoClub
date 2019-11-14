@@ -1,19 +1,18 @@
-
 package Modelo;
 
 import java.util.Date;
 
-
 public class Customer {
-     private Short customerId;
-     private Address address;
-     private Store store;
-     private String firstName;
-     private String lastName;
-     private String email;
-     private boolean active;
-     private Date createDate;
-     private Date lastUpdate;
+
+    private Short customerId;
+    private Address address;
+    private Store store;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private boolean active;
+    private Date createDate;
+    private Date lastUpdate;
 
     public Customer(Short customerId, Address address, Store store, String firstName, String lastName, String email, boolean active, Date createDate, Date lastUpdate) {
         this.customerId = customerId;
@@ -98,5 +97,5 @@ public class Customer {
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
-     
+
 }

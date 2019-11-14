@@ -51,9 +51,7 @@ public class Category {
         return filmCategory;
     }
 
-    public void setFilmCategory(Map filmCategory) {
-        this.filmCategory = filmCategory;
-    }
+    
 
     @Override
     public String toString() {

@@ -22,4 +22,6 @@ public interface DAOManager {
     StaffDAO getStaffDAO();
 
     FilmDAO getFilmDAO();
+
+    LanguageDAO getLanguageDAO();
 }
