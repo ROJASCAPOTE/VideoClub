@@ -1,5 +1,6 @@
 package Modelo;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Actor {
@@ -8,8 +9,17 @@ public class Actor {
     private String firstName;
     private String lastName;
     private Date lastUpdate;
+    private ArrayList<Film> filmActors;
 
     public Actor() {
+    }
+
+    public Actor(int actorId, String firstName, String lastName, Date lastUpdate, ArrayList<Film> filmActors) {
+        this.actorId = actorId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.lastUpdate = lastUpdate;
+        this.filmActors = filmActors;
     }
 
     public Actor(String firstName, String lastName, Date lastUpdate) {
@@ -49,6 +59,14 @@ public class Actor {
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
+
+    public ArrayList<Film> getFilmActors() {
+        return filmActors;
+    }
+
+    public void setFilmActors(ArrayList<Film> filmActors) {
+        this.filmActors = filmActors;
+    } 
 
     @Override
     public String toString() {

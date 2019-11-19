@@ -48,6 +48,11 @@ public class StoreController {
         codigo = modelo.getStaffDAO().getCodigo();
         return codigo;
     }
+    
+    public void cambiarCodigo(){
+        vista.setTextIdStore(cargarCodigoStore() + "");
+        vista.setTextAdministrador(cargarCodigoStaff());
+    }
 
     public void registrarTienda() {
         Store store = new Store();

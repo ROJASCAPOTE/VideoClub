@@ -150,6 +150,13 @@ public class Film {
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
+
+    @Override
+    public String toString() {
+        return filmId + " - " +title ;
+    }
+
+    
     
     
 }

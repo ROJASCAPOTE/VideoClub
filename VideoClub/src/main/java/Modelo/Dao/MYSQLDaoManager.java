@@ -20,6 +20,8 @@ public class MYSQLDaoManager implements DAOManager {
     private StaffDAO staff;
     private FilmDAO film;
     private LanguageDAO language;
+    private ActorDAO actor;
+    private CategoriaDAO categoria;
     private ConnectionBD conn = null;
 
     public MYSQLDaoManager(ConnectionBD conn) {
@@ -80,6 +82,22 @@ public class MYSQLDaoManager implements DAOManager {
             language = new LanguageDAO(conn);
         }
         return language;
+    }
+
+    @Override
+    public ActorDAO getActorDAO() {
+        if (actor == null) {
+            actor = new ActorDAO(conn);
+        }
+        return actor;
+    }
+
+    @Override
+    public CategoriaDAO getCategoriaDAO() {
+        if (categoria == null) {
+            categoria = new CategoriaDAO(conn);
+        }
+        return categoria;
     }
 
 }

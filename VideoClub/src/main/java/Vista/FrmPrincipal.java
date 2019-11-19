@@ -5,9 +5,11 @@
  */
 package Vista;
 
+import Controlador.ActorController;
 import Controlador.AddressController;
 import Controlador.CityController;
 import Controlador.CountryController;
+import Controlador.CustomerController;
 import Controlador.FilmController;
 import Controlador.StaffController;
 import Controlador.StoreController;
@@ -273,7 +275,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
         FrmCustomer customer = new FrmCustomer();
-
+        CustomerController controller = new CustomerController(customer, manager);
         int x = (jDesktopPane.getWidth() / 2) - customer.getWidth() / 2;
         int y = (jDesktopPane.getHeight() / 2) - customer.getHeight() / 2;
 
@@ -382,7 +384,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     private void deleteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteMenuItemActionPerformed
         FrmActor frmActor = new FrmActor();
-
+        ActorController controller = new ActorController(frmActor, manager);
         int x = (jDesktopPane.getWidth() / 2) - frmActor.getWidth() / 2;
         int y = (jDesktopPane.getHeight() / 2) - frmActor.getHeight() / 2;
 

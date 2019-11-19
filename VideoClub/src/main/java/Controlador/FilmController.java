@@ -20,6 +20,7 @@ public class FilmController {
         this.modelo = modelo;
         language();
         languageOrginal();
+        
     }
 
     public void language() {

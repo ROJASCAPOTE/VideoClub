@@ -49,7 +49,7 @@ public class StaffListController {
         return modelo.getStoreDAO().consultarStore(store_id);
     }
 
-    public void obtenerDatosStaff() throws IOException {
+    public void obtenerDatosStaff()  {
         Staff staff = null;
         Address address = null;
         Store store = null;
