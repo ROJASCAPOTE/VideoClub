@@ -22,7 +22,7 @@ public class City {
         this.city_id = 0;
         this.city = "";
         this.country = null;
-        this.last_update = null;
+        this.last_update = new Date();
     }
 
     public int getCity_id() {
@@ -59,8 +59,7 @@ public class City {
 
     @Override
     public String toString() {
-        return  city;
+        return city;
     }
 
-    
 }

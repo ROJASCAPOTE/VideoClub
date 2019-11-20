@@ -31,7 +31,7 @@ public class Staff {
         active = true;
         username = "";
         password = "";
-        last_update = null;
+        last_update = new Date();
     }
 
     public int getStaff_id() {

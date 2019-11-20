@@ -22,6 +22,9 @@ public class MYSQLDaoManager implements DAOManager {
     private LanguageDAO language;
     private ActorDAO actor;
     private CategoriaDAO categoria;
+    private CustomerDAO customer;
+    private FilmActorDAO filmActor;
+    private FilmCategoryDAO filmCategory;
     private ConnectionBD conn = null;
 
     public MYSQLDaoManager(ConnectionBD conn) {
@@ -98,6 +101,30 @@ public class MYSQLDaoManager implements DAOManager {
             categoria = new CategoriaDAO(conn);
         }
         return categoria;
+    }
+
+    @Override
+    public FilmActorDAO getFilmActorDAO() {
+        if (filmActor == null) {
+            filmActor = new FilmActorDAO(conn);
+        }
+        return filmActor;
+    }
+
+    @Override
+    public FilmCategoryDAO getFilCategoryDAO() {
+        if (filmCategory == null) {
+            filmCategory = new FilmCategoryDAO(conn);
+        }
+        return filmCategory;
+    }
+
+    @Override
+    public CustomerDAO getCustomerDAO() {
+        if (customer == null) {
+            customer = new CustomerDAO(conn);
+        }
+        return customer;
     }
 
 }

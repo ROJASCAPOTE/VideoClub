@@ -20,6 +20,7 @@ public class CountryController {
     private FrmCountry vista;
     private DAOManager modelo;
     private int pos = 0;
+
     public CountryController(FrmCountry vista, DAOManager modelo) {
         this.vista = vista;
         this.modelo = modelo;
@@ -32,16 +33,19 @@ public class CountryController {
         vista.activarControles(false);
         pos = 0;
         countryIndex(pos);
+        codgoCountry();
     }
-    
-    
+
+    public void codgoCountry() {
+        int codigo = modelo.getCountryDAO().grtCodigo();
+        vista.codigoCountryId(codigo);    
+    }
 
     public void obtenerUltimo() {
         Country country = modelo.getCountryDAO().getCountry();
         if (country != null) {
             vista.setTexCodigoCountry(country.getCountry_id());
             vista.setTtexCountry(country.getCountry());
-            vista.setTexLastUpdate(country.getLastUpdate());
         }
     }
 
@@ -85,7 +89,6 @@ public class CountryController {
         Country country = modelo.getCountryDAO().listadoPais().get(index);
         vista.setTexCodigoCountry(country.getCountry_id());
         vista.setTtexCountry(country.getCountry());
-        vista.setTexLastUpdate(country.getLastUpdate());
     }
 
     public void cerrarAction() {
@@ -100,7 +103,6 @@ public class CountryController {
             Country country = new Country();
             country.setCountry_id(vista.getTexCodigoCountry());
             country.setCountry(vista.getTtexCountry());
-            country.setLastUpdate(vista.getTexLastUpdate());
             int resultado = 0;
             resultado = modelo.getCountryDAO().grabarCountry(country);
             if (resultado == 1) {
@@ -110,6 +112,7 @@ public class CountryController {
                 vista.activarControles(false);
                 vista.nuevoAction();
                 vista.limpiarCampos();
+                codgoCountry();
             } else {
                 vista.gestionMensajes("Error al grabar",
                         "Confirmación", JOptionPane.ERROR_MESSAGE);
@@ -123,7 +126,6 @@ public class CountryController {
         Country country = new Country();
         country.setCountry_id(vista.getTexCodigoCountry());
         country.setCountry(vista.getTtexCountry());
-        country.setLastUpdate(vista.getTexLastUpdate());
 
         if (modelo.getCountryDAO().modificarCountry(country) == 1) {
             vista.gestionMensajes(
@@ -134,6 +136,7 @@ public class CountryController {
             vista.activarControles(false);
             vista.nuevoAction();
             vista.limpiarCampos();
+            codgoCountry();
         } else {
             vista.gestionMensajes(
                     "Actualización Falida",
@@ -167,6 +170,7 @@ public class CountryController {
                     vista.activarControles(false);
                     vista.nuevoAction();
                     vista.limpiarCampos();
+                    codgoCountry();
                 } else {
                     JOptionPane.showMessageDialog(null,
                             "Error al borrar",

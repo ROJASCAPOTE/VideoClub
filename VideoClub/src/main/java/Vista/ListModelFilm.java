@@ -26,6 +26,10 @@ public class ListModelFilm extends AbstractListModel implements ComboBoxModel {
         this.listaFilms = listaFilms;
     }
 
+    public ListModelFilm() {
+        this.listaFilms = new ArrayList();
+    }
+
     @Override
     public int getSize() {
         return listaFilms.size();
@@ -48,6 +52,14 @@ public class ListModelFilm extends AbstractListModel implements ComboBoxModel {
 
     public Film getFilm(int index) {
         return listaFilms.get(index);
+    }
+
+    public void addElement(Film f) {
+        listaFilms.add(f);
+    }
+
+    public ArrayList<Film> getListaFilms() {
+        return listaFilms;
     }
 
 }

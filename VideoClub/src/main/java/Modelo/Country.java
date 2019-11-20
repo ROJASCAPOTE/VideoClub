@@ -20,7 +20,7 @@ public class Country {
     public Country() {
         this.country_id = 0;
         this.country = "";
-        this.lastUpdate = null;
+        this.lastUpdate = new Date();
     }
 
     public Country(int country_id, String country, Date lastUpdate) {
@@ -55,7 +55,7 @@ public class Country {
 
     @Override
     public String toString() {
-        return  country;
+        return country;
     }
 
 }

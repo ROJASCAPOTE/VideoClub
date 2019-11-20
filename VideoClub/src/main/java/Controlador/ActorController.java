@@ -12,6 +12,7 @@ import Vista.FrmActor;
 import Vista.ListModelFilm;
 import Vista.ListModeloActorFilm;
 import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,17 +26,20 @@ public class ActorController {
     private ArrayList<Film> listaFilm;
     private ListModeloActorFilm modeloActorFilm;
     private ListModelFilm modeloFilm;
+    private DefaultListModel model;
+
+    ;
 
     public ActorController(FrmActor vista, DAOManager modelo) {
         this.vista = vista;
         this.modelo = modelo;
-        listaFilm = new ArrayList();
-        vista.addListenerNuevo(new ActorListener(this));
-        vista.addListenerAdicionar(new ActorListener(this));
-        vista.addListenerCerrar(new ActorListener(this));
-        vista.activarControles(false);
+        this.listaFilm = new ArrayList();
+        this.vista.addListenerNuevo(new ActorListener(this));
+        this.vista.addListenerBtnModificar(new ActorListener(this));
+        this.vista.addListenerCerrar(new ActorListener(this));
+        this.vista.addListenerAdicionar(new ActorListener(this));
+        this.vista.activarControles(false);
         ArrayList<Film> lista;
-
         lista = modelo.getFilmDAO().listadoFilm();
         modeloFilm = new ListModelFilm(modelo, lista);
         vista.setModelo(modeloFilm);
@@ -56,7 +60,6 @@ public class ActorController {
 
     public void listFilmActor(Film film) {
         modeloActorFilm = new ListModeloActorFilm();
-//        vista.setListFilmActorModel(modeloActorFilm);
         Film unItem = buscarItemFilm(film.getTitle());
         if (unItem == null) {
             listaFilm.add(film);
@@ -75,6 +78,11 @@ public class ActorController {
     public void seleccionar(int seleccionado) {
         vista.getDetalleFilmActor().setSelectedIndex(seleccionado);
         vista.getDetalleFilmActor().ensureIndexIsVisible(seleccionado);
+    }
+
+    public void selecionarPelicula(int seleccionado) {
+        vista.getListaFilm().setSelectedIndex(seleccionado);
+        vista.getListaFilm().ensureIndexIsVisible(seleccionado);
     }
 
     public void refrescarLista() {
@@ -112,15 +120,27 @@ public class ActorController {
         if (listaFilm.size() > 0) {
             vista.salveData();
             vista.getActor().setFilmActors(listaFilm);
-            boolean resultado;
+            int resultado;
             resultado = modelo.getActorDAO().grabarActor(vista.getActor());
-            if (resultado == true) {
-                vista.gestionMensajes("Registro Grabado con éxito",
-                        "Confirmación", JOptionPane.INFORMATION_MESSAGE);
-                getActorId();
-            } else {
+            if (resultado != 1) {
                 vista.gestionMensajes("Error al grabar",
                         "Confirmación", JOptionPane.ERROR_MESSAGE);
+                vista.activarControles(false);
+                vista.nuevoAction();
+            } else {
+                int resultadoFilmActor = modelo.getFilmActorDAO().grabarFilmActor(vista.getActor().getActorId(), listaFilm);
+                if (resultadoFilmActor == 1) {
+                    vista.gestionMensajes("Registro Grabado con éxito",
+                            "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+                    vista.activarControles(false);
+                    vista.nuevoAction();
+                    vista.limpiarCampos();
+                    getActorId();
+                    vista.setModelo(modeloFilm);
+                    vista.getDetalleFilmActor().setModel(new ListModeloActorFilm());
+                    listaFilm.clear();
+                }
+
             }
         } else {
             vista.gestionMensajes("Sellecione una pelicula",

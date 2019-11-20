@@ -2,7 +2,6 @@ package Modelo.Dao;
 
 import Modelo.Country;
 import Servisios.ConnectionBD;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,13 +20,31 @@ public class CountryDAO {
     public CountryDAO(ConnectionBD con) {
         this.con = con;
     }
+    
+    public int grtCodigo() {
+        String sql = "SELECT MAX(country_id) as total FROM country";
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        int cant = 0;
+        try {
+            st = con.getConexion().prepareStatement(sql);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                cant = rs.getInt("total") + 1;
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+        }
+        return cant;
+    }
 
     public int grabarCountry(Country c) {
         PreparedStatement pstm;
         pstm = null;
         int rtdo;
         rtdo = 0;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd H:mm:ss");
         String last_update = sdf.format(c.getLastUpdate());
         try {
 

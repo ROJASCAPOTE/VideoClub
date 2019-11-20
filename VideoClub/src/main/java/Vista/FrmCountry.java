@@ -36,10 +36,8 @@ public class FrmCountry extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         texCodigoCountry = new javax.swing.JTextField();
         texCountry = new javax.swing.JTextField();
-        texLastUpdate = new com.toedter.calendar.JDateChooser();
         jButton10 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         btnModificar = new javax.swing.JButton();
@@ -65,10 +63,6 @@ public class FrmCountry extends javax.swing.JInternalFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Country");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Last update");
-
         jButton10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/buscar.png"))); // NOI18N
         jButton10.setBorder(null);
@@ -83,15 +77,13 @@ public class FrmCountry extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(86, 86, 86)
+                .addGap(95, 95, 95)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1))
                 .addGap(42, 42, 42)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(texCountry, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(texLastUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addComponent(texCodigoCountry, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -101,20 +93,17 @@ public class FrmCountry extends javax.swing.JInternalFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(70, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(texCodigoCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(74, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(texCodigoCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(texCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(texLastUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(56, 56, 56))
+                .addGap(82, 82, 82))
         );
 
         jPanel3.setBackground(new java.awt.Color(102, 102, 102));
@@ -223,12 +212,9 @@ public class FrmCountry extends javax.swing.JInternalFrame {
         this.texCodigoCountry.setText(codigo + "");
     }
     
-    public Date getTexLastUpdate() {
-        return texLastUpdate.getDate();
-    }
-    
-    public void setTexLastUpdate(Date texLastUpdate) {
-        this.texLastUpdate.setDate(texLastUpdate);
+   public void codigoCountryId(int codigo) {
+        String numCadena = String.valueOf(codigo);
+        texCodigoCountry.setText(numCadena);
     }
     
     public String getTtexCountry() {
@@ -277,15 +263,12 @@ public class FrmCountry extends javax.swing.JInternalFrame {
     }
     
     public void limpiarCampos() {
-        texCodigoCountry.setText("");
         texCountry.setText("");
-        texLastUpdate.setDate(null);
     }
     
     public void activarControles(boolean estado) {
-        texCodigoCountry.setEnabled(estado);
+        texCodigoCountry.setEnabled(false);
         texCountry.setEnabled(estado);
-        texLastUpdate.setEnabled(estado);
         btnModificar.setEnabled(estado);
         btnEliminar.setEnabled(estado);
     }
@@ -293,7 +276,6 @@ public class FrmCountry extends javax.swing.JInternalFrame {
     public void activarControlesModificar(boolean estado) {
         texCodigoCountry.setEnabled(!estado);
         texCountry.setEnabled(estado);
-        texLastUpdate.setEnabled(estado);
         texCodigoCountry.setEnabled(false);
         btnModificar.setEnabled(estado);
         btnEliminar.setEnabled(estado);
@@ -302,9 +284,7 @@ public class FrmCountry extends javax.swing.JInternalFrame {
     
     public void nuevoAction() {
         if (btnNuevo.getText().equals("Nuevo")) {
-            texCodigoCountry.setText("");
             texCountry.setText("");
-            texLastUpdate.setDate(null);
             activarControles(true);
             btnNuevo.setText("Grabar");
             btnNuevo.setActionCommand("Grabar");
@@ -315,7 +295,7 @@ public class FrmCountry extends javax.swing.JInternalFrame {
                     getResource("/Save.png"))); // NOI18N
             btnModificar.setIcon(new ImageIcon(getClass().
                     getResource("/Cancel.png"))); // NOI18N
-            texCodigoCountry.requestFocusInWindow();
+            texCountry.requestFocusInWindow();
             
         } else {
             activarControles(false);
@@ -378,12 +358,10 @@ public class FrmCountry extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton10;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField texCodigoCountry;
     private javax.swing.JTextField texCountry;
-    private com.toedter.calendar.JDateChooser texLastUpdate;
     // End of variables declaration//GEN-END:variables
 }

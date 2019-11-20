@@ -5,11 +5,13 @@
  */
 package Modelo.Dao;
 
+import Modelo.Address;
 import Modelo.Language;
 import Servisios.ConnectionBD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -95,5 +97,39 @@ public class LanguageDAO {
             }
         }
         return listado;
+    }
+
+    public Language buscarLanguage(int codigo) {
+        String sql = "SELECT * FROM language WHERE language_id =" + codigo + "";
+        ResultSet resultado = null;
+        Statement st = null;
+        Language language = null;
+        try {
+            st = con.getConexion().createStatement();
+            resultado = st.executeQuery(sql);
+
+            if (resultado.next()) {
+                language = new Language();
+                language.setLanguageId(resultado.getInt(1));
+                language.setName(resultado.getString(2));
+                language.setLastUpdate(resultado.getDate(3));
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Código : "
+                    + ex.getErrorCode() + "\nError :" + ex.getMessage());
+        } finally {
+            try {
+                if (resultado != null) {
+                    resultado.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Código : "
+                        + ex.getErrorCode() + "\nError :" + ex.getMessage());
+            }
+        }
+        return language;
     }
 }

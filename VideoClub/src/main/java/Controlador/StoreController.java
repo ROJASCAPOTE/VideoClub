@@ -64,7 +64,6 @@ public class StoreController {
         address = (Address) vista.getCombAddressStore().getSelectedItem();
         store.setAddress_id(address);
         store.setManager_staff(vista.getStaff());
-        store.setLast_update(vista.getTextLastUpdateStore());
 
         int resulStaff = 0, resultadoStore = 0;
         resulStaff = modelo.getStaffDAO().grabarStaff(store.getManager_staff());

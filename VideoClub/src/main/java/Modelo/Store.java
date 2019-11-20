@@ -15,7 +15,7 @@ public class Store {
         this.store_id = 0;
         this.manager_staff = null;
         this.address_id = null;
-        this.last_update = null;
+        this.last_update = new Date();
     }
 
     public Store(int store_id, Staff manager_staff, Address address_id, Date last_update) {

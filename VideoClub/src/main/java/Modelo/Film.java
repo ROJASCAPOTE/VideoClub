@@ -1,8 +1,11 @@
 package Modelo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Film {
+
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
     private int filmId;
     private Language languageByLanguageId;
     private Language languageByOriginalLanguageId;
@@ -16,11 +19,11 @@ public class Film {
     private String rating;
     private String specialFeatures;
     private Date lastUpdate;
-    
+
     public Film() {
+        lastUpdate = new Date();
     }
 
-	
     public Film(Language languageByLanguageId, String title, int rentalDuration, double rentalRate, double replacementCost, Date lastUpdate) {
         this.languageByLanguageId = languageByLanguageId;
         this.title = title;
@@ -45,7 +48,6 @@ public class Film {
         this.specialFeatures = specialFeatures;
         this.lastUpdate = lastUpdate;
     }
-    
 
     public int getFilmId() {
         return filmId;
@@ -153,10 +155,7 @@ public class Film {
 
     @Override
     public String toString() {
-        return filmId + " - " +title ;
+        return filmId + " - " + title + " - " + sdf.format(getReleaseYear());
     }
 
-    
-    
-    
 }

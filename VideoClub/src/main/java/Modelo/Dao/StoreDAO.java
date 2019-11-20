@@ -19,6 +19,9 @@ public class StoreDAO {
 
     private ConnectionBD con;
 
+    public StoreDAO() {
+    }
+
     public StoreDAO(ConnectionBD con) {
         this.con = con;
     }
@@ -28,7 +31,7 @@ public class StoreDAO {
         pstm = null;
         int rtdo;
         rtdo = 0;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd H:mm:ss");
         String last_update = sdf.format(store.getLast_update());
         try {
             System.out.println("Modelo.Dao.StoreDAO.grabarStore()" + store.getManager_staff().getStaff_id());
@@ -54,7 +57,6 @@ public class StoreDAO {
         try {
             st = con.getConexion().createStatement();
             resultado = st.executeQuery(sql);
-
             if (resultado.next()) {
                 store = new Store();
                 store.setStore_id(resultado.getInt(1));

@@ -26,7 +26,13 @@ public class CityController {
         ArrayList<Country> listadoMunicipios;
         listadoMunicipios = manager.getCountryDAO().listadoCountry();
         this.vista.cargarCountry(listadoMunicipios);
+        codigocity();
 
+    }
+
+    public void codigocity() {
+        int codigo = manager.getCityDAO().grtCodigo();
+        vista.codigoCity(codigo);
     }
 
     public void nuevoAction() {
@@ -42,10 +48,7 @@ public class CityController {
             vista.gestionMensajes("Ingrese el código",
                     "Error de Entrada", JOptionPane.ERROR_MESSAGE);
             vista.camposObligatorios();
-        } else if (vista.getTextLastUpdate() == null) {
-            vista.gestionMensajes("Ingrese la fecha",
-                    "Error de Entrada", JOptionPane.ERROR_MESSAGE);
-            vista.camposObligatorios();
+
         } else {
             City city = new City();
             Country country = null;
@@ -54,7 +57,6 @@ public class CityController {
             city.setCity(vista.getTextCity());
             country = (Country) vista.getCombCountry().getSelectedItem();
             city.setCountry(country);
-            city.setLast_update(vista.getTextLastUpdate());
 
             int resultado = 0;
             resultado = manager.getCityDAO().grabarCity(city);
@@ -64,6 +66,7 @@ public class CityController {
                 vista.activarControles(false);
                 vista.nuevoAction();
                 vista.limpiarCampos();
+                codigocity();
             } else {
                 vista.gestionMensajes("Error al grabar",
                         "Confirmación", JOptionPane.ERROR_MESSAGE);
@@ -73,37 +76,30 @@ public class CityController {
     }
 
     public void modificarCity() {
+        City city = new City();
+        Country country = null;
+        int city_id = Integer.parseInt(vista.getTextCodigo());
+        city.setCity_id(city_id);
+        city.setCity(vista.getTextCity());
+        country = (Country) vista.getCombCountry().getSelectedItem();
+        city.setCountry(country);
 
-        if (vista.getTextLastUpdate() == null) {
-            vista.gestionMensajes("Ingrese la fecha",
-                    "Error de Entrada", JOptionPane.ERROR_MESSAGE);
-            vista.camposObligatorios();
+        if (manager.getCityDAO().modificarCity(city) == 1) {
+            vista.gestionMensajes(
+                    "Actualización exitosa",
+                    "Confirmación ",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+            vista.activarControles(false);
+            vista.nuevoAction();
+            vista.limpiarCampos();
+            codigocity();
+
         } else {
-            City city = new City();
-            Country country = null;
-            int city_id = Integer.parseInt(vista.getTextCodigo());
-            city.setCity_id(city_id);
-            city.setCity(vista.getTextCity());
-            country = (Country) vista.getCombCountry().getSelectedItem();
-            city.setCountry(country);
-            city.setLast_update(vista.getTextLastUpdate());
-
-            if (manager.getCityDAO().modificarCity(city) == 1) {
-                vista.gestionMensajes(
-                        "Actualización exitosa",
-                        "Confirmación ",
-                        JOptionPane.INFORMATION_MESSAGE);
-
-                vista.activarControles(false);
-                vista.nuevoAction();
-                vista.limpiarCampos();
-
-            } else {
-                vista.gestionMensajes(
-                        "Actualización Falida",
-                        "Confirmación ",
-                        JOptionPane.ERROR_MESSAGE);
-            }
+            vista.gestionMensajes(
+                    "Actualización Falida",
+                    "Confirmación ",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -132,7 +128,7 @@ public class CityController {
                     vista.activarControles(false);
                     vista.nuevoAction();
                     vista.limpiarCampos();
-
+                    codigocity();
                 } else {
                     JOptionPane.showMessageDialog(null,
                             "Error al borrar",

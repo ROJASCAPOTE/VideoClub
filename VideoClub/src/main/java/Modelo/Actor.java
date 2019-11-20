@@ -12,6 +12,7 @@ public class Actor {
     private ArrayList<Film> filmActors;
 
     public Actor() {
+        lastUpdate = new Date();
     }
 
     public Actor(int actorId, String firstName, String lastName, Date lastUpdate, ArrayList<Film> filmActors) {
@@ -66,7 +67,7 @@ public class Actor {
 
     public void setFilmActors(ArrayList<Film> filmActors) {
         this.filmActors = filmActors;
-    } 
+    }
 
     @Override
     public String toString() {

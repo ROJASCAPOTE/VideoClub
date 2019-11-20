@@ -10,7 +10,6 @@ import Modelo.Country;
 import Modelo.Dao.DAOManager;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -22,6 +21,11 @@ public class frmCity extends javax.swing.JInternalFrame {
 
     public frmCity() {
         initComponents();
+    }
+
+    public void codigoCity(int codigo) {
+        String numCadena = String.valueOf(codigo);
+        texCityCodigo.setText(numCadena);
     }
 
     public void setTextCodigo(int codigo) {
@@ -38,14 +42,6 @@ public class frmCity extends javax.swing.JInternalFrame {
 
     public String getTextCity() {
         return textCity.getText();
-    }
-
-    public Date getTextLastUpdate() {
-        return textLastUpdate.getDate();
-    }
-
-    public void setTextLastUpdate(Date textLastUpdate) {
-        this.textLastUpdate.setDate(textLastUpdate);
     }
 
     public JComboBox<String> getCombCountry() {
@@ -92,14 +88,12 @@ public class frmCity extends javax.swing.JInternalFrame {
         texCityCodigo.setText("");
         textCity.setText("");
         combCountry.setSelectedIndex(0);
-        textLastUpdate.setDate(null);
     }
 
     public void activarControles(boolean estado) {
-        texCityCodigo.setEnabled(estado);
+        texCityCodigo.setEnabled(false);
         textCity.setEnabled(estado);
         combCountry.setEnabled(estado);
-        textLastUpdate.setEnabled(estado);
         btnModificar.setEnabled(estado);
         btnEliminar.setEnabled(estado);
     }
@@ -108,7 +102,6 @@ public class frmCity extends javax.swing.JInternalFrame {
         texCityCodigo.setEnabled(!estado);
         textCity.setEnabled(estado);
         combCountry.setEnabled(estado);
-        textLastUpdate.setEnabled(estado);
         btnModificar.setEnabled(estado);
         btnEliminar.setEnabled(estado);
 
@@ -116,10 +109,8 @@ public class frmCity extends javax.swing.JInternalFrame {
 
     public void nuevoAction() {
         if (btnNuevo.getText().equals("Nuevo")) {
-            texCityCodigo.setText("");
             textCity.setText("");
             combCountry.setSelectedIndex(0);
-            textLastUpdate.setDate(null);
             activarControles(true);
             btnNuevo.setText("Grabar");
             btnNuevo.setActionCommand("Grabar");
@@ -156,7 +147,7 @@ public class frmCity extends javax.swing.JInternalFrame {
                 getResource("/Modify.png"))); // NOI18N
         btnModificar.setIcon(new ImageIcon(getClass().
                 getResource("/Cancel.png"))); // NOI18N
-        texCityCodigo.requestFocusInWindow();
+        textCity.requestFocusInWindow();
 
     }
 
@@ -170,10 +161,6 @@ public class frmCity extends javax.swing.JInternalFrame {
             return;
         }
 
-        if (getTextLastUpdate() == null) {
-            textLastUpdate.requestFocusInWindow();
-            return;
-        }
     }
 
     @SuppressWarnings("unchecked")
@@ -188,8 +175,6 @@ public class frmCity extends javax.swing.JInternalFrame {
         textCity = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         combCountry = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
-        textLastUpdate = new com.toedter.calendar.JDateChooser();
         btnBuscar = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         btnNuevo = new javax.swing.JButton();
@@ -221,10 +206,6 @@ public class frmCity extends javax.swing.JInternalFrame {
 
         combCountry.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Lasp update");
-
         btnBuscar.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\buscar.png")); // NOI18N
         btnBuscar.setBorder(null);
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -238,26 +219,19 @@ public class frmCity extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(96, 96, 96)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addGap(27, 27, 27))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)))
+                .addGap(96, 96, 96)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
+                .addGap(27, 27, 27)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(texCityCodigo)
+                        .addComponent(texCityCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(combCountry, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(textCity)
-                    .addComponent(textLastUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textCity))
                 .addContainerGap(113, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -277,11 +251,7 @@ public class frmCity extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(combCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(textLastUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(37, 37, 37))
+                .addGap(63, 63, 63))
         );
 
         jPanel5.setBackground(new java.awt.Color(102, 102, 102));
@@ -389,13 +359,11 @@ public class frmCity extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JTextField texCityCodigo;
     private javax.swing.JTextField textCity;
-    private com.toedter.calendar.JDateChooser textLastUpdate;
     // End of variables declaration//GEN-END:variables
 
 }

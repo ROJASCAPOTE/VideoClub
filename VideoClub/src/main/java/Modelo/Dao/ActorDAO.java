@@ -1,13 +1,11 @@
 package Modelo.Dao;
 
 import Modelo.Actor;
-import Modelo.Film;
 import Servisios.ConnectionBD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.Iterator;
 import javax.swing.JOptionPane;
 
 public class ActorDAO {
@@ -37,15 +35,14 @@ public class ActorDAO {
         return cant;
     }
 
-    public boolean grabarActor(Actor actor) {
+    public int grabarActor(Actor actor) {
         PreparedStatement pstm;
         pstm = null;
         int rtdo;
         rtdo = 0;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd H:mm:ss");
         String last_update = sdf.format(actor.getLastUpdate());
         try {
-
             String sql = "INSERT INTO actor values (?,?,?,?)";
             pstm = con.getConexion().prepareStatement(sql);
             pstm.setInt(1, actor.getActorId());
@@ -53,24 +50,10 @@ public class ActorDAO {
             pstm.setString(3, actor.getLastName());
             pstm.setString(4, last_update);
             rtdo = pstm.executeUpdate();
-            pstm.close();
-
-            Iterator<Film> FilmIterator = actor.getFilmActors().iterator();
-            String q = "INSERT INTO film_actor VALUES(?, ?, ?)";
-            while (FilmIterator.hasNext()) {
-                Film elemento = FilmIterator.next();
-                pstm = con.getConexion().prepareStatement(q);
-                pstm.setInt(1, actor.getActorId());
-                pstm.setInt(2, elemento.getFilmId());
-                pstm.setString(3, last_update);
-                rtdo = pstm.executeUpdate();
-                pstm.close();
-            }
-            return true;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Código : "
                     + ex.getErrorCode() + "\nError :" + ex.getMessage());
         }
-        return false;
+        return rtdo;
     }
 }

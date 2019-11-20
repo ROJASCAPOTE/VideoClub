@@ -23,9 +23,16 @@ public interface DAOManager {
 
     FilmDAO getFilmDAO();
 
+    CustomerDAO getCustomerDAO();
+
     LanguageDAO getLanguageDAO();
 
     ActorDAO getActorDAO();
 
     CategoriaDAO getCategoriaDAO();
+
+    FilmActorDAO getFilmActorDAO();
+
+    FilmCategoryDAO getFilCategoryDAO();
+
 }

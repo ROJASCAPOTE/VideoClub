@@ -16,6 +16,9 @@ public class StaffDAO {
 
     private ConnectionBD con;
 
+    public StaffDAO() {
+    }
+
     public StaffDAO(ConnectionBD con) {
         this.con = con;
     }
@@ -43,7 +46,7 @@ public class StaffDAO {
         pstm = null;
         int rtdo;
         rtdo = 0;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd H:mm:ss");
         String last_update = sdf.format(s.getLast_update());
         FileInputStream fis = null;
         File file = null;

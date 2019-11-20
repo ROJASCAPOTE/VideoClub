@@ -51,9 +51,7 @@ public class StaffController {
         int codigo = modelo.getStaffDAO().getCodigo();
         vista.setTexCodigoStaff(codigo + "");
     }
-    
-    
-    
+
     public void guardarStaff() {
         Staff staff = new Staff();
         Address address = null;
@@ -138,7 +136,7 @@ public class StaffController {
     }
 
     public void registrarManager() {
-        
+
     }
 
     public void nuevoAction() {

@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Customer {
 
-    private Short customerId;
+    private int customerId;
     private Address address;
     private Store store;
     private String firstName;
@@ -14,7 +14,12 @@ public class Customer {
     private Date createDate;
     private Date lastUpdate;
 
-    public Customer(Short customerId, Address address, Store store, String firstName, String lastName, String email, boolean active, Date createDate, Date lastUpdate) {
+    public Customer() {
+        createDate = new Date();
+        lastUpdate = new Date();
+    }
+
+    public Customer(int customerId, Address address, Store store, String firstName, String lastName, String email, boolean active, Date createDate, Date lastUpdate) {
         this.customerId = customerId;
         this.address = address;
         this.store = store;
@@ -26,11 +31,11 @@ public class Customer {
         this.lastUpdate = lastUpdate;
     }
 
-    public Short getCustomerId() {
+    public int getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(Short customerId) {
+    public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
 
@@ -74,12 +79,16 @@ public class Customer {
         this.email = email;
     }
 
-    public boolean isActive() {
-        return active;
-    }
+    
 
     public void setActive(boolean active) {
         this.active = active;
+        System.out.println("Modelo.Customer.setActive()" + active);
+    }
+    
+    public boolean isActive() {
+        return active;
+        
     }
 
     public Date getCreateDate() {

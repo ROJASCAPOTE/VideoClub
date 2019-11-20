@@ -23,6 +23,9 @@ public class AddressDAO {
 
     private ConnectionBD con;
 
+    public AddressDAO() {
+    }
+
     public AddressDAO(ConnectionBD con) {
         this.con = con;
     }

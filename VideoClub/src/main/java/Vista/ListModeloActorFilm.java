@@ -28,4 +28,10 @@ public class ListModeloActorFilm extends AbstractListModel {
         }
     }
 
+    public void removeAllElements() {
+        for (int i = 0; i < films.size(); i++) {
+            films.remove(i);
+        }
+    }
+
 }
