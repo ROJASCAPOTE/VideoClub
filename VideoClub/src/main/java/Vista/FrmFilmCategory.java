@@ -24,10 +24,6 @@ public class FrmFilmCategory extends javax.swing.JInternalFrame {
         initComponents();
     }
 
-   
-
-   
-
     public JList<String> getListaFilm() {
         return ListaFilm;
     }
@@ -65,10 +61,8 @@ public class FrmFilmCategory extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(this, mensaje, titulo, icono);
     }
 
-    
-
     public void activarControles(boolean estado) {
-        
+
         btnModificar.setEnabled(estado);
         btnEliminar.setEnabled(estado);
     }
