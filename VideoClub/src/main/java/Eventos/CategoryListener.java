@@ -5,7 +5,7 @@
  */
 package Eventos;
 
-import Controlador.ActorController;
+import Controlador.CategoryController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,11 +13,11 @@ import java.awt.event.ActionListener;
  *
  * @author ACER E5
  */
-public class ActorListener implements ActionListener {
+public class CategoryListener implements ActionListener {
 
-    private ActorController controller;
+    private CategoryController controller;
 
-    public ActorListener(ActorController controller) {
+    public CategoryListener(CategoryController controller) {
         this.controller = controller;
     }
 
@@ -28,13 +28,11 @@ public class ActorListener implements ActionListener {
         } else if (e.getActionCommand().equalsIgnoreCase("Cancelar")) {
             controller.nuevoAction();
         } else if (e.getActionCommand().equalsIgnoreCase("Grabar")) {
-            controller.guardarActor();
+            controller.guardarCategory();
         } else if (e.getActionCommand().equalsIgnoreCase("Adicionar")) {
-          
         } else if (e.getActionCommand().equalsIgnoreCase("Salir")) {
             controller.cerrarAction();
         }
-
     }
 
 }

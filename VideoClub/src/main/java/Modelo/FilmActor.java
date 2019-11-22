@@ -4,25 +4,25 @@ import java.util.Date;
 
 public class FilmActor {
 
-    private Actor actor;
+    private Actor actor_id;
     private Film film;
     private Date lastUpdate;
 
     public FilmActor() {
+        lastUpdate = new Date();
     }
 
-    public FilmActor(Actor actor, Film film, Date lastUpdate) {
-        this.actor = actor;
+    public FilmActor(Actor actor_id, Film film) {
+        this.actor_id = actor_id;
         this.film = film;
-        this.lastUpdate = lastUpdate;
     }
 
-    public Actor getActor() {
-        return actor;
+    public Actor getActor_id() {
+        return actor_id;
     }
 
-    public void setActor(Actor actor) {
-        this.actor = actor;
+    public void setActor_id(Actor actor_id) {
+        this.actor_id = actor_id;
     }
 
     public Film getFilm() {
@@ -39,6 +39,11 @@ public class FilmActor {
 
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    @Override
+    public String toString() {
+        return actor_id.getActorId() + "   -   " + actor_id.getFirstName() + "  " + actor_id.getLastName() + "    |  " + film.toString();
     }
 
 }

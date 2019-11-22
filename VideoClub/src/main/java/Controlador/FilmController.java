@@ -6,7 +6,9 @@
 package Controlador;
 
 import Eventos.FilmListener;
+import Modelo.Customer;
 import Modelo.Dao.DAOManager;
+import Modelo.Film;
 import Modelo.Language;
 import Vista.FrmFilm;
 import java.util.ArrayList;
@@ -56,11 +58,32 @@ public class FilmController {
         }
 
     }
-    
-    public void buscarFilm(){
-        
+
+    public void buscarFilm() {
+        int codigo = 0;
+        String customer_id = JOptionPane.showInputDialog(null, "Ingrese el codigo de la pelicula");
+        try {
+            codigo = Integer.parseInt(customer_id);
+        } catch (NumberFormatException e) {
+            codigo = 0;
+        }
+
+        if (codigo > 0) //        vista.getCmbStore().setSelectedIndex(codigo - 1);
+        {
+            Film film = modelo.getFilmDAO().getFilm(codigo);
+            if (film != null) {
+                vista.mostrarFilm(film);
+                vista.modificarAction();
+            } else {
+                JOptionPane.showMessageDialog(null, "La pelicula no se encuentra registrado");
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe ingresar el codigo de la pelicula");
+        }
     }
-     public void nuevoAction() {
+
+    public void nuevoAction() {
         vista.nuevoAction();
     }
 

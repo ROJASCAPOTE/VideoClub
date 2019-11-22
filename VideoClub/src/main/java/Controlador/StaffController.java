@@ -61,9 +61,6 @@ public class StaffController {
         if (vista.getTexCodigoStaff().equals("")) {
             vista.gestionMensajes("Ingrese el código",
                     "Error de Entrada", JOptionPane.ERROR_MESSAGE);
-        } else if (vista.getTextLastUpdate() == null) {
-            vista.gestionMensajes("Ingrese la fecha",
-                    "Error de Entrada", JOptionPane.ERROR_MESSAGE);
         } else {
             int codigo = Integer.parseInt(vista.getTexCodigoStaff());
             staff.setStaff_id(codigo);
@@ -76,7 +73,6 @@ public class StaffController {
             staff.setStore_id(store.getStore_id());
             staff.setUsername(vista.getTexUserName());
             staff.setPassword(vista.getTexPassword());
-            staff.setLast_update(vista.getTextLastUpdate());
             int resultado = 0;
             resultado = modelo.getStaffDAO().grabarStaff(staff);
             if (resultado == 1) {
@@ -94,45 +90,37 @@ public class StaffController {
     }
 
     public void modificarStaff() {
+        Staff staff = new Staff();
+        Address address = null;
+        Store store = null;
+        int staff_id;
+        int codigo = Integer.parseInt(vista.getTexCodigoStaff());
+        staff.setStaff_id(codigo);
+        staff.setFirst_name(vista.getTextFirstName());
+        staff.setLast_name(vista.getTexLastName());
+        address = (Address) vista.getCombAddress().getSelectedItem();
+        staff.setAddressId(address.getAddressId());
+        staff.setEmail(vista.getTexEmail());
+        store = (Store) vista.getCmbStore().getSelectedItem();
+        staff.setStore_id(store.getStore_id());
+        staff.setUsername(vista.getTexUserName());
+        staff.setPassword(vista.getTexPassword());
+        if (modelo.getStaffDAO().actualizarEmpleado(staff) == 1) {
+            vista.gestionMensajes(
+                    "Actualización exitosa",
+                    "Confirmación ",
+                    JOptionPane.INFORMATION_MESSAGE);
 
-        if (vista.getTextLastUpdate() == null) {
-            vista.gestionMensajes("Ingrese la fecha",
-                    "Error de Entrada", JOptionPane.ERROR_MESSAGE);
+            vista.activarControles(false);
+            vista.nuevoAction();
+            vista.limpiarCampos();
+            getCodigoStaff();
         } else {
-            Staff staff = new Staff();
-            Address address = null;
-            Store store = null;
-            int staff_id;
-            int codigo = Integer.parseInt(vista.getTexCodigoStaff());
-            staff.setStaff_id(codigo);
-            staff.setFirst_name(vista.getTextFirstName());
-            staff.setLast_name(vista.getTexLastName());
-            address = (Address) vista.getCombAddress().getSelectedItem();
-            staff.setAddressId(address.getAddressId());
-            staff.setEmail(vista.getTexEmail());
-            store = (Store) vista.getCmbStore().getSelectedItem();
-            staff.setStore_id(store.getStore_id());
-            staff.setUsername(vista.getTexUserName());
-            staff.setPassword(vista.getTexPassword());
-            staff.setLast_update(vista.getTextLastUpdate());
-            if (modelo.getStaffDAO().actualizarEmpleado(staff) == 1) {
-                vista.gestionMensajes(
-                        "Actualización exitosa",
-                        "Confirmación ",
-                        JOptionPane.INFORMATION_MESSAGE);
-
-                vista.activarControles(false);
-                vista.nuevoAction();
-                vista.limpiarCampos();
-                getCodigoStaff();
-            } else {
-                vista.gestionMensajes(
-                        "Actualización Falida",
-                        "Confirmación ",
-                        JOptionPane.ERROR_MESSAGE);
-            }
+            vista.gestionMensajes(
+                    "Actualización Falida",
+                    "Confirmación ",
+                    JOptionPane.ERROR_MESSAGE);
         }
-
     }
 
     public void registrarManager() {

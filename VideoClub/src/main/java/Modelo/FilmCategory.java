@@ -4,35 +4,25 @@ import java.util.Date;
 
 public class FilmCategory {
 
-    private int id;
-    private Category category;
+    private int category_id;
     private Film film;
     private Date lastUpdate;
 
     public FilmCategory() {
+        lastUpdate = new Date();
     }
 
-    public FilmCategory(int id, Category category, Film film, Date lastUpdate) {
-        this.id = id;
-        this.category = category;
+    public FilmCategory(int category_id, Film film) {
+        this.category_id = category_id;
         this.film = film;
-        this.lastUpdate = lastUpdate;
     }
 
-    public int getId() {
-        return id;
+    public int getCategory_id() {
+        return category_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategory_id(int category_id) {
+        this.category_id = category_id;
     }
 
     public Film getFilm() {
@@ -50,6 +40,5 @@ public class FilmCategory {
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
-    
-    
+
 }

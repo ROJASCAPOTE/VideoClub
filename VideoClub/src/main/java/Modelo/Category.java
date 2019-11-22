@@ -1,33 +1,31 @@
 package Modelo;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Category {
 
-    private Byte categoryId;
+    private int categoryId;
     private String name;
     private Date lastUpdate;
-    private Map filmCategory;
+    private ArrayList<Film> listFilm;
 
     public Category() {
-        filmCategory = null;
+        listFilm = new ArrayList();
+        lastUpdate = new Date();
     }
 
-    public Category(Byte categoryId, String name, Date lastUpdate) {
+    public Category(int categoryId, String name) {
         this.categoryId = categoryId;
         this.name = name;
-        this.lastUpdate = lastUpdate;
-        filmCategory = new HashMap();
-
+        listFilm = new ArrayList();
     }
 
-    public Byte getCategoryId() {
+    public int getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Byte categoryId) {
+    public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
 
@@ -47,11 +45,13 @@ public class Category {
         this.lastUpdate = lastUpdate;
     }
 
-    public Map getFilmCategory() {
-        return filmCategory;
+    public ArrayList<Film> getListFilm() {
+        return listFilm;
     }
 
-    
+    public void setListFilm(ArrayList<Film> listFilm) {
+        this.listFilm = listFilm;
+    }
 
     @Override
     public String toString() {

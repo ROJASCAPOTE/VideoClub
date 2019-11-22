@@ -71,7 +71,7 @@ public class Actor {
 
     @Override
     public String toString() {
-        return firstName + " " + lastName;
+        return actorId + " - " + firstName + "  " + lastName;
     }
 
 }

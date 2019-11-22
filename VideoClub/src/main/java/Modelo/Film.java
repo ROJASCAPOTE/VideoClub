@@ -1,11 +1,9 @@
 package Modelo;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Film {
 
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
     private int filmId;
     private Language languageByLanguageId;
     private Language languageByOriginalLanguageId;
@@ -155,7 +153,7 @@ public class Film {
 
     @Override
     public String toString() {
-        return filmId + " - " + title + " - " + sdf.format(getReleaseYear());
+        return filmId + " - " + title ;
     }
 
 }

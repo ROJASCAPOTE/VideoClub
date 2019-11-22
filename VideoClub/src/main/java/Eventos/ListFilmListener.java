@@ -5,7 +5,7 @@
  */
 package Eventos;
 
-import Controlador.ActorController;
+import Controlador.FilmActorController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,9 +15,9 @@ import java.awt.event.ActionListener;
  */
 public class ListFilmListener implements ActionListener {
 
-    private ActorController controller;
+    private FilmActorController controller;
 
-    public ListFilmListener(ActorController controller) {
+    public ListFilmListener(FilmActorController controller) {
         this.controller = controller;
     }
     

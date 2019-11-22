@@ -5,16 +5,15 @@
  */
 package Modelo.Dao;
 
-import Modelo.City;
 import Modelo.Film;
 import Servisios.ConnectionBD;
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import javax.swing.JOptionPane;
 
 /**
@@ -52,31 +51,28 @@ public class FilmDAO {
         pstm = null;
         int rtdo;
         rtdo = 0;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd H:mm:ss");
         String last_update = sdf.format(film.getLastUpdate());
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY");
-        String realease_year = dateFormat.format(film.getReleaseYear());
-        System.out.println("Modelo.Dao.FilmDAO.grabarFilm()" + realease_year);
-        
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY");
+//        String realease_year = dateFormat.format(film.getReleaseYear());
         try {
             String sql = "INSERT INTO film"
-                    + "(`film_id`,`title`,`description`,`release_year`,`language_id`,`original_language_id`,`rental_duration`,`rental_rate`,`length`,`replacement_cost`,`rating`,`special_features`,`last_update`)"
-                    + " values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    + "(`film_id`,`title`,`description`,`language_id`,`original_language_id`,`rental_duration`,`rental_rate`,`length`,`replacement_cost`,`rating`,`special_features`,`last_update`)"
+                    + " values (?,?,?,?,?,?,?,?,?,?,?,?)";
             pstm = con.getConexion().prepareStatement(sql);
             pstm.setInt(1, film.getFilmId());
             pstm.setString(2, film.getTitle());
             pstm.setString(3, film.getDescription());
-            pstm.setString(4, realease_year);
-            pstm.setInt(5, film.getLanguageByLanguageId().getLanguageId());
-            pstm.setInt(6, film.getLanguageByOriginalLanguageId().getLanguageId());
-            pstm.setInt(7, film.getRentalDuration());
-            pstm.setBigDecimal(8, new BigDecimal(film.getRentalRate()));
-            pstm.setInt(9, film.getLength());
-            pstm.setBigDecimal(10, new BigDecimal(film.getReplacementCost()));
-            pstm.setString(11, film.getRating());
-            pstm.setString(12, film.getSpecialFeatures());
-            pstm.setString(13, last_update);
+            pstm.setInt(4, film.getLanguageByLanguageId().getLanguageId());
+            pstm.setInt(5, film.getLanguageByOriginalLanguageId().getLanguageId());
+            pstm.setInt(6, film.getRentalDuration());
+            pstm.setBigDecimal(7, new BigDecimal(film.getRentalRate()));
+            pstm.setInt(8, film.getLength());
+            pstm.setBigDecimal(9, new BigDecimal(film.getReplacementCost()));
+            pstm.setString(10, film.getRating());
+            pstm.setString(11, film.getSpecialFeatures());
+            pstm.setString(12, last_update);
             rtdo = pstm.executeUpdate();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Código : "
@@ -85,12 +81,92 @@ public class FilmDAO {
         return rtdo;
     }
 
+    public Film getFilm(int codigo) {
+        LanguageDAO languageDAO = new LanguageDAO(con);
+        String sql = "SELECT * FROM film WHERE film_id =" + codigo + "";
+        ResultSet resultado = null;
+        Statement st = null;
+        Film film = null;
+        try {
+            st = con.getConexion().createStatement();
+            resultado = st.executeQuery(sql);
+            if (resultado.next()) {
+                film = new Film();
+                film.setFilmId(resultado.getInt(1));
+                film.setTitle(resultado.getString(2));
+                film.setDescription(resultado.getString(3));
+                film.setReleaseYear(resultado.getDate(4));
+                film.setLanguageByLanguageId(languageDAO.buscarLanguage(resultado.getInt(5)));
+                film.setLanguageByOriginalLanguageId(languageDAO.buscarLanguage(resultado.getInt(6)));
+                film.setRentalDuration(resultado.getInt(7));
+                film.setRentalRate(resultado.getDouble(8));
+                film.setLength(resultado.getInt(9));
+                film.setReplacementCost(resultado.getDouble(10));
+                film.setRating(resultado.getString(11));
+                film.setSpecialFeatures(resultado.getString(12));
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Código : "
+                    + ex.getErrorCode() + "\nError :" + ex.getMessage());
+        } finally {
+            try {
+                if (resultado != null) {
+                    resultado.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Código : "
+                        + ex.getErrorCode() + "\nError :" + ex.getMessage());
+            }
+        }
+        return film;
+    }
+
     public ArrayList<Film> listadoFilm() {
         PreparedStatement pstm = null;
         ResultSet rs = null;
         ArrayList<Film> listado = new ArrayList<>();
         try {
             String sql = "SELECT * FROM film ORDER BY film_id";
+            pstm = con.getConexion().prepareStatement(sql);
+            rs = pstm.executeQuery();
+            Film film = null;
+            while (rs.next()) {
+                film = new Film();
+                film.setFilmId(rs.getInt(1));
+                film.setTitle(rs.getString(2));
+                film.setDescription(rs.getString(3));
+                film.setReleaseYear(rs.getDate(4));
+                listado.add(film);
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Código : "
+                    + ex.getErrorCode() + "\nError :" + ex.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstm != null) {
+                    pstm.close();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Código : "
+                        + ex.getErrorCode() + "\nError :" + ex.getMessage());
+            }
+        }
+        return listado;
+    }
+
+    public ArrayList<Film> listadoFilm(int codigo) {
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        ArrayList<Film> listado = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM film WHERE film_id=" + codigo + "";
             pstm = con.getConexion().prepareStatement(sql);
             rs = pstm.executeQuery();
             Film film = null;

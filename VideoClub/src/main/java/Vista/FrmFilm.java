@@ -4,25 +4,24 @@ import Modelo.Film;
 import Modelo.Language;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Calendar;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 public class FrmFilm extends javax.swing.JInternalFrame {
-
+    
     private Film film;
-
+    
     public FrmFilm() {
         initComponents();
     }
-
+    
     public void setTexIdFilm(int codigo) {
         String numCadena = String.valueOf(codigo);
         texIdFilm.setText(numCadena);
     }
-
+    
     public void cargarLanguaje(ArrayList<Language> ListLanguage) {
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         ListLanguage.forEach((Language) -> {
@@ -30,7 +29,7 @@ public class FrmFilm extends javax.swing.JInternalFrame {
         });
         combLanguage.setModel(modelo);
     }
-
+    
     public void cargarLanguageOriginal(ArrayList<Language> ListLanguageOriginal) {
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         ListLanguageOriginal.forEach((laguageOriginal) -> {
@@ -38,7 +37,23 @@ public class FrmFilm extends javax.swing.JInternalFrame {
         });
         combLanguageOriginal.setModel(modelo);
     }
-
+    
+    public JComboBox<String> getCombLanguage() {
+        return combLanguage;
+    }
+    
+    public JComboBox<String> getCombLanguageOriginal() {
+        return combLanguageOriginal;
+    }
+    
+    public JComboBox<String> getCombRating() {
+        return combRating;
+    }
+    
+    public JComboBox<String> getCombSpecialFeatures() {
+        return combSpecialFeatures;
+    }
+    
     public void salveDate() {
         if (film == null) {
             film = new Film();
@@ -47,7 +62,6 @@ public class FrmFilm extends javax.swing.JInternalFrame {
         film.setFilmId(Integer.parseInt(texIdFilm.getText()));
         film.setTitle(texTitleFilm.getText());
         film.setDescription(editDescription.getText());
-        film.setReleaseYear(texDateReleaseYear.getDate());
         language_1 = (Language) combLanguage.getSelectedItem();
         language_2 = (Language) combLanguageOriginal.getSelectedItem();
         film.setLanguageByLanguageId(language_1);
@@ -58,38 +72,70 @@ public class FrmFilm extends javax.swing.JInternalFrame {
         film.setReplacementCost(Double.parseDouble(textReplacementCost.getText()));
         String rating = (String) combRating.getSelectedItem();
         film.setRating(rating);
-        String special_features=(String) combSpecialFeatures.getSelectedItem();
+        String special_features = (String) combSpecialFeatures.getSelectedItem();
         film.setSpecialFeatures(special_features);
     }
-
+    
+    public void mostrarFilm(Film f) {
+        DefaultComboBoxModel modeloLanguage;
+        modeloLanguage = (DefaultComboBoxModel) getCombLanguage().getModel();
+        
+        DefaultComboBoxModel modeloLanguageOriginal;
+        modeloLanguageOriginal = (DefaultComboBoxModel) getCombLanguageOriginal().getModel();
+        
+        DefaultComboBoxModel modeloRating;
+        modeloRating = (DefaultComboBoxModel) getCombRating().getModel();
+        
+        DefaultComboBoxModel modeloSpecialFeatures;
+        modeloSpecialFeatures = (DefaultComboBoxModel) getCombSpecialFeatures().getModel();
+        
+        String customer_id = String.valueOf(f.getFilmId());
+        texIdFilm.setText(customer_id);
+        texTitleFilm.setText(f.getTitle());
+        editDescription.setText(f.getDescription());
+        modeloLanguage.setSelectedItem(f.getLanguageByLanguageId());
+        if (f.getLanguageByOriginalLanguageId() != null) {
+            modeloLanguageOriginal.setSelectedItem(f.getLanguageByOriginalLanguageId());
+        }
+        String numCadena = String.valueOf(f.getRentalDuration());
+        texRentalDuration.setText(numCadena);
+        String costoArrendamiento = String.valueOf(f.getRentalRate());
+        textRentalRate.setText(costoArrendamiento);
+        String cantidad = String.valueOf(f.getLength());
+        textLength.setText(cantidad);
+        String replacementCost = String.valueOf(f.getReplacementCost());
+        textReplacementCost.setText(replacementCost);
+        modeloRating.setSelectedItem(f.getRating());
+        modeloSpecialFeatures.setSelectedItem(f.getSpecialFeatures());
+    }
+    
     public Film getFilm() {
         return film;
     }
-
+    
     public void addListenerNuevo(ActionListener listenerFilm) {
         btnNuevo.addActionListener(listenerFilm);
     }
-
+    
     public void addListenerCerrar(ActionListener listenerFilm) {
         btnSalir.addActionListener(listenerFilm);
     }
-
+    
     public void addListenerBtnModificar(ActionListener listenerFilm) {
         btnModificar.addActionListener(listenerFilm);
     }
-
+    
     public void addListenerBtnBuscar(ActionListener listenerFilm) {
-        btnBuscar.addActionListener(listenerFilm);
+        btnBiscarFilm.addActionListener(listenerFilm);
     }
-
+    
     public void gestionMensajes(String mensaje, String titulo, int icono) {
         JOptionPane.showMessageDialog(this, mensaje, titulo, icono);
     }
-
+    
     public void limpiarCampos() {
         texTitleFilm.setText("");
         editDescription.setText("");
-        texDateReleaseYear.setDate(null);
         combLanguage.setSelectedIndex(0);
         combLanguageOriginal.setSelectedIndex(0);
         texRentalDuration.setText("");
@@ -99,12 +145,11 @@ public class FrmFilm extends javax.swing.JInternalFrame {
         combRating.setSelectedIndex(0);
         combSpecialFeatures.setSelectedIndex(0);
     }
-
+    
     public void activarControles(boolean estado) {
         texIdFilm.setEnabled(false);
         texTitleFilm.setEnabled(estado);
         editDescription.setEnabled(estado);
-        texDateReleaseYear.setEnabled(estado);
         combLanguage.setEnabled(estado);
         combLanguageOriginal.setEnabled(estado);
         texRentalDuration.setEnabled(estado);
@@ -116,12 +161,11 @@ public class FrmFilm extends javax.swing.JInternalFrame {
         btnModificar.setEnabled(estado);
         btnEliminar.setEnabled(estado);
     }
-
+    
     public void activarControlesModificar(boolean estado) {
         texIdFilm.setEnabled(false);
         texTitleFilm.setEnabled(estado);
         editDescription.setEnabled(estado);
-        texDateReleaseYear.setEnabled(estado);
         combLanguage.setEnabled(estado);
         combLanguageOriginal.setEnabled(estado);
         texRentalDuration.setEnabled(estado);
@@ -132,14 +176,13 @@ public class FrmFilm extends javax.swing.JInternalFrame {
         combSpecialFeatures.setEnabled(estado);
         btnModificar.setEnabled(estado);
         btnEliminar.setEnabled(estado);
-
+        
     }
-
+    
     public void nuevoAction() {
         if (btnNuevo.getText().equals("Nuevo")) {
             texTitleFilm.setText("");
             editDescription.setText("");
-            texDateReleaseYear.setDate(null);
             combLanguage.setSelectedIndex(0);
             combLanguageOriginal.setSelectedIndex(0);
             texRentalDuration.setText("");
@@ -159,7 +202,7 @@ public class FrmFilm extends javax.swing.JInternalFrame {
             btnModificar.setIcon(new ImageIcon(getClass().
                     getResource("/Cancel.png"))); // NOI18N
             texTitleFilm.requestFocusInWindow();
-
+            
         } else {
             activarControles(false);
             btnNuevo.setText("Nuevo");
@@ -173,7 +216,7 @@ public class FrmFilm extends javax.swing.JInternalFrame {
                     getResource("/Modify.png"))); // NOI18N
         }
     }
-
+    
     public void modificarAction() {
         activarControlesModificar(true);
         btnNuevo.setText("Actualizar");
@@ -185,9 +228,9 @@ public class FrmFilm extends javax.swing.JInternalFrame {
         btnModificar.setIcon(new ImageIcon(getClass().
                 getResource("/Cancel.png"))); // NOI18N
         texTitleFilm.requestFocusInWindow();
-
+        
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -198,7 +241,7 @@ public class FrmFilm extends javax.swing.JInternalFrame {
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnBiscarFilm = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         texIdFilm = new javax.swing.JTextField();
@@ -207,8 +250,6 @@ public class FrmFilm extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         editDescription = new javax.swing.JEditorPane();
-        jLabel4 = new javax.swing.JLabel();
-        texDateReleaseYear = new com.toedter.calendar.JDateChooser();
         jLabel5 = new javax.swing.JLabel();
         combLanguage = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
@@ -253,9 +294,9 @@ public class FrmFilm extends javax.swing.JInternalFrame {
         btnSalir.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\Get out.png")); // NOI18N
         btnSalir.setText("Salir");
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\LookFor.png")); // NOI18N
-        jButton2.setText("Peliculas");
+        btnBiscarFilm.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnBiscarFilm.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\LookFor.png")); // NOI18N
+        btnBiscarFilm.setText("Buscar");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -269,7 +310,7 @@ public class FrmFilm extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnEliminar)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(btnBiscarFilm)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
@@ -283,7 +324,7 @@ public class FrmFilm extends javax.swing.JInternalFrame {
                         .addComponent(btnModificar)
                         .addComponent(btnEliminar)
                         .addComponent(btnSalir)
-                        .addComponent(jButton2))
+                        .addComponent(btnBiscarFilm))
                     .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -305,10 +346,6 @@ public class FrmFilm extends javax.swing.JInternalFrame {
         jLabel3.setText("Description");
 
         jScrollPane1.setViewportView(editDescription);
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Release year");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -359,36 +396,40 @@ public class FrmFilm extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(162, 162, 162)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel12)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(texDateReleaseYear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(combLanguage, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(combLanguageOriginal, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(texRentalDuration)
-                        .addComponent(texTitleFilm)
-                        .addComponent(textRentalRate)
-                        .addComponent(textLength)
-                        .addComponent(textReplacementCost)
-                        .addComponent(combRating, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(combSpecialFeatures, 0, 423, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(texIdFilm, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnBuscar)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                                .addComponent(texTitleFilm))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(texIdFilm, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnBuscar))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(combLanguage, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(combLanguageOriginal, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(texRentalDuration)
+                            .addComponent(textRentalRate)
+                            .addComponent(textLength)
+                            .addComponent(textReplacementCost)
+                            .addComponent(combRating, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(combSpecialFeatures, 0, 423, Short.MAX_VALUE))))
                 .addContainerGap(241, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -408,10 +449,6 @@ public class FrmFilm extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
-                    .addComponent(texDateReleaseYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -444,7 +481,7 @@ public class FrmFilm extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(combSpecialFeatures, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -484,6 +521,7 @@ public class FrmFilm extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBiscarFilm;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
@@ -494,14 +532,12 @@ public class FrmFilm extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> combRating;
     private javax.swing.JComboBox<String> combSpecialFeatures;
     private javax.swing.JEditorPane editDescription;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -511,7 +547,6 @@ public class FrmFilm extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private com.toedter.calendar.JDateChooser texDateReleaseYear;
     private javax.swing.JTextField texIdFilm;
     private javax.swing.JTextField texRentalDuration;
     private javax.swing.JTextField texTitleFilm;

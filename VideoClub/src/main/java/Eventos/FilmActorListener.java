@@ -5,7 +5,7 @@
  */
 package Eventos;
 
-import Controlador.ActorController;
+import Controlador.FilmActorController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,11 +13,11 @@ import java.awt.event.ActionListener;
  *
  * @author ACER E5
  */
-public class ActorListener implements ActionListener {
+public class FilmActorListener implements ActionListener {
 
-    private ActorController controller;
+    private FilmActorController controller;
 
-    public ActorListener(ActorController controller) {
+    public FilmActorListener(FilmActorController controller) {
         this.controller = controller;
     }
 
@@ -27,14 +27,19 @@ public class ActorListener implements ActionListener {
             controller.nuevoAction();
         } else if (e.getActionCommand().equalsIgnoreCase("Cancelar")) {
             controller.nuevoAction();
+        } else if (e.getActionCommand().equalsIgnoreCase("Actualizar")) {
+            controller.modificarCity();
         } else if (e.getActionCommand().equalsIgnoreCase("Grabar")) {
-            controller.guardarActor();
+            controller.guardarFilmActor();
         } else if (e.getActionCommand().equalsIgnoreCase("Adicionar")) {
-          
+            controller.listaFilm();
+        } else if (e.getActionCommand().equalsIgnoreCase("Consultar")) {
+            controller.consultarFilmActor();
         } else if (e.getActionCommand().equalsIgnoreCase("Salir")) {
             controller.cerrarAction();
+        } else if (e.getActionCommand().equalsIgnoreCase("Eliminar")) {
+            controller.borrarFilmActor();
         }
-
     }
 
 }

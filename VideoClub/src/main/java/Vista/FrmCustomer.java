@@ -138,7 +138,6 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
         rdbSi.setEnabled(estado);
         rdbNo.setEnabled(estado);
         textCreateData.setEnabled(estado);
-        textLastUpdate.setEnabled(estado);
         btnModificar.setEnabled(estado);
         btnEliminar.setEnabled(estado);
     }
@@ -153,7 +152,6 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
         rdbSi.setEnabled(estado);
         rdbNo.setEnabled(estado);
         textCreateData.setEnabled(estado);
-        textLastUpdate.setEnabled(estado);
         btnModificar.setEnabled(estado);
         btnEliminar.setEnabled(estado);
 
@@ -167,7 +165,6 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
             textEmail.setText("");
             combAddress.setSelectedIndex(0);
             rdbSi.setSelected(true);
-            textLastUpdate.setDate(null);
             activarControles(true);
             btnNuevo.setText("Grabar");
             btnNuevo.setActionCommand("Grabar");
@@ -229,8 +226,6 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         textCreateData = new com.toedter.calendar.JDateChooser();
-        jLabel9 = new javax.swing.JLabel();
-        textLastUpdate = new com.toedter.calendar.JDateChooser();
         combAddress = new javax.swing.JComboBox<>();
         rdbSi = new javax.swing.JRadioButton();
         rdbNo = new javax.swing.JRadioButton();
@@ -280,10 +275,6 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Create Date");
-
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Last Update");
 
         combAddress.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -339,13 +330,9 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
                                 .addComponent(textEmail)
                                 .addComponent(combAddress, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(textCreateData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(textLastUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(textCreateData, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(279, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -386,11 +373,7 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(5, 5, 5)
                         .addComponent(jLabel8)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(textLastUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(102, 102, 102));
@@ -505,7 +488,6 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -516,6 +498,5 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
     private javax.swing.JTextField textEmail;
     private javax.swing.JTextField textFirsName;
     private javax.swing.JTextField textLastName;
-    private com.toedter.calendar.JDateChooser textLastUpdate;
     // End of variables declaration//GEN-END:variables
 }
