@@ -12,12 +12,12 @@ import Modelo.Store;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 /**
  *
@@ -89,7 +89,21 @@ public class FrmStaff extends javax.swing.JInternalFrame {
         this.texPassword.setText(texPassword);
     }
 
-   
+    public boolean getRdbNo() {
+        return rdbNo.isSelected();
+    }
+
+    public boolean getRdbSi() {
+        return rdbSi.isSelected();
+    }
+
+    public void setRdbNo(boolean rdbNo) {
+        this.rdbNo.setSelected(rdbNo);
+    }
+
+    public void setRdbSi(boolean rdbSi) {
+        this.rdbSi.setSelected(rdbSi);
+    }
 
     public void setManager(DAOManager manager) {
         this.manager = manager;
@@ -137,6 +151,8 @@ public class FrmStaff extends javax.swing.JInternalFrame {
         combAddress.setEnabled(estado);
         texEmail.setEnabled(estado);
         cmbStore.setEnabled(estado);
+        rdbSi.setEnabled(estado);
+        rdbNo.setEnabled(estado);
         texUserName.setEnabled(estado);
         texPassword.setEnabled(estado);
         btnModificar.setEnabled(estado);
@@ -150,6 +166,8 @@ public class FrmStaff extends javax.swing.JInternalFrame {
         combAddress.setEnabled(estado);
         texEmail.setEnabled(estado);
         cmbStore.setEnabled(estado);
+        rdbSi.setEnabled(estado);
+        rdbNo.setEnabled(estado);
         texUserName.setEnabled(estado);
         texPassword.setEnabled(estado);
         btnModificar.setEnabled(estado);
@@ -165,6 +183,7 @@ public class FrmStaff extends javax.swing.JInternalFrame {
         cmbStore.setSelectedIndex(0);
         texUserName.setText("");
         texPassword.setText("");
+        rdbSi.setSelected(true);
     }
 
     public void nuevoAction() {
@@ -177,6 +196,7 @@ public class FrmStaff extends javax.swing.JInternalFrame {
             texUserName.setText("");
             texPassword.setText("");
             activarControles(true);
+            rdbSi.setSelected(true);
             btnNuevo.setText("Grabar");
             btnNuevo.setActionCommand("Grabar");
             btnModificar.setText("Cancelar");
@@ -222,6 +242,7 @@ public class FrmStaff extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -241,9 +262,11 @@ public class FrmStaff extends javax.swing.JInternalFrame {
         texPassword = new javax.swing.JPasswordField();
         jButton3 = new javax.swing.JButton();
         combAddress = new javax.swing.JComboBox<>();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        rdbSi = new javax.swing.JRadioButton();
+        rdbNo = new javax.swing.JRadioButton();
         jLabel7 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        texIdStaff = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
@@ -326,19 +349,27 @@ public class FrmStaff extends javax.swing.JInternalFrame {
 
         combAddress.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jRadioButton1.setBackground(new java.awt.Color(102, 102, 102));
-        jRadioButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jRadioButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jRadioButton1.setText("Si");
+        rdbSi.setBackground(new java.awt.Color(102, 102, 102));
+        buttonGroup1.add(rdbSi);
+        rdbSi.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        rdbSi.setForeground(new java.awt.Color(255, 255, 255));
+        rdbSi.setText("Si");
 
-        jRadioButton2.setBackground(new java.awt.Color(102, 102, 102));
-        jRadioButton2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jRadioButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jRadioButton2.setText("No");
+        rdbNo.setBackground(new java.awt.Color(102, 102, 102));
+        buttonGroup1.add(rdbNo);
+        rdbNo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        rdbNo.setForeground(new java.awt.Color(255, 255, 255));
+        rdbNo.setText("No");
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Active");
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("ID");
+
+        texIdStaff.setText("jTextField1");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -347,6 +378,7 @@ public class FrmStaff extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(131, 131, 131)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel10)
                     .addComponent(jLabel9)
                     .addComponent(jLabel6)
                     .addComponent(jLabel5)
@@ -357,23 +389,23 @@ public class FrmStaff extends javax.swing.JInternalFrame {
                     .addComponent(jLabel8)
                     .addComponent(jLabel7))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
+                        .addComponent(rdbSi)
                         .addGap(18, 18, 18)
-                        .addComponent(jRadioButton2))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(texPassword, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(texUserName, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(cmbStore, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(texEmail, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(combAddress, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(texLastName, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(textFirstName, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                            .addComponent(texCodigoStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jButton3))))
+                        .addComponent(rdbNo))
+                    .addComponent(texPassword)
+                    .addComponent(texUserName)
+                    .addComponent(cmbStore, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(texEmail)
+                    .addComponent(combAddress, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(texLastName)
+                    .addComponent(textFirstName)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(texCodigoStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton3))
+                    .addComponent(texIdStaff))
                 .addContainerGap(155, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -385,6 +417,10 @@ public class FrmStaff extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
                         .addComponent(texCodigoStaff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel10)
+                    .addComponent(texIdStaff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -407,8 +443,8 @@ public class FrmStaff extends javax.swing.JInternalFrame {
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
+                    .addComponent(rdbSi)
+                    .addComponent(rdbNo)
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -418,7 +454,7 @@ public class FrmStaff extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(texPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(102, 102, 102));
@@ -542,11 +578,13 @@ public class FrmStaff extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JComboBox<String> cmbStore;
     private javax.swing.JComboBox<String> combAddress;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -558,10 +596,11 @@ public class FrmStaff extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton rdbNo;
+    private javax.swing.JRadioButton rdbSi;
     private javax.swing.JTextField texCodigoStaff;
     private javax.swing.JTextField texEmail;
+    private javax.swing.JTextField texIdStaff;
     private javax.swing.JTextField texLastName;
     private javax.swing.JPasswordField texPassword;
     private javax.swing.JTextField texUserName;

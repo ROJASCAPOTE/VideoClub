@@ -5,7 +5,6 @@
  */
 package Controlador;
 
-import Eventos.CountryListener;
 import Eventos.CustomerListener;
 import Modelo.Address;
 import Modelo.Customer;
@@ -32,6 +31,7 @@ public class CustomerController {
         this.vista.addListenerBtnModificar(new CustomerListener(this));
         this.vista.addListenerCerrar(new CustomerListener(this));
         this.vista.addListenerBtnBuscar(new CustomerListener(this));
+        this.vista.addListenerBtnEliminar(new CustomerListener(this));
         ArrayList<Store> listaTiendas;
         listaTiendas = modelo.getStoreDAO().listadoStore();
         vista.cargarStore(listaTiendas);
@@ -75,10 +75,89 @@ public class CustomerController {
 
     public void guardarCustomer() {
         vista.salveData();
+        if (vista.getCustomer().getCustomerId() == 0) {
+            vista.gestionMensajes("Ingrese el código",
+                    "Error de Entrada", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+
+            int resultado = 0;
+            resultado = modelo.getCustomerDAO().grabarCustomer(vista.getCustomer());
+            if (resultado == 1) {
+                vista.gestionMensajes("Registro Grabado con éxito",
+                        "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+                vista.activarControles(false);
+                vista.nuevoAction();
+                vista.limpiarCampos();
+                customerId();
+            } else {
+                vista.gestionMensajes("Error al grabar",
+                        "Confirmación", JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
+    }
+
+    public void modificarCustomer() {
+        vista.salveData();
+        int resultado = 0;
+        resultado = modelo.getCustomerDAO().modificarCustomer(vista.getCustomer());
+        if (resultado == 1) {
+            vista.gestionMensajes(
+                    "Actualización exitosa",
+                    "Confirmación ",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+            vista.activarControles(false);
+            vista.nuevoAction();
+            vista.limpiarCampos();
+            customerId();
+        } else {
+            vista.gestionMensajes(
+                    "Actualización Falida",
+                    "Confirmación ",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void eliminarCustomer() {
+        int codigo = 0;
+        vista.salveData();
+        if (vista.getCustomer().getCustomerId()==0) {
+            vista.gestionMensajes(
+                    "Ingrese el codigo del customer",
+                    "Mensaje de Advertencia ",
+                    JOptionPane.ERROR_MESSAGE);
+        } else {
+            int respuesta = JOptionPane.showConfirmDialog(null,
+                    "¿Desea Eliminar el cliente  de codigo : "
+                    + codigo + " ?",
+                    "Confirmación de Acción", JOptionPane.YES_NO_OPTION);
+
+            if (respuesta == JOptionPane.YES_OPTION) {
+                codigo = modelo.getCustomerDAO().borrarCustomer(vista.getCustomer().getCustomerId());
+                if (codigo == 1) {
+                    JOptionPane.showMessageDialog(null,
+                            "Registro Borrado con éxtio",
+                            "Confirmación de acción",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    vista.activarControles(false);
+                    vista.nuevoAction();
+                    vista.limpiarCampos();
+                    customerId();
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                            "Error al borrar",
+                            "Confirmación de acción",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
     }
 
     public void nuevoAction() {
         vista.nuevoAction();
+        customerId();
     }
 
     public void cerrarAction() {

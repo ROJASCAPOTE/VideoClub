@@ -161,12 +161,56 @@ public class FilmDAO {
         return listado;
     }
 
-    public ArrayList<Film> listadoFilm(int codigo) {
+    public ArrayList<Film> getListFilm(String nombre) {
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        ArrayList<Film> listado = new ArrayList<>();
+        String sql = "";
+        if (nombre.equals("")) {
+            sql = "SELECT film_id, title, rental_duration, rental_rate, length, special_features FROM film";
+        } else {
+            sql = "SELECT film_id, title, rental_duration, rental_rate, length, special_features FROM film  WHERE title like '%" + nombre + "%'";
+        }
+        try {
+            pstm = con.getConexion().prepareStatement(sql);
+            rs = pstm.executeQuery();
+            Film film = null;
+            while (rs.next()) {
+                film = new Film();
+                film.setFilmId(rs.getInt("film_id"));
+                film.setTitle(rs.getString("title"));
+                film.setRentalDuration(rs.getInt("rental_duration"));
+                film.setRentalRate(rs.getDouble("rental_rate"));
+                film.setLength(rs.getInt("length"));
+                film.setSpecialFeatures(rs.getString("special_features"));
+                listado.add(film);
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Código : "
+                    + ex.getErrorCode() + "\nError :" + ex.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstm != null) {
+                    pstm.close();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Código : "
+                        + ex.getErrorCode() + "\nError :" + ex.getMessage());
+            }
+        }
+        return listado;
+    }
+
+    public ArrayList<Film> getListFilmCategoria(int categoria) {
         PreparedStatement pstm = null;
         ResultSet rs = null;
         ArrayList<Film> listado = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM film WHERE film_id=" + codigo + "";
+            String sql = "select f.film_id, f.title, f.rental_duration, f.rental_rate, f.length, f.special_features  from film_category c, film f where c.film_id=f.film_id and c.category_id=" + categoria + "";
             pstm = con.getConexion().prepareStatement(sql);
             rs = pstm.executeQuery();
             Film film = null;
@@ -174,8 +218,10 @@ public class FilmDAO {
                 film = new Film();
                 film.setFilmId(rs.getInt(1));
                 film.setTitle(rs.getString(2));
-                film.setDescription(rs.getString(3));
-                film.setReleaseYear(rs.getDate(4));
+                film.setRentalDuration(rs.getInt(3));
+                film.setRentalRate(rs.getDouble(4));
+                film.setLength(rs.getInt(5));
+                film.setSpecialFeatures(rs.getString(6));
                 listado.add(film);
             }
 

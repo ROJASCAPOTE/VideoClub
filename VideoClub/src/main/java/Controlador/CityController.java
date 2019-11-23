@@ -37,6 +37,7 @@ public class CityController {
 
     public void nuevoAction() {
         vista.nuevoAction();
+        codigocity();
     }
 
     public void cerrarAction() {

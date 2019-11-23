@@ -6,6 +6,8 @@
 package Controlador;
 
 import Eventos.CategoryListener;
+import Eventos.FilmCategoryListener;
+import Modelo.Category;
 import Modelo.Dao.DAOManager;
 import Modelo.Film;
 import Vista.FrmFilmCategory;
@@ -26,15 +28,19 @@ public class FilmCategoryController {
         this.vista = vista;
         this.modelo = modelo;
         this.listaFilm = new ArrayList();
-//        this.vista.addListenerNuevo(new CategoryListener(this));
-//        this.vista.addListenerBtnModificar(new CategoryListener(this));
-//        this.vista.addListenerCerrar(new CategoryListener(this));
-//        this.vista.addListenerAdicionar(new CategoryListener(this));
-//        this.vista.activarControles(false);
+        this.vista.addListenerNuevo(new FilmCategoryListener(this));
+        this.vista.addListenerBtnModificar(new FilmCategoryListener(this));
+        this.vista.addListenerCerrar(new FilmCategoryListener(this));
+        this.vista.addListenerAdicionar(new FilmCategoryListener(this));
+        this.vista.activarControles(false);
         ArrayList<Film> lista;
         lista = modelo.getFilmDAO().listadoFilm();
         modeloFilm = new ListModelFilm(modelo, lista);
         vista.setModelo(modeloFilm);
+
+        ArrayList<Category> listadoCategory;
+        listadoCategory = modelo.getCategoriaDAO().listadoCategory();
+        vista.cargarCategory(listadoCategory);
     }
 
     public void listaFilm() {

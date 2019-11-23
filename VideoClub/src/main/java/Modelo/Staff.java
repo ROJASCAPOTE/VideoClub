@@ -9,6 +9,7 @@ public class Staff {
     private String first_name;
     private String last_name;
     private int addressId;
+    private Address address;
     private Image imagen;
     private byte[] picture;
     private String ruta = "/Manager.png";
@@ -65,6 +66,15 @@ public class Staff {
     public void setAddressId(int addressId) {
         this.addressId = addressId;
     }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+    
 
     public Image getImagen() {
         return imagen;

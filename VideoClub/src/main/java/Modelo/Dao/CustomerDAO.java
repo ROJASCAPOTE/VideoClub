@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 
 public class CustomerDAO {
@@ -15,6 +16,80 @@ public class CustomerDAO {
 
     public CustomerDAO(ConnectionBD con) {
         this.con = con;
+    }
+
+    public int grabarCustomer(Customer c) {
+        PreparedStatement pstm;
+        pstm = null;
+        int rtdo;
+        rtdo = 0;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd H:mm:ss");
+        String last_update = sdf.format(c.getLastUpdate());
+        SimpleDateFormat dateCreate = new SimpleDateFormat("yyyy-MM-dd H:mm:ss");
+        String create = dateCreate.format(c.getCreateDate());
+        try {
+
+            String sql = "INSERT INTO customer values (?,?,?,?,?,?,?,?,?)";
+            pstm = con.getConexion().prepareStatement(sql);
+            pstm.setInt(1, c.getCustomerId());
+            pstm.setInt(2, c.getStore().getStore_id());
+            pstm.setString(3, c.getFirstName());
+            pstm.setString(4, c.getLastName());
+            pstm.setString(5, c.getEmail());
+            pstm.setInt(6, c.getAddress().getAddressId());
+            pstm.setBoolean(7, c.isActive());
+            pstm.setString(8, last_update);
+            pstm.setString(9, create);
+            rtdo = pstm.executeUpdate();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Código : "
+                    + ex.getErrorCode() + "\nError :" + ex.getMessage());
+        }
+        return rtdo;
+    }
+
+    public int modificarCustomer(Customer c) {
+        PreparedStatement pstm;
+        pstm = null;
+        int rtdo;
+        rtdo = 0;
+        SimpleDateFormat dateCreate = new SimpleDateFormat("yyyy-MM-dd H:mm:ss");
+        String create = dateCreate.format(c.getCreateDate());
+        try {
+            String sql = "UPDATE customer "
+                    + "SET store_id=?, first_name=?, last_name=?, email=?, address_id=?, active=?, create_date=?  WHERE customer_id=?";
+            pstm = con.getConexion().prepareStatement(sql);
+            pstm.setInt(1, c.getStore().getStore_id());
+            pstm.setString(2, c.getFirstName());
+            pstm.setString(3, c.getLastName());
+            pstm.setString(4, c.getEmail());
+            pstm.setInt(5, c.getAddress().getAddressId());
+            pstm.setBoolean(6, c.isActive());
+            pstm.setString(7, create);
+            pstm.setInt(8, c.getCustomerId());
+            rtdo = pstm.executeUpdate();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Código : "
+                    + ex.getErrorCode() + "\nError :" + ex.getMessage());
+        }
+        return rtdo;
+    }
+    
+     public int borrarCustomer(int customer_id) {
+        PreparedStatement pstm = null;
+        int rtdo;
+        rtdo = 0;
+        try {
+            String sql = "DELETE FROM customer WHERE customer_id = ? ";
+            pstm = con.getConexion().prepareStatement(sql);
+            pstm.setInt(1, customer_id);
+            rtdo = pstm.executeUpdate();
+            return rtdo;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Código : "
+                    + ex.getErrorCode() + "\nError :" + ex.getMessage());
+        }
+        return rtdo;
     }
 
     public int grtCodigo() {

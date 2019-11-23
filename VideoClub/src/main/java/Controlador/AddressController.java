@@ -5,9 +5,9 @@
  */
 package Controlador;
 
+import Eventos.AddressListener;
 import Modelo.Address;
 import Modelo.City;
-import Modelo.Country;
 import Modelo.Dao.DAOManager;
 import Vista.FrmAddess;
 import java.util.ArrayList;
@@ -25,10 +25,20 @@ public class AddressController {
     public AddressController(FrmAddess vista, DAOManager modelo) {
         this.vista = vista;
         this.modelo = modelo;
-
+        vista.addListenerNuevo(new AddressListener(this));
+        vista.addListenerBtnModificar(new AddressListener(this));
+        vista.addListenerBtnEliminar(new AddressListener(this));
+        vista.addListenerCerrar(new AddressListener(this));
+        this.vista.activarControles(false);
         ArrayList<City> listadoCity;
         listadoCity = modelo.getCityDAO().listadoCity();
         this.vista.cargarCity(listadoCity);
+        codigoAddress();
+    }
+
+    public void codigoAddress() {
+        int codigo = modelo.getAddressDAO().grtCodigo();
+        vista.codigoAddress(codigo);
     }
 
     public void guardarAddress() {
@@ -49,8 +59,22 @@ public class AddressController {
             int resultado = 0;
             resultado = modelo.getAddressDAO().grabarAddress(address);
             if (resultado == 1) {
-
+                vista.gestionMensajes("Registro Grabado con éxito",
+                        "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+                vista.activarControles(false);
+                vista.nuevoAction();
+                vista.limpiarCampos();
+                codigoAddress();
             }
         }
     }
+
+    public void nuevoAction() {
+        vista.nuevoAction();
+    }
+
+    public void cerrarAction() {
+        vista.cerrarAction();
+    }
+
 }

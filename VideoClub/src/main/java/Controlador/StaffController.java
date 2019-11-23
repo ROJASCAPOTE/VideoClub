@@ -44,6 +44,7 @@ public class StaffController {
         vista.cargarTiendas(listaTiendas);
         vista.codigoStaff(false);
         vista.activarControles(false);
+        vista.setRdbSi(true);
         getCodigoStaff();
     }
 
@@ -73,6 +74,10 @@ public class StaffController {
             staff.setStore_id(store.getStore_id());
             staff.setUsername(vista.getTexUserName());
             staff.setPassword(vista.getTexPassword());
+            if (vista.getRdbSi()) {
+                active = true;
+            }
+            staff.setActive(active);
             int resultado = 0;
             resultado = modelo.getStaffDAO().grabarStaff(staff);
             if (resultado == 1) {

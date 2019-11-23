@@ -9,11 +9,12 @@ import Controlador.ActorController;
 import Controlador.FilmActorController;
 import Controlador.AddressController;
 import Controlador.CategoryController;
-import Controlador.FilmCategoryController;
 import Controlador.CityController;
 import Controlador.CountryController;
 import Controlador.CustomerController;
+import Controlador.FilmCategoryController;
 import Controlador.FilmController;
+import Controlador.LanguageController;
 import Controlador.StaffController;
 import Controlador.StoreController;
 import Modelo.Dao.DAOManager;
@@ -24,16 +25,16 @@ import Modelo.DesktopConFondo;
  * @author ACER E5
  */
 public class FrmPrincipal extends javax.swing.JFrame {
-    
+
     private DAOManager manager;
-    
+
     public FrmPrincipal(DAOManager manager) {
         initComponents();
         this.setExtendedState(FrmPrincipal.MAXIMIZED_BOTH);
         this.manager = manager;
         ((DesktopConFondo) jDesktopPane).setImagen("/fondo.jpg");
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -295,7 +296,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         frmCountry.setManager(manager);
         int x = (jDesktopPane.getWidth() / 2) - frmCountry.getWidth() / 2;
         int y = (jDesktopPane.getHeight() / 2) - frmCountry.getHeight() / 2;
-        
+
         if (frmCountry.isShowing()) {
             frmCountry.setLocation(x, y);
         } else {
@@ -310,7 +311,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         CustomerController controller = new CustomerController(customer, manager);
         int x = (jDesktopPane.getWidth() / 2) - customer.getWidth() / 2;
         int y = (jDesktopPane.getHeight() / 2) - customer.getHeight() / 2;
-        
+
         if (customer.isShowing()) {
             customer.setLocation(x, y);
         } else {
@@ -319,7 +320,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             customer.setVisible(true);
         }
     }//GEN-LAST:event_openMenuItemActionPerformed
-    
+
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 
@@ -331,7 +332,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         cityView.setManager(manager);
         int x = (jDesktopPane.getWidth() / 2) - cityView.getWidth() / 2;
         int y = (jDesktopPane.getHeight() / 2) - cityView.getHeight() / 2;
-        
+
         if (cityView.isShowing()) {
             cityView.setLocation(x, y);
         } else {
@@ -344,9 +345,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void copyMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyMenuItemActionPerformed
         FrmFilm frmFilm = new FrmFilm();
         FilmController controller = new FilmController(frmFilm, manager);
+        frmFilm.setManager(manager);
         int x = (jDesktopPane.getWidth() / 2) - frmFilm.getWidth() / 2;
         int y = (jDesktopPane.getHeight() / 2) - frmFilm.getHeight() / 2;
-        
+
         if (frmFilm.isShowing()) {
             frmFilm.setLocation(x, y);
         } else {
@@ -357,7 +359,19 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_copyMenuItemActionPerformed
 
     private void pasteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pasteMenuItemActionPerformed
-        // TODO add your handling code here:
+        FrmLanguage language = new FrmLanguage();
+        LanguageController controller=new LanguageController(language, manager);
+        int x = (jDesktopPane.getWidth() / 2) - language.getWidth() / 2;
+        int y = (jDesktopPane.getHeight() / 2) - language.getHeight() / 2;
+
+        if (language.isShowing()) {
+            language.setLocation(x, y);
+        } else {
+            jDesktopPane.add(language);
+            language.setLocation(x, y);
+            language.setVisible(true);
+        }
+
     }//GEN-LAST:event_pasteMenuItemActionPerformed
 
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
@@ -369,7 +383,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         staffController.setModelo(manager);
         int x = (jDesktopPane.getWidth() / 2) - frmStore.getWidth() / 2;
         int y = (jDesktopPane.getHeight() / 2) - frmStore.getHeight() / 2;
-        
+
         if (frmStore.isShowing()) {
             frmStore.setLocation(x, y);
         } else {
@@ -388,7 +402,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         AddressController controller = new AddressController(frmAddess, manager);
         int x = (jDesktopPane.getWidth() / 2) - frmAddess.getWidth() / 2;
         int y = (jDesktopPane.getHeight() / 2) - frmAddess.getHeight() / 2;
-        
+
         if (frmAddess.isShowing()) {
             frmAddess.setLocation(x, y);
         } else {
@@ -404,7 +418,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         frmStaffView.setManager(manager);
         int x = (jDesktopPane.getWidth() / 2) - frmStaffView.getWidth() / 2;
         int y = (jDesktopPane.getHeight() / 2) - frmStaffView.getHeight() / 2;
-        
+
         if (frmStaffView.isShowing()) {
             frmStaffView.setLocation(x, y);
         } else {
@@ -416,11 +430,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     private void cutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cutMenuItemActionPerformed
         FrmCategory category = new FrmCategory();
-        
+
         CategoryController controller = new CategoryController(category, manager);
         int x = (jDesktopPane.getWidth() / 2) - category.getWidth() / 2;
         int y = (jDesktopPane.getHeight() / 2) - category.getHeight() / 2;
-        
+
         if (category.isShowing()) {
             category.setLocation(x, y);
         } else {
@@ -461,6 +475,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         FrmFilmCategory frmFilmCategory = new FrmFilmCategory();
+        FilmCategoryController categoryController = new FilmCategoryController(frmFilmCategory, manager);
         int x = (jDesktopPane.getWidth() / 2) - frmFilmCategory.getWidth() / 2;
         int y = (jDesktopPane.getHeight() / 2) - frmFilmCategory.getHeight() / 2;
         if (frmFilmCategory.isShowing()) {

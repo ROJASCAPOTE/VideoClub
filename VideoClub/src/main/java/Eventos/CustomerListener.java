@@ -28,11 +28,11 @@ public class CustomerListener implements ActionListener {
         } else if (e.getActionCommand().equalsIgnoreCase("Cancelar")) {
             controller.nuevoAction();
         } else if (e.getActionCommand().equalsIgnoreCase("Grabar")) {
-
+            controller.guardarCustomer();
         } else if (e.getActionCommand().equalsIgnoreCase("Actualizar")) {
-
+            controller.modificarCustomer();
         } else if (e.getActionCommand().equalsIgnoreCase("Eliminar")) {
-
+            controller.eliminarCustomer();
         } else if (e.getActionCommand().equalsIgnoreCase("Buscar")) {
             controller.buscarCustomer();
         } else if (e.getActionCommand().equalsIgnoreCase("Salir")) {

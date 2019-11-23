@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class CategoriaDAO {
@@ -15,7 +16,7 @@ public class CategoriaDAO {
     public CategoriaDAO(ConnectionBD con) {
         this.con = con;
     }
-    
+
     public int grtCodigo() {
         String sql = "SELECT MAX(category_id) as total FROM category";
         PreparedStatement st = null;
@@ -54,7 +55,42 @@ public class CategoriaDAO {
         }
         return rtdo;
     }
-    
+
+    public ArrayList<Category> listadoCategory() {
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        ArrayList<Category> listado = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM category ORDER BY category_id";
+            pstm = con.getConexion().prepareStatement(sql);
+            rs = pstm.executeQuery();
+            Category category = null;
+            while (rs.next()) {
+                category = new Category();
+                category.setCategoryId(rs.getInt(1));
+                category.setName(rs.getString(2));
+                listado.add(category);
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Código : "
+                    + ex.getErrorCode() + "\nError :" + ex.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstm != null) {
+                    pstm.close();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Código : "
+                        + ex.getErrorCode() + "\nError :" + ex.getMessage());
+            }
+        }
+        return listado;
+    }
+
     public Object[][] getTableCategory() {
         int registros = 0;
         String sql = "SELECT * FROM category ORDER BY category_id ASC";
@@ -71,7 +107,7 @@ public class CategoriaDAO {
         } catch (SQLException e) {
             System.out.println(e);
         }
-        
+
         Object[][] data = new String[registros][2];
         PreparedStatement pst = null;
         ResultSet resp = null;

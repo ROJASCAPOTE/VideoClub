@@ -1,7 +1,10 @@
 package Vista;
 
+import Controlador.FilmListController;
+import Modelo.Dao.DAOManager;
 import Modelo.Film;
 import Modelo.Language;
+import static Vista.FrmPrincipal.jDesktopPane;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
@@ -10,18 +13,23 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 public class FrmFilm extends javax.swing.JInternalFrame {
-    
+
     private Film film;
-    
+    private DAOManager manager;
+
     public FrmFilm() {
         initComponents();
     }
-    
+
+    public void setManager(DAOManager manager) {
+        this.manager = manager;
+    }
+
     public void setTexIdFilm(int codigo) {
         String numCadena = String.valueOf(codigo);
         texIdFilm.setText(numCadena);
     }
-    
+
     public void cargarLanguaje(ArrayList<Language> ListLanguage) {
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         ListLanguage.forEach((Language) -> {
@@ -29,7 +37,7 @@ public class FrmFilm extends javax.swing.JInternalFrame {
         });
         combLanguage.setModel(modelo);
     }
-    
+
     public void cargarLanguageOriginal(ArrayList<Language> ListLanguageOriginal) {
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         ListLanguageOriginal.forEach((laguageOriginal) -> {
@@ -37,23 +45,23 @@ public class FrmFilm extends javax.swing.JInternalFrame {
         });
         combLanguageOriginal.setModel(modelo);
     }
-    
+
     public JComboBox<String> getCombLanguage() {
         return combLanguage;
     }
-    
+
     public JComboBox<String> getCombLanguageOriginal() {
         return combLanguageOriginal;
     }
-    
+
     public JComboBox<String> getCombRating() {
         return combRating;
     }
-    
+
     public JComboBox<String> getCombSpecialFeatures() {
         return combSpecialFeatures;
     }
-    
+
     public void salveDate() {
         if (film == null) {
             film = new Film();
@@ -75,20 +83,20 @@ public class FrmFilm extends javax.swing.JInternalFrame {
         String special_features = (String) combSpecialFeatures.getSelectedItem();
         film.setSpecialFeatures(special_features);
     }
-    
+
     public void mostrarFilm(Film f) {
         DefaultComboBoxModel modeloLanguage;
         modeloLanguage = (DefaultComboBoxModel) getCombLanguage().getModel();
-        
+
         DefaultComboBoxModel modeloLanguageOriginal;
         modeloLanguageOriginal = (DefaultComboBoxModel) getCombLanguageOriginal().getModel();
-        
+
         DefaultComboBoxModel modeloRating;
         modeloRating = (DefaultComboBoxModel) getCombRating().getModel();
-        
+
         DefaultComboBoxModel modeloSpecialFeatures;
         modeloSpecialFeatures = (DefaultComboBoxModel) getCombSpecialFeatures().getModel();
-        
+
         String customer_id = String.valueOf(f.getFilmId());
         texIdFilm.setText(customer_id);
         texTitleFilm.setText(f.getTitle());
@@ -108,31 +116,31 @@ public class FrmFilm extends javax.swing.JInternalFrame {
         modeloRating.setSelectedItem(f.getRating());
         modeloSpecialFeatures.setSelectedItem(f.getSpecialFeatures());
     }
-    
+
     public Film getFilm() {
         return film;
     }
-    
+
     public void addListenerNuevo(ActionListener listenerFilm) {
         btnNuevo.addActionListener(listenerFilm);
     }
-    
+
     public void addListenerCerrar(ActionListener listenerFilm) {
         btnSalir.addActionListener(listenerFilm);
     }
-    
+
     public void addListenerBtnModificar(ActionListener listenerFilm) {
         btnModificar.addActionListener(listenerFilm);
     }
-    
+
     public void addListenerBtnBuscar(ActionListener listenerFilm) {
         btnBiscarFilm.addActionListener(listenerFilm);
     }
-    
+
     public void gestionMensajes(String mensaje, String titulo, int icono) {
         JOptionPane.showMessageDialog(this, mensaje, titulo, icono);
     }
-    
+
     public void limpiarCampos() {
         texTitleFilm.setText("");
         editDescription.setText("");
@@ -145,7 +153,7 @@ public class FrmFilm extends javax.swing.JInternalFrame {
         combRating.setSelectedIndex(0);
         combSpecialFeatures.setSelectedIndex(0);
     }
-    
+
     public void activarControles(boolean estado) {
         texIdFilm.setEnabled(false);
         texTitleFilm.setEnabled(estado);
@@ -161,7 +169,7 @@ public class FrmFilm extends javax.swing.JInternalFrame {
         btnModificar.setEnabled(estado);
         btnEliminar.setEnabled(estado);
     }
-    
+
     public void activarControlesModificar(boolean estado) {
         texIdFilm.setEnabled(false);
         texTitleFilm.setEnabled(estado);
@@ -176,9 +184,9 @@ public class FrmFilm extends javax.swing.JInternalFrame {
         combSpecialFeatures.setEnabled(estado);
         btnModificar.setEnabled(estado);
         btnEliminar.setEnabled(estado);
-        
+
     }
-    
+
     public void nuevoAction() {
         if (btnNuevo.getText().equals("Nuevo")) {
             texTitleFilm.setText("");
@@ -202,7 +210,7 @@ public class FrmFilm extends javax.swing.JInternalFrame {
             btnModificar.setIcon(new ImageIcon(getClass().
                     getResource("/Cancel.png"))); // NOI18N
             texTitleFilm.requestFocusInWindow();
-            
+
         } else {
             activarControles(false);
             btnNuevo.setText("Nuevo");
@@ -216,7 +224,7 @@ public class FrmFilm extends javax.swing.JInternalFrame {
                     getResource("/Modify.png"))); // NOI18N
         }
     }
-    
+
     public void modificarAction() {
         activarControlesModificar(true);
         btnNuevo.setText("Actualizar");
@@ -228,9 +236,9 @@ public class FrmFilm extends javax.swing.JInternalFrame {
         btnModificar.setIcon(new ImageIcon(getClass().
                 getResource("/Cancel.png"))); // NOI18N
         texTitleFilm.requestFocusInWindow();
-        
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -388,13 +396,18 @@ public class FrmFilm extends javax.swing.JInternalFrame {
         combSpecialFeatures.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Trailers", "Commentaries", "Deleted Scenes", "Behind the Scenes" }));
 
         btnBuscar.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\buscar.png")); // NOI18N
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(162, 162, 162)
+                .addGap(163, 163, 163)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -404,8 +417,8 @@ public class FrmFilm extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
-                                .addComponent(texTitleFilm))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addComponent(texTitleFilm, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(texIdFilm, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -429,13 +442,13 @@ public class FrmFilm extends javax.swing.JInternalFrame {
                             .addComponent(textLength)
                             .addComponent(textReplacementCost)
                             .addComponent(combRating, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(combSpecialFeatures, 0, 423, Short.MAX_VALUE))))
-                .addContainerGap(241, Short.MAX_VALUE))
+                            .addComponent(combSpecialFeatures, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(240, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(40, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -481,7 +494,7 @@ public class FrmFilm extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(combSpecialFeatures, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addGap(36, 36, 36))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -518,6 +531,22 @@ public class FrmFilm extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        FrmListFilm frmListFilm = new FrmListFilm();
+        FilmListController controller = new FilmListController(frmListFilm, manager);
+        controller.setFrmFilm(this);
+        int x = (jDesktopPane.getWidth() / 2) - frmListFilm.getWidth() / 2;
+        int y = (jDesktopPane.getHeight() / 2) - frmListFilm.getHeight() / 2;
+
+        if (frmListFilm.isShowing()) {
+            frmListFilm.setLocation(x, y);
+        } else {
+            jDesktopPane.add(frmListFilm);
+            frmListFilm.setLocation(x, y);
+            frmListFilm.setVisible(true);
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

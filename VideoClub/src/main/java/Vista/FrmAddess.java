@@ -5,99 +5,105 @@
  */
 package Vista;
 
-import Modelo.Address;
 import Modelo.City;
 import Modelo.Dao.DAOManager;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 public class FrmAddess extends javax.swing.JInternalFrame {
-
+    
     private DAOManager manager;
-
+    
     public FrmAddess() {
         initComponents();
     }
-
+    
+    public void codigoAddress(int codigo) {
+        String numCadena = String.valueOf(codigo);
+        texIDaddress.setText(numCadena);
+    }
+    
     public DAOManager getManager() {
         return manager;
     }
-
+    
     public void setManager(DAOManager manager) {
         this.manager = manager;
     }
-
+    
     public String getTexIDaddress() {
         return texIDaddress.getText();
     }
-
+    
     public void setTexIDaddress(String texIDaddress) {
         this.texIDaddress.setText(texIDaddress);
     }
-
+    
     public String getTexAddress() {
         return texAddress.getText();
     }
-
+    
     public void setTexAddress(String texAddress) {
         this.texAddress.setText(texAddress);
     }
-
+    
     public String getTexAddress2() {
         return texAddress2.getText();
     }
-
+    
     public void setTexAddress2(String texAddress2) {
         this.texAddress2.setText(texAddress2);
     }
-
+    
     public String getTexCodigoPostal() {
         return texCodigoPostal.getText();
     }
-
+    
     public void setTexCodigoPostal(String texCodigoPostal) {
         this.texCodigoPostal.setText(texCodigoPostal);
     }
-
+    
     public String getTexDistrict() {
         return texDistrict.getText();
     }
-
+    
     public void setTexDistrict(String texDistrict) {
         this.texDistrict.setText(texDistrict);
     }
-
+    
     public JComboBox<String> getComCity() {
         return comCity;
     }
-
+    
     public String getTexIaddress() {
         return texIDaddress.getText();
     }
-
+    
     public void setTexIaddress(String texIaddress) {
         this.texIDaddress.setText(texIaddress);
     }
-
+    
     public Date getTexLastUpdate() {
         return texLastUpdate.getDate();
     }
-
+    
     public void setTexLastUpdate(Date texLastUpdate) {
         this.texLastUpdate.setDate(texLastUpdate);
     }
-
+    
     public String getTexPhone() {
         return texPhone.getText();
     }
-
+    
     public void setTexPhone(String texPhone) {
         this.texPhone.setText(texPhone);
     }
-
+    
     public void cargarCity(ArrayList<City> ListCity) {
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         for (Object direcciones : ListCity) {
@@ -105,11 +111,117 @@ public class FrmAddess extends javax.swing.JInternalFrame {
         }
         comCity.setModel(modelo);
     }
-
+    
     public void gestionMensajes(String mensaje, String titulo, int icono) {
         JOptionPane.showMessageDialog(this, mensaje, titulo, icono);
     }
-
+    
+    public void addListenerNuevo(ActionListener listenerAddress) {
+        btnNuevo.addActionListener(listenerAddress);
+    }
+    
+    public void addListenerCerrar(ActionListener listenerAddress) {
+        btnSalir.addActionListener(listenerAddress);
+    }
+    
+    public void addListenerBtnModificar(ActionListener listenerAddress) {
+        btnModificar.addActionListener(listenerAddress);
+    }
+    
+    public void addListenerBtnEliminar(ActionListener listenerAddress) {
+        btnEliminar.addActionListener(listenerAddress);
+    }
+    
+    public void cerrarAction() {
+        dispose();
+    }
+    
+    public void limpiarCampos() {
+        texAddress.setText("");
+        texAddress2.setText("");
+        texDistrict.setText("");
+        comCity.setSelectedIndex(0);
+        texCodigoPostal.setText("");
+        texPhone.setText("");
+        texLastUpdate.setDate(null);
+    }
+    
+    public void activarControles(boolean estado) {
+        texIDaddress.setEnabled(false);
+        texAddress.setEnabled(estado);
+        texAddress2.setEnabled(estado);
+        texDistrict.setEnabled(estado);
+        comCity.setEnabled(estado);
+        texCodigoPostal.setEnabled(estado);
+        texPhone.setEnabled(estado);
+        texLastUpdate.setEnabled(estado);
+        btnModificar.setEnabled(estado);
+        btnEliminar.setEnabled(estado);
+    }
+    
+    public void activarControlesModificar(boolean estado) {
+        texIDaddress.setEnabled(false);
+        texAddress.setEnabled(estado);
+        texAddress2.setEnabled(estado);
+        texDistrict.setEditable(estado);
+        comCity.setEditable(estado);
+        texCodigoPostal.setEnabled(estado);
+        texPhone.setEnabled(estado);
+        texLastUpdate.setEnabled(estado);
+        btnModificar.setEnabled(estado);
+        btnEliminar.setEnabled(estado);
+        
+    }
+    
+    public void nuevoAction() {
+        if (btnNuevo.getText().equals("Nuevo")) {
+            texAddress.setText("");
+            texAddress2.setText("");
+            texDistrict.setText("");
+            comCity.setSelectedIndex(0);
+            texCodigoPostal.setText("");
+            texPhone.setText("");
+            texLastUpdate.setDate(null);
+            activarControles(true);
+            btnNuevo.setText("Grabar");
+            btnNuevo.setActionCommand("Grabar");
+            btnModificar.setText("Cancelar");
+            btnModificar.setActionCommand("Cancelar");
+            btnEliminar.setEnabled(false);
+            btnNuevo.setIcon(new ImageIcon(getClass().
+                    getResource("/Save.png"))); // NOI18N
+            btnModificar.setIcon(new ImageIcon(getClass().
+                    getResource("/Cancel.png"))); // NOI18N
+            texAddress.requestFocusInWindow();
+            
+        } else {
+            activarControles(false);
+            btnNuevo.setText("Nuevo");
+            btnNuevo.setActionCommand("Nuevo");
+            btnModificar.setText("Modificar");
+            btnModificar.setActionCommand("Modificar");
+            btnNuevo.requestFocusInWindow();
+            btnNuevo.setIcon(new ImageIcon(getClass().
+                    getResource("/New.png"))); // NOI18N
+            btnModificar.setIcon(new ImageIcon(getClass().
+                    getResource("/Modify.png"))); // NOI18N
+        }
+    }
+    
+    public void modificarAction() {
+        activarControlesModificar(true);
+        btnNuevo.setText("Actualizar");
+        btnNuevo.setActionCommand("Actualizar");
+        btnModificar.setText("Cancelar");
+        btnModificar.setActionCommand("Cancelar");
+        btnNuevo.setIcon(new ImageIcon(getClass().
+                getResource("/Modify.png"))); // NOI18N
+        btnModificar.setIcon(new ImageIcon(getClass().
+                getResource("/Cancel.png"))); // NOI18N
+        texAddress.requestFocusInWindow();
+        
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -133,10 +245,10 @@ public class FrmAddess extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         texLastUpdate = new com.toedter.calendar.JDateChooser();
         jPanel3 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnNuevo = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -250,17 +362,17 @@ public class FrmAddess extends javax.swing.JInternalFrame {
         jPanel3.setBackground(new java.awt.Color(102, 102, 102));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Controles", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
 
-        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\New.png")); // NOI18N
-        jButton2.setText("Nuevo");
+        btnNuevo.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\New.png")); // NOI18N
+        btnNuevo.setText("Nuevo");
 
-        jButton3.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\Modify.png")); // NOI18N
-        jButton3.setText("Modificar");
+        btnModificar.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\Modify.png")); // NOI18N
+        btnModificar.setText("Modificar");
 
         btnSalir.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\Get out.png")); // NOI18N
         btnSalir.setText("Salir");
 
-        jButton4.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\Remove.png")); // NOI18N
-        jButton4.setText("Eliminar");
+        btnEliminar.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\Remove.png")); // NOI18N
+        btnEliminar.setText("Eliminar");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -268,11 +380,11 @@ public class FrmAddess extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton2)
+                .addComponent(btnNuevo)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(btnModificar)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addComponent(btnEliminar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50))
@@ -282,9 +394,9 @@ public class FrmAddess extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
+                    .addComponent(btnNuevo)
+                    .addComponent(btnModificar)
+                    .addComponent(btnEliminar)
                     .addComponent(btnSalir))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -326,11 +438,11 @@ public class FrmAddess extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> comCity;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

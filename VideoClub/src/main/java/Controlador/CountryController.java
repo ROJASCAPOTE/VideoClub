@@ -83,6 +83,7 @@ public class CountryController {
 
     public void nuevoAction() {
         vista.nuevoAction();
+        codgoCountry();
     }
 
     public void countryIndex(int index) {

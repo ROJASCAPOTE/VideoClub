@@ -5,7 +5,7 @@
  */
 package Eventos;
 
-import Controlador.AddressController;
+import Controlador.FilmCategoryController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,29 +13,27 @@ import java.awt.event.ActionListener;
  *
  * @author ACER E5
  */
-public class AddressListener implements ActionListener {
+public class FilmCategoryListener implements ActionListener {
 
-    private AddressController addressController;
+    private FilmCategoryController categoryController;
 
-    public AddressListener(AddressController addressController) {
-        this.addressController = addressController;
+    public FilmCategoryListener(FilmCategoryController categoryController) {
+        this.categoryController = categoryController;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equalsIgnoreCase("Nuevo")) {
-            addressController.nuevoAction();
         } else if (e.getActionCommand().equalsIgnoreCase("Cancelar")) {
-            addressController.nuevoAction();
-        } else if (e.getActionCommand().equalsIgnoreCase("Grabar")) {
-            addressController.guardarAddress();
-        } else if (e.getActionCommand().equalsIgnoreCase("Actualizar")) {
-        } else if (e.getActionCommand().equalsIgnoreCase("Eliminar")) {
-        } else if (e.getActionCommand().equalsIgnoreCase("Buscar")) {
-        } else if (e.getActionCommand().equalsIgnoreCase("Salir")) {
-            addressController.cerrarAction();
-        }
 
+        } else if (e.getActionCommand().equalsIgnoreCase("Actualizar")) {
+        } else if (e.getActionCommand().equalsIgnoreCase("Grabar")) {
+        } else if (e.getActionCommand().equalsIgnoreCase("Adicionar")) {
+            categoryController.listaFilm();
+        } else if (e.getActionCommand().equalsIgnoreCase("Consultar")) {
+        } else if (e.getActionCommand().equalsIgnoreCase("Salir")) {
+        } else if (e.getActionCommand().equalsIgnoreCase("Eliminar")) {
+        }
     }
 
 }

@@ -24,6 +24,15 @@ public class Address {
     private Date lastUpdate;
 
     public Address() {
+        addressId = 0;
+        city = null;
+        city_id = 0;
+        this.address = "";
+        address2 = "";
+        district = "";
+        postalCode = "";
+        phone="";
+        lastUpdate = new Date();
     }
 
     public Address(int addressId, City city, String address, String address2, String district, String postalCode, String phone, Date lastUpdate) {

@@ -49,7 +49,7 @@ public class StaffListController {
         return modelo.getStoreDAO().consultarStore(store_id);
     }
 
-    public void obtenerDatosStaff()  {
+    public void obtenerDatosStaff() {
         Staff staff = null;
         Address address = null;
         Store store = null;
@@ -65,9 +65,17 @@ public class StaffListController {
         address = obtenerSeleccionAddress();
         modelocbxaAddress.setSelectedItem(address);
         frmStaff.setTexEmail(staff.getEmail());
-
         store = obtenerSeleccionStore();
         modelocbxaStore.setSelectedItem(store);
+        if (staff.isActive() == true) {
+            frmStaff.setRdbSi(true);
+        }
+        if (staff.isActive() == false) {
+            frmStaff.setRdbNo(true);
+        }
+        
+        frmStaff.setTexUserName(staff.getUsername());
+
         frmStaff.modificarAction();
     }
 

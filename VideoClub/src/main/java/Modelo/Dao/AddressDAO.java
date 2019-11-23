@@ -29,6 +29,25 @@ public class AddressDAO {
     public AddressDAO(ConnectionBD con) {
         this.con = con;
     }
+    
+    public int grtCodigo() {
+        String sql = "SELECT MAX(address_id) as total FROM address";
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        int cant = 0;
+        try {
+            st = con.getConexion().prepareStatement(sql);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                cant = rs.getInt("total") + 1;
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+        }
+        return cant;
+    }
+    
 
     public int grabarAddress(Address address) {
         PreparedStatement pstm;
