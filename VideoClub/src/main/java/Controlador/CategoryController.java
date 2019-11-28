@@ -8,7 +8,6 @@ package Controlador;
 import Eventos.CategoryListener;
 import Modelo.Dao.DAOManager;
 import Vista.FrmCategory;
-import Vista.ListModeloActorFilm;
 import javax.swing.JOptionPane;
 
 /**

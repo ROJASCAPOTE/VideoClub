@@ -26,15 +26,17 @@ public class FilmActorListener implements ActionListener {
         if (e.getActionCommand().equalsIgnoreCase("Nuevo")) {
             controller.nuevoAction();
         } else if (e.getActionCommand().equalsIgnoreCase("Cancelar")) {
-            controller.nuevoAction();
+//            controller.nuevoAction();
+            controller.cerrarAction();
         } else if (e.getActionCommand().equalsIgnoreCase("Actualizar")) {
             controller.modificarCity();
         } else if (e.getActionCommand().equalsIgnoreCase("Grabar")) {
             controller.guardarFilmActor();
-        } else if (e.getActionCommand().equalsIgnoreCase("Adicionar")) {
-            controller.listaFilm();
-        } else if (e.getActionCommand().equalsIgnoreCase("Consultar")) {
-            controller.consultarFilmActor();
+        } else if (e.getActionCommand().equalsIgnoreCase("Adicionar a la lista")) {
+            controller.adiccionarFilmActor();
+        } else if (e.getActionCommand().equalsIgnoreCase("Eliminar")) {
+            controller.sacarLista();
+        } else if (e.getActionCommand().equalsIgnoreCase("Film")) {
         } else if (e.getActionCommand().equalsIgnoreCase("Salir")) {
             controller.cerrarAction();
         } else if (e.getActionCommand().equalsIgnoreCase("Eliminar")) {

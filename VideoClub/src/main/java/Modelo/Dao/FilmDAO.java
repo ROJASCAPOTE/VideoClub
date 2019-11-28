@@ -81,6 +81,51 @@ public class FilmDAO {
         return rtdo;
     }
 
+    public ArrayList<Film> getDetallePelicula() {
+        LanguageDAO languageDAO = new LanguageDAO(con);
+        String sql = "SELECT * FROM film";
+        ResultSet resultado = null;
+        Statement st = null;
+        ArrayList<Film> listado = new ArrayList<>();
+        Film film = null;
+        try {
+            st = con.getConexion().createStatement();
+            resultado = st.executeQuery(sql);
+            while (resultado.next()) {
+                film = new Film();
+                film.setFilmId(resultado.getInt(1));
+                film.setTitle(resultado.getString(2));
+                film.setDescription(resultado.getString(3));
+                film.setReleaseYear(resultado.getDate(4));
+                film.setLanguageByLanguageId(languageDAO.buscarLanguage(resultado.getInt(5)));
+                film.setLanguageByOriginalLanguageId(languageDAO.buscarLanguage(resultado.getInt(6)));
+                film.setRentalDuration(resultado.getInt(7));
+                film.setRentalRate(resultado.getDouble(8));
+                film.setLength(resultado.getInt(9));
+                film.setReplacementCost(resultado.getDouble(10));
+                film.setRating(resultado.getString(11));
+                film.setSpecialFeatures(resultado.getString(12));
+                listado.add(film);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Código : "
+                    + ex.getErrorCode() + "\nError :" + ex.getMessage());
+        } finally {
+            try {
+                if (resultado != null) {
+                    resultado.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Código : "
+                        + ex.getErrorCode() + "\nError :" + ex.getMessage());
+            }
+        }
+        return listado;
+    }
+
     public Film getFilm(int codigo) {
         LanguageDAO languageDAO = new LanguageDAO(con);
         String sql = "SELECT * FROM film WHERE film_id =" + codigo + "";
@@ -161,15 +206,17 @@ public class FilmDAO {
         return listado;
     }
 
-    public ArrayList<Film> getListFilm(String nombre) {
+    public ArrayList<Film> getListFilm(int codigo, String nombre) {
         PreparedStatement pstm = null;
         ResultSet rs = null;
         ArrayList<Film> listado = new ArrayList<>();
         String sql = "";
-        if (nombre.equals("")) {
-            sql = "SELECT film_id, title, rental_duration, rental_rate, length, special_features FROM film";
+        if (!nombre.equals("")) {
+            sql = "SELECT film_id, title, release_year, rental_duration, rental_rate, length, rating FROM film WHERE  title like '%" + nombre + "%'";
+        } else if (codigo > 0) {
+            sql = "SELECT film_id, title, release_year, rental_duration, rental_rate, length, rating FROM film WHERE  film_id like '%" + codigo + "%'";
         } else {
-            sql = "SELECT film_id, title, rental_duration, rental_rate, length, special_features FROM film  WHERE title like '%" + nombre + "%'";
+            sql = "SELECT film_id, title, release_year, rental_duration, rental_rate, length, rating FROM film";
         }
         try {
             pstm = con.getConexion().prepareStatement(sql);
@@ -177,12 +224,13 @@ public class FilmDAO {
             Film film = null;
             while (rs.next()) {
                 film = new Film();
-                film.setFilmId(rs.getInt("film_id"));
-                film.setTitle(rs.getString("title"));
-                film.setRentalDuration(rs.getInt("rental_duration"));
-                film.setRentalRate(rs.getDouble("rental_rate"));
-                film.setLength(rs.getInt("length"));
-                film.setSpecialFeatures(rs.getString("special_features"));
+                film.setFilmId(rs.getInt(1));
+                film.setTitle(rs.getString(2));
+                film.setReleaseYear(rs.getDate(3));
+                film.setRentalDuration(rs.getInt(4));
+                film.setRentalRate(rs.getDouble(5));
+                film.setLength(rs.getInt(6));
+                film.setRating(rs.getString(7));
                 listado.add(film);
             }
 
@@ -210,7 +258,7 @@ public class FilmDAO {
         ResultSet rs = null;
         ArrayList<Film> listado = new ArrayList<>();
         try {
-            String sql = "select f.film_id, f.title, f.rental_duration, f.rental_rate, f.length, f.special_features  from film_category c, film f where c.film_id=f.film_id and c.category_id=" + categoria + "";
+            String sql = "select f.film_id, f.title, f.release_year, f.rental_duration, f.rental_rate, f.length, f.rating  from film_category c, film f where c.film_id=f.film_id and c.category_id=" + categoria + "";
             pstm = con.getConexion().prepareStatement(sql);
             rs = pstm.executeQuery();
             Film film = null;
@@ -218,10 +266,11 @@ public class FilmDAO {
                 film = new Film();
                 film.setFilmId(rs.getInt(1));
                 film.setTitle(rs.getString(2));
-                film.setRentalDuration(rs.getInt(3));
-                film.setRentalRate(rs.getDouble(4));
-                film.setLength(rs.getInt(5));
-                film.setSpecialFeatures(rs.getString(6));
+                film.setReleaseYear(rs.getDate(3));
+                film.setRentalDuration(rs.getInt(4));
+                film.setRentalRate(rs.getDouble(5));
+                film.setLength(rs.getInt(6));
+                film.setRating(rs.getString(7));
                 listado.add(film);
             }
 
@@ -279,24 +328,48 @@ public class FilmDAO {
         }
         return film;
     }
-//public producto getProducto(String nombre) {
-//        producto p = new producto();
-//        String q = "SELECT * FROM tproducto WHERE p_descripcion = '" + nombre + "' ";
-//        try {
-//            PreparedStatement pstm = this.getConexion().prepareStatement(q);
-//            ResultSet res = pstm.executeQuery();
-//            while (res.next()) {
-//                p.setId(res.getString("p_id"));
-//                p.setDescripcion(res.getString("p_descripcion"));
-//                p.setPrecio(res.getFloat("p_preciov"));
-//                p.setStock(res.getInt("p_stock"));
-//                p.setCategoria(res.getString("id_categoria"));
-//            }
-//            res.close();
-//        } catch (SQLException e) {
-//            System.err.println(e.getMessage());
-//        }
-//        return p;
-//    }
 
+    public Object[][] getTablaCatalogoPelicula() {
+        LanguageDAO ldao = new LanguageDAO(con);
+        int registros = 0;
+        String sql = "SELECT film_id, title, release_year, language_id, original_language_id, rental_duration, rental_rate, length, rating FROM film  ORDER BY film_id ASC";
+        String cantidad = "Select count(*) as total from film";
+        PreparedStatement pstm = null;
+        ResultSet res = null;
+        try {
+            pstm = con.getConexion().prepareStatement(cantidad);
+            res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+            pstm.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        Object[][] data = new String[registros][8];
+        PreparedStatement pst = null;
+        ResultSet resp = null;
+        int i = 0;
+        String idioma = "";
+        try {
+            pst = con.getConexion().prepareStatement(sql);
+            resp = pst.executeQuery();
+            while (resp.next()) {
+                data[i][0] = resp.getString(1);
+                data[i][1] = resp.getString(2);
+                data[i][2] = resp.getString(3);
+                data[i][3] = resp.getString(4) + ", " + resp.getString(5);
+                data[i][4] = resp.getString(6);
+                data[i][5] = resp.getString(7);
+                data[i][6] = resp.getString(8);
+                data[i][7] = resp.getString(9);
+                i++;
+            }
+            resp.close();
+            pst.close();
+        } catch (SQLException e) {
+        }
+        return data;
+    }
 }

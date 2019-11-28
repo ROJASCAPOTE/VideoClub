@@ -10,12 +10,13 @@ import Modelo.Actor;
 import Modelo.Dao.DAOManager;
 import Modelo.Film;
 import Modelo.FilmActor;
+import ModeloGUI.ModeloFilmActor;
 import Vista.FrmFilmActor;
-import Vista.ListFilActorModelo;
-import Vista.ListModelFilm;
-import Vista.ListModeloActorFilm;
+
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,98 +27,83 @@ public class FilmActorController {
 
     private FrmFilmActor vista;
     private DAOManager modelo;
-    private ArrayList<Film> listaFilm;
     private ArrayList<FilmActor> filmActorLista;
-    private ListModeloActorFilm modeloActorFilm;
-    private ListModelFilm modeloFilm;
-    private DefaultListModel model;
-    private ListFilActorModelo modeloFilmActor;
+    private Film film;
+    private Map filmActor = new HashMap();
+    private ModeloFilmActor modeloFilmActor;
 
-    public FilmActorController(FrmFilmActor vista, DAOManager modelo) {
+    public FilmActorController(FrmFilmActor vista, DAOManager modelo, Film film) {
         this.vista = vista;
         this.modelo = modelo;
-        this.listaFilm = new ArrayList();
+        this.film = film;
         this.filmActorLista = new ArrayList();
         vista.addListenerNuevo(new FilmActorListener(this));
         vista.addListenerBtnModificar(new FilmActorListener(this));
         vista.addListenerCerrar(new FilmActorListener(this));
-        vista.addListenerBtnConsultar(new FilmActorListener(this));
-        vista.addListenerBtnAdicionar(new FilmActorListener(this));
-        vista.addListenerBtnEliminar(new FilmActorListener(this));
+        vista.addListenerBtnAdiccionar(new FilmActorListener(this));
+        vista.addListenerBtnSacarLista(new FilmActorListener(this));
+        vista.setCodigoPelicula(film);
         this.vista.activarControles(false);
-        ArrayList<Film> lista;
-        lista = modelo.getFilmDAO().listadoFilm();
-        modeloFilm = new ListModelFilm(modelo, lista);
-        vista.setModelo(modeloFilm);
 
         ArrayList<Actor> listadoActores;
         listadoActores = modelo.getActorDAO().listadoActores();
         vista.cargarActores(listadoActores);
     }
 
-    public void listaFilm() {
-        int selection = vista.getListaFilm().getSelectedIndex();
-        if (selection != -1) {
-            Film codigo = modeloFilm.getFilm(selection);
-            Film film = this.modelo.getFilmDAO().buscarFilm(codigo.getFilmId());
-            listFilmActor(film);
-            adiccionarFilmActor(film);
+    public void adiccionarFilmActor() {
+        FilmActor actorFilm = new FilmActor();
+        int seleccion = vista.getCobActores().getSelectedIndex();
+        if (seleccion == 0) {
+            vista.gestionMensajes("Seleccione un actor",
+                    "Confirmación", JOptionPane.ERROR_MESSAGE);
         } else {
-            vista.gestionMensajes("Debe seleccionar una pelicula",
+            Actor actor = (Actor) vista.getCobActores().getSelectedItem();
+            if (actor != null) {
+                FilmActor filmAc = buscarItemFilm(actor.getActorId());
+                if (filmAc == null) {
+                    actorFilm.setFilm(film);
+                    actorFilm.setActor_id(actor);
+                    this.filmActorLista.add(actorFilm);
+                    modeloFilmActor = new ModeloFilmActor(filmActorLista);
+                    vista.getListFilmActor().setModel(modeloFilmActor);
+                } else {
+                    vista.gestionMensajes("El actor ya esta en la lista de actores ",
+                            "Confirmación", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                vista.gestionMensajes("Seleccione un actor",
+                        "Confirmación", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    public void sacarLista() {
+        int selectedIndex = vista.getListFilmActor().getSelectedIndex();
+        if (selectedIndex != -1) {
+            modeloFilmActor.eliminar(selectedIndex);
+            vista.getListFilmActor().setModel(modeloFilmActor);
+        } else {
+            vista.gestionMensajes("Seleccione una categoria para sacar de la lista",
                     "Confirmación", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public void listFilmActor(Film film) {
-        modeloActorFilm = new ListModeloActorFilm();
-        Film unItem = buscarItemFilm(film.getTitle());
-        if (unItem == null) {
-            listaFilm.add(film);
-            modeloActorFilm.addElement(listaFilm);
-            vista.getDetalleFilmActor().setModel(modeloActorFilm);
-            vista.setModelo(modeloFilm);
-            seleccionar(listaFilm.size() - 1);
-        } else {
-            modeloActorFilm.addElement(listaFilm);
-            vista.getDetalleFilmActor().setModel(modeloActorFilm);
-            vista.setModelo(modeloFilm);
-            seleccionar(listaFilm.size() - 1);
-        }
-    }
-
-    public void adiccionarFilmActor(Film film) {
-        FilmActor filmActor = null;
-        Actor actor = (Actor) vista.getCobActores().getSelectedItem();
-        filmActor = new FilmActor(actor, film);
-        filmActorLista.add(filmActor);
-
-    }
-
     public void seleccionar(int seleccionado) {
-        vista.getDetalleFilmActor().setSelectedIndex(seleccionado);
-        vista.getDetalleFilmActor().ensureIndexIsVisible(seleccionado);
+        vista.getListFilmActor().setSelectedIndex(seleccionado);
+        vista.getListFilmActor().ensureIndexIsVisible(seleccionado);
     }
 
-    public void selecionarPelicula(int seleccionado) {
-        vista.getListaFilm().setSelectedIndex(seleccionado);
-        vista.getListaFilm().ensureIndexIsVisible(seleccionado);
-    }
-
-    public void refrescarLista() {
-        vista.getDetalleFilmActor().setSelectedIndex(0);
-    }
-
-    public Film buscarItemFilm(String title) {
+    public FilmActor buscarItemFilm(int codigo) {
         boolean encontrado = false;
-        Film item = null;
+        FilmActor item = null;
 
         // �ndice para el recorrido del arreglo
         int i = 0;
-        int totalItems = listaFilm.size();
+        int totalItems = filmActorLista.size();
         // Mientras no encuentre el libro en un �tem
         while (i < totalItems && !encontrado) {
-            item = listaFilm.get(i);
-            if (item.getTitle().equals(title)) {
+            item = filmActorLista.get(i);
+            if (item.getActor_id().getActorId() == codigo) {
                 encontrado = true;
             }
             i++;
@@ -129,112 +115,42 @@ public class FilmActorController {
         }
     }
 
-    public void consultarFilmActor() {
-        Actor actor = (Actor) vista.getCobActores().getSelectedItem();
-        filmActorLista = modelo.getFilmActorDAO().listadoFilmActor(actor.getActorId());
-        modeloFilmActor = new ListFilActorModelo(filmActorLista);
-        vista.getDetalleFilmActor().setModel(modeloFilmActor);
-        vista.modificarAction();
-        vista.BtnEliminar();
-    }
-
     public void guardarFilmActor() {
-        if (listaFilm.size() > 0) {
+        if (filmActorLista.size() > 0) {
 
             int resultado = 0;
-            resultado = modelo.getFilmActorDAO().grabarFilmActor(filmActorLista);
-            if (resultado == 1) {
-                vista.gestionMensajes("Registro Grabado con éxito",
-                        "Confirmación", JOptionPane.INFORMATION_MESSAGE);
-                vista.activarControles(false);
-                vista.nuevoAction();
-                vista.getDetalleFilmActor().setModel(new ListModeloActorFilm());
-                this.listaFilm.clear();
-                this.filmActorLista.clear();
-            } else {
-                vista.gestionMensajes("Ya esta registrado el actor de la pelicula",
-                        "Confirmación", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
-
-    public void modificarCity() {
-        FilmActor filmActor = null;
-        int resultado = 0;
-        int selection = vista.getListaFilm().getSelectedIndex();
-        int detalle = vista.getDetalleFilmActor().getSelectedIndex();
-        if (selection != -1 && detalle != -1) {
-            Actor actor = (Actor) vista.getCobActores().getSelectedItem();
-            Film codigo = modeloFilm.getFilm(selection);
-            FilmActor filmA = (FilmActor) modeloFilmActor.getElementAt(detalle);
-            filmActor = new FilmActor(actor, codigo);
-            resultado = modelo.getFilmActorDAO().modificarFilmActor(filmA, filmActor);
-            if (resultado == 1) {
-                vista.gestionMensajes(
-                        "Actualización exitosa",
-                        "Confirmación ",
-                        JOptionPane.INFORMATION_MESSAGE);
-
-                vista.activarControles(false);
-                vista.nuevoAction();
-                vista.limpiarCampos();
-                consultarFilmActor();
-                vista.setModelo(modeloFilm);
-            } else {
-                vista.gestionMensajes(
-                        "Actualización Falida",
-                        "Confirmación ",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-        } else {
-            vista.gestionMensajes(
-                    "Seleccione una pelicula",
-                    "Confirmación ",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-
-    }
-
-    public void borrarFilmActor() {
-        int detalle = vista.getDetalleFilmActor().getSelectedIndex();
-        System.out.println("Controlador.FilmActorController.borrarFilmActor()" + detalle);
-        if (detalle == -1) {
-            vista.gestionMensajes(
-                    "Por favor seleccione Film actor",
-                    "Mensaje de Advertencia ",
-                    JOptionPane.ERROR_MESSAGE);
-        } else {
-            FilmActor filmA = (FilmActor) modeloFilmActor.getElementAt(detalle);
             int respuesta = JOptionPane.showConfirmDialog(null,
-                    "¿Desea Eliminar la comuna de codigo : "
-                    + filmA.getActor_id().getActorId() + "," + filmA.getFilm().getFilmId() + " ?",
+                    "¿Desea Guardar",
                     "Confirmación de Acción", JOptionPane.YES_NO_OPTION);
-
+            
             if (respuesta == JOptionPane.YES_OPTION) {
-                int codigo = modelo.getFilmActorDAO().borrarFilmActor(filmA);
-                if (codigo == 1) {
-                    JOptionPane.showMessageDialog(null,
-                            "Registro Borrado con éxtio",
-                            "Confirmación de acción",
-                            JOptionPane.INFORMATION_MESSAGE);
+                resultado = modelo.getFilmActorDAO().grabarFilmActor(filmActorLista);
+                if (resultado == 1) {
+                    vista.gestionMensajes("Registro Grabado con éxito",
+                            "Confirmación", JOptionPane.INFORMATION_MESSAGE);
                     vista.activarControles(false);
                     vista.nuevoAction();
-                    vista.limpiarCampos();
-                    consultarFilmActor();
+                    vista.getListFilmActor().setModel(new DefaultComboBoxModel());
+                    this.filmActorLista.clear();
+                    vista.cerrarAction();
                 } else {
-                    JOptionPane.showMessageDialog(null,
-                            "Error al borrar",
-                            "Confirmación de acción",
-                            JOptionPane.ERROR_MESSAGE);
+                    vista.gestionMensajes("Ya esta registrado el actor de la pelicula",
+                            "Confirmación", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
     }
 
+    public void modificarCity() {
+
+    }
+
+    public void borrarFilmActor() {
+
+    }
+
     public void nuevoAction() {
         vista.nuevoAction();
-        vista.getDetalleFilmActor().setModel(new ListModeloActorFilm());
-        this.listaFilm.clear();
         this.filmActorLista.clear();
     }
 

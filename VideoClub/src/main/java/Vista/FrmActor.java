@@ -209,7 +209,7 @@ public class FrmActor extends javax.swing.JInternalFrame {
                     .addComponent(textIdActor)
                     .addComponent(textFirsName)
                     .addComponent(texLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(237, Short.MAX_VALUE))
+                .addContainerGap(447, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

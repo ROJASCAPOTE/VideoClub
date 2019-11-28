@@ -1,4 +1,4 @@
-package Vista;
+package ModeloGUI;
 
 import Modelo.Film;
 import java.util.ArrayList;
@@ -27,6 +27,7 @@ public class ListModeloActorFilm extends AbstractListModel {
             films.add(film);
         }
     }
+    
 
     public void removeAllElements() {
         for (int i = 0; i < films.size(); i++) {

@@ -5,11 +5,14 @@
  */
 package Vista;
 
+import Controlador.AddressController;
 import Modelo.Address;
 import Modelo.Customer;
+import Modelo.Dao.DAOManager;
 import Modelo.Store;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -22,9 +25,15 @@ import javax.swing.JOptionPane;
 public class FrmCustomer extends javax.swing.JInternalFrame {
 
     private Customer customer;
+    private DAOManager manager;
+    private Address address;
 
     public FrmCustomer() {
         initComponents();
+    }
+
+    public void setManager(DAOManager manager) {
+        this.manager = manager;
     }
 
     public void salveData() {
@@ -39,7 +48,6 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
         customer.setFirstName(textFirsName.getText());
         customer.setLastName(textLastName.getText());
         customer.setEmail(textEmail.getText());
-        Address address = (Address) combAddress.getSelectedItem();
         customer.setAddress(address);
         if (rdbSi.isSelected()) {
             active = true;
@@ -51,8 +59,6 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
     public Customer getCustomer() {
         return customer;
     }
-    
-    
 
     public void customerId(int codigo) {
         String numCadena = String.valueOf(codigo);
@@ -68,27 +74,30 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
         cmbStore.setModel(mod);
     }
 
-    public void cargarDireccioneCustomer(ArrayList<Address> ListAddress) {
-        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
-        for (Object direcciones : ListAddress) {
-            modelo.addElement(direcciones);
-        }
-        combAddress.setModel(modelo);
-    }
-
+//    public void cargarDireccioneCustomer(ArrayList<Address> ListAddress) {
+//        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+//        modelo.addElement("Select Address");
+//        for (Object direcciones : ListAddress) {
+//            modelo.addElement(direcciones);
+//        }
+//        combAddress.setModel(modelo);
+//    }
+//    
+//    public void cargarDireccioneCustomer() {
+//        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+//        combAddress.setModel(modelo);
+//    }
+//    
     public void mostrarCustomer(Customer c) {
         DefaultComboBoxModel modeloStore;
         modeloStore = (DefaultComboBoxModel) getCmbStore().getModel();
-
-        DefaultComboBoxModel modeloAddress;
-        modeloAddress = (DefaultComboBoxModel) getCombAddress().getModel();
 
         String customer_id = String.valueOf(c.getCustomerId());
         textCustomerId.setText(customer_id);
         modeloStore.setSelectedItem(c.getStore());
         textFirsName.setText(c.getFirstName());
         textLastName.setText(c.getLastName());
-        modeloAddress.setSelectedItem(c.getAddress());
+        textAddess.setText(c.getAddress().getAddress());
         textEmail.setText(c.getEmail());
         if (c.isActive() == true) {
             rdbSi.setSelected(true);
@@ -99,12 +108,19 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
 
     }
 
-    public JComboBox<String> getCmbStore() {
-        return cmbStore;
+    public void setAddresCustomer(Address address) {
+        this.address = address;
+        textAddess.setText(address.getAddress());
     }
 
-    public JComboBox<String> getCombAddress() {
-        return combAddress;
+    public Address getAddress() {
+        return address;
+    }
+    
+    
+
+    public JComboBox<String> getCmbStore() {
+        return cmbStore;
     }
 
     public void addListenerNuevo(ActionListener listenerCustomer) {
@@ -126,9 +142,11 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
     public void addListenerBtnEliminar(ActionListener listenerCustomer) {
         btnEliminar.addActionListener(listenerCustomer);
     }
+
     public void gestionMensajes(String mensaje, String titulo, int icono) {
         JOptionPane.showMessageDialog(this, mensaje, titulo, icono);
     }
+
     public void cerrarAction() {
         dispose();
     }
@@ -138,7 +156,8 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
         textFirsName.setText("");
         textLastName.setText("");
         textEmail.setText("");
-        combAddress.setSelectedIndex(0);
+        textAddess.setText("");
+        address = null;
         rdbSi.setSelected(true);
     }
 
@@ -148,12 +167,14 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
         textFirsName.setEnabled(estado);
         textLastName.setEditable(estado);
         textEmail.setEditable(estado);
-        combAddress.setEnabled(estado);
+        textAddess.setEnabled(false);
         rdbSi.setEnabled(estado);
         rdbNo.setEnabled(estado);
+        textCreateData.setDate(Calendar.getInstance().getTime());
         textCreateData.setEnabled(estado);
         btnModificar.setEnabled(estado);
         btnEliminar.setEnabled(estado);
+        btnAdicionarAddress.setEnabled(estado);
     }
 
     public void activarControlesModificar(boolean estado) {
@@ -162,12 +183,14 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
         textFirsName.setEnabled(estado);
         textLastName.setEditable(estado);
         textEmail.setEditable(estado);
-        combAddress.setEnabled(estado);
+        textAddess.setEnabled(false);
         rdbSi.setEnabled(estado);
         rdbNo.setEnabled(estado);
+        textCreateData.setDate(Calendar.getInstance().getTime());
         textCreateData.setEnabled(estado);
         btnModificar.setEnabled(estado);
         btnEliminar.setEnabled(estado);
+        btnAdicionarAddress.setEnabled(estado);
 
     }
 
@@ -177,7 +200,7 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
             textFirsName.setText("");
             textLastName.setText("");
             textEmail.setText("");
-            combAddress.setSelectedIndex(0);
+            textAddess.setText("");
             rdbSi.setSelected(true);
             activarControles(true);
             btnNuevo.setText("Grabar");
@@ -193,6 +216,7 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
 
         } else {
             activarControles(false);
+            limpiarCampos();
             btnNuevo.setText("Nuevo");
             btnNuevo.setActionCommand("Nuevo");
             btnModificar.setText("Modificar");
@@ -240,13 +264,14 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         textCreateData = new com.toedter.calendar.JDateChooser();
-        combAddress = new javax.swing.JComboBox<>();
         rdbSi = new javax.swing.JRadioButton();
         rdbNo = new javax.swing.JRadioButton();
         jLabel10 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         textIdentificacion = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        btnAdicionarAddress = new javax.swing.JButton();
+        textAddess = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
@@ -293,8 +318,6 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Create Date");
 
-        combAddress.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         rdbSi.setBackground(new java.awt.Color(102, 102, 102));
         buttonGroup1.add(rdbSi);
         rdbSi.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -321,6 +344,15 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        btnAdicionarAddress.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\buscar.png")); // NOI18N
+        btnAdicionarAddress.setText(" ");
+        btnAdicionarAddress.setBorder(null);
+        btnAdicionarAddress.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarAddressActionPerformed(evt);
             }
         });
 
@@ -355,7 +387,10 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
                                 .addComponent(textFirsName)
                                 .addComponent(textLastName)
                                 .addComponent(textEmail)
-                                .addComponent(combAddress, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                    .addComponent(textAddess)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(btnAdicionarAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGap(18, 18, 18)
@@ -364,20 +399,22 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(textCustomerId, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
-                            .addComponent(textIdentificacion))))
-                .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(textIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(textCustomerId)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(279, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(textCustomerId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(textCustomerId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -400,8 +437,10 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
                     .addComponent(textEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(combAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel6)
+                        .addComponent(textAddess, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAdicionarAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(4, 4, 4)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rdbSi)
@@ -411,7 +450,7 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(textCreateData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addGap(38, 38, 38))
         );
 
         jPanel3.setBackground(new java.awt.Color(102, 102, 102));
@@ -529,8 +568,24 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnAdicionarAddressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarAddressActionPerformed
+        FrmAddess frmAddess = new FrmAddess();
+        AddressController addressController = new AddressController(frmAddess, manager);
+        addressController.setCustomer(this);
+        int x = (FrmPrincipal.jDesktopPane.getWidth() / 2) - frmAddess.getWidth() / 2;
+        int y = (FrmPrincipal.jDesktopPane.getHeight() / 2) - frmAddess.getHeight() / 2;
+        if (frmAddess.isShowing()) {
+            frmAddess.setLocation(x, y);
+        } else {
+            FrmPrincipal.jDesktopPane.add(frmAddess);
+            frmAddess.setLocation(x, y);
+            frmAddess.setVisible(true);
+        }
+    }//GEN-LAST:event_btnAdicionarAddressActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdicionarAddress;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
@@ -539,7 +594,6 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JComboBox<String> cmbStore;
-    private javax.swing.JComboBox<String> combAddress;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -555,6 +609,7 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JRadioButton rdbNo;
     private javax.swing.JRadioButton rdbSi;
+    private javax.swing.JTextField textAddess;
     private com.toedter.calendar.JDateChooser textCreateData;
     private javax.swing.JTextField textCustomerId;
     private javax.swing.JTextField textEmail;

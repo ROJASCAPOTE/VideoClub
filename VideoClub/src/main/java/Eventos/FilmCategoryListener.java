@@ -24,15 +24,19 @@ public class FilmCategoryListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equalsIgnoreCase("Nuevo")) {
+            categoryController.nuevoAction();
         } else if (e.getActionCommand().equalsIgnoreCase("Cancelar")) {
-
+//            categoryController.nuevoAction();
+            categoryController.cerrarAction();
         } else if (e.getActionCommand().equalsIgnoreCase("Actualizar")) {
         } else if (e.getActionCommand().equalsIgnoreCase("Grabar")) {
-        } else if (e.getActionCommand().equalsIgnoreCase("Adicionar")) {
-            categoryController.listaFilm();
+            categoryController.guardarFilmCategory();
+        } else if (e.getActionCommand().equalsIgnoreCase("Adiccionar")) {
+            categoryController.adiccionarFilmCategory();
         } else if (e.getActionCommand().equalsIgnoreCase("Consultar")) {
         } else if (e.getActionCommand().equalsIgnoreCase("Salir")) {
         } else if (e.getActionCommand().equalsIgnoreCase("Eliminar")) {
+            categoryController.sacarLista();
         }
     }
 

@@ -5,89 +5,131 @@
  */
 package Controlador;
 
-import Eventos.CategoryListener;
 import Eventos.FilmCategoryListener;
 import Modelo.Category;
 import Modelo.Dao.DAOManager;
 import Modelo.Film;
+import Modelo.FilmCategory;
+import ModeloGUI.ModeloFilmCategory;
 import Vista.FrmFilmCategory;
-import Vista.ListModelFilm;
-import Vista.ListModeloActorFilm;
+
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 public class FilmCategoryController {
 
     private FrmFilmCategory vista;
     private DAOManager modelo;
-    private ArrayList<Film> listaFilm;
-    private ListModelFilm modeloFilm;
-    private ListModeloActorFilm modeloActorFilm;
+    private ArrayList<FilmCategory> listaFilmCategory;
+    private Film film;
+    private ModeloFilmCategory modeloFilmCategory;
 
     public FilmCategoryController(FrmFilmCategory vista, DAOManager modelo) {
         this.vista = vista;
         this.modelo = modelo;
-        this.listaFilm = new ArrayList();
+        this.listaFilmCategory = new ArrayList();
         this.vista.addListenerNuevo(new FilmCategoryListener(this));
         this.vista.addListenerBtnModificar(new FilmCategoryListener(this));
         this.vista.addListenerCerrar(new FilmCategoryListener(this));
         this.vista.addListenerAdicionar(new FilmCategoryListener(this));
+        this.vista.addListenerBtnSacarLista(new FilmCategoryListener(this));
         this.vista.activarControles(false);
-        ArrayList<Film> lista;
-        lista = modelo.getFilmDAO().listadoFilm();
-        modeloFilm = new ListModelFilm(modelo, lista);
-        vista.setModelo(modeloFilm);
 
         ArrayList<Category> listadoCategory;
         listadoCategory = modelo.getCategoriaDAO().listadoCategory();
         vista.cargarCategory(listadoCategory);
     }
 
-    public void listaFilm() {
-        int selection = vista.getListaFilm().getSelectedIndex();
-        if (selection != -1) {
-            Film codigo = modeloFilm.getFilm(selection);
-            Film film = this.modelo.getFilmDAO().buscarFilm(codigo.getFilmId());
-            listFilmActor(film);
+    public void sacarLista() {
+        int selectedIndex = vista.getDetalleFilmCategory().getSelectedIndex();
+        if (selectedIndex != -1) {
+            modeloFilmCategory.eliminar(selectedIndex);
+            vista.getDetalleFilmCategory().setModel(modeloFilmCategory);
         } else {
-            vista.gestionMensajes("Debe seleccionar una pelicula",
+            vista.gestionMensajes("Seleccione una categoria para sacar de la lista",
                     "Confirmación", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public void listFilmActor(Film film) {
-        modeloActorFilm = new ListModeloActorFilm();
-        Film unItem = buscarItemFilm(film.getTitle());
-        if (unItem == null) {
-            listaFilm.add(film);
-            modeloActorFilm.addElement(listaFilm);
-            vista.getDetalleFilmCategory().setModel(modeloActorFilm);
-            vista.setModelo(modeloFilm);
-            seleccionar(listaFilm.size() - 1);
+    public void adiccionarFilmCategory() {
+        FilmCategory filmCategory = new FilmCategory();
+        int seleccion = vista.getConbCategory().getSelectedIndex();
+        if (seleccion == 0) {
+            vista.gestionMensajes("Seleccione una categoria",
+                    "Confirmación", JOptionPane.ERROR_MESSAGE);
         } else {
-            modeloActorFilm.addElement(listaFilm);
-            vista.getDetalleFilmCategory().setModel(modeloActorFilm);
-            vista.setModelo(modeloFilm);
-            seleccionar(listaFilm.size() - 1);
+            Category category = (Category) vista.getConbCategory().getSelectedItem();
+            if (category != null) {
+                FilmCategory fc = buscarItemFilmCategory(category.getCategoryId());
+                if (fc == null) {
+                    filmCategory.setFilm(film);
+                    filmCategory.setCategory_id(category);
+                    listaFilmCategory.add(filmCategory);
+                    modeloFilmCategory = new ModeloFilmCategory(listaFilmCategory);
+                    vista.getDetalleFilmCategory().setModel(modeloFilmCategory);
+                    seleccionar(listaFilmCategory.size() - 1);
+                } else {
+                    vista.gestionMensajes("La categoria ya se encuentra en la lista",
+                            "Confirmación", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                vista.gestionMensajes("Seleccione un actor",
+                        "Confirmación", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
+    public void guardarFilmCategory() {
+        if (listaFilmCategory.size() > 0) {
+
+            int resultado = 0;
+            resultado = modelo.getFilCategoryDAO().grabarFilmCategory(listaFilmCategory);
+            if (resultado == 1) {
+                vista.gestionMensajes("Registro Grabado con éxito",
+                        "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+                vista.activarControles(false);
+                vista.nuevoAction();
+                vista.getDetalleFilmCategory().setModel(new DefaultComboBoxModel());
+                vista.cerrarAction();
+                this.listaFilmCategory.clear();
+            } else {
+                vista.gestionMensajes("Ya esta registrado el actor de la pelicula",
+                        "Confirmación", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+////    public void listFilmActor(Film film) {
+////        modeloActorFilm = new ListModeloActorFilm();
+////        Film unItem = buscarItemFilm(film.getTitle());
+////        if (unItem == null) {
+////            listaFilm.add(film);
+////            modeloActorFilm.addElement(listaFilm);
+////            vista.getDetalleFilmCategory().setModel(modeloActorFilm);
+////            seleccionar(listaFilm.size() - 1);
+////        } else {
+////            modeloActorFilm.addElement(listaFilm);
+////            vista.getDetalleFilmCategory().setModel(modeloActorFilm);
+////            seleccionar(listaFilm.size() - 1);
+////        }
+////    }
     public void seleccionar(int seleccionado) {
         vista.getDetalleFilmCategory().setSelectedIndex(seleccionado);
         vista.getDetalleFilmCategory().ensureIndexIsVisible(seleccionado);
     }
 
-    public Film buscarItemFilm(String title) {
+    public FilmCategory buscarItemFilmCategory(int codigo) {
         boolean encontrado = false;
-        Film item = null;
+        FilmCategory item = null;
 
         // �ndice para el recorrido del arreglo
         int i = 0;
-        int totalItems = listaFilm.size();
+        int totalItems = listaFilmCategory.size();
         // Mientras no encuentre el libro en un �tem
         while (i < totalItems && !encontrado) {
-            item = listaFilm.get(i);
-            if (item.getTitle().equals(title)) {
+            item = listaFilmCategory.get(i);
+            if (item.getCategory_id().getCategoryId() == codigo) {
                 encontrado = true;
             }
             i++;
@@ -105,10 +147,20 @@ public class FilmCategoryController {
 
     public void nuevoAction() {
         vista.nuevoAction();
+        this.listaFilmCategory.clear();
     }
 
     public void cerrarAction() {
         vista.cerrarAction();
+    }
+
+    public void setFilm(Film film) {
+        this.film = film;
+        vista.setFilmCategory(film);
+    }
+
+    public Film getFilm() {
+        return film;
     }
 
 }

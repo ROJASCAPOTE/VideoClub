@@ -10,6 +10,7 @@ import Modelo.Address;
 import Modelo.City;
 import Modelo.Dao.DAOManager;
 import Vista.FrmAddess;
+import Vista.FrmCustomer;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -21,6 +22,7 @@ public class AddressController {
 
     private FrmAddess vista;
     private DAOManager modelo;
+    private FrmCustomer customer;
 
     public AddressController(FrmAddess vista, DAOManager modelo) {
         this.vista = vista;
@@ -36,9 +38,35 @@ public class AddressController {
         codigoAddress();
     }
 
+    public void setCustomer(FrmCustomer customer) {
+        this.customer = customer;
+    }
+
     public void codigoAddress() {
         int codigo = modelo.getAddressDAO().grtCodigo();
         vista.codigoAddress(codigo);
+    }
+
+    public void cargarDireccion() {
+        Address address = new Address();
+        address.setAddressId(Integer.parseInt(vista.getTexIDaddress()));
+        address.setAddress(vista.getTexAddress());
+        address.setAddress2(vista.getTexAddress2());
+        address.setDistrict(vista.getTexDistrict());
+        City city = (City) vista.getComCity().getSelectedItem();
+        address.setCity(city);
+        address.setPostalCode(vista.getTexCodigoPostal());
+        address.setPhone(vista.getTexPhone());
+        address.setLastUpdate(vista.getTexLastUpdate());
+        int respuesta = JOptionPane.showConfirmDialog(null,
+                "¿Desea crear la direccion      : "
+                + address.getAddress() + " ?",
+                "Confirmación de Acción", JOptionPane.YES_NO_OPTION);
+
+        if (respuesta == JOptionPane.YES_OPTION) {
+            customer.setAddresCustomer(address);
+            vista.cerrarAction();
+        }
     }
 
     public void guardarAddress() {
@@ -64,7 +92,6 @@ public class AddressController {
                 vista.activarControles(false);
                 vista.nuevoAction();
                 vista.limpiarCampos();
-                codigoAddress();
             }
         }
     }

@@ -7,8 +7,8 @@ package Controlador;
 
 import Modelo.Dao.DAOManager;
 import Modelo.Language;
+import ModeloGUI.LanguageModelo;
 import Vista.FrmLanguage;
-import Vista.LanguageModelo;
 import java.util.ArrayList;
 
 /**

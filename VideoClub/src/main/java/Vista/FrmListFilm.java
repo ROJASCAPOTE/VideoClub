@@ -6,6 +6,7 @@
 package Vista;
 
 import Modelo.Category;
+import ModeloGUI.FilmTableModel;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;

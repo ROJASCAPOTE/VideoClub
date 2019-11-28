@@ -11,13 +11,13 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class ActorDAO {
-    
+
     private ConnectionBD con;
-    
+
     public ActorDAO(ConnectionBD con) {
         this.con = con;
     }
-    
+
     public int grtCodigo() {
         String sql = "SELECT MAX(actor_id) as total FROM actor";
         PreparedStatement st = null;
@@ -35,7 +35,7 @@ public class ActorDAO {
         }
         return cant;
     }
-    
+
     public int grabarActor(Actor actor) {
         PreparedStatement pstm;
         pstm = null;
@@ -57,7 +57,7 @@ public class ActorDAO {
         }
         return rtdo;
     }
-    
+
     public Object[][] getTableActor() {
         int registros = 0;
         String sql = "SELECT * FROM actor ORDER BY actor_id ASC";
@@ -74,7 +74,7 @@ public class ActorDAO {
         } catch (SQLException e) {
             System.out.println(e);
         }
-        
+
         Object[][] data = new String[registros][3];
         PreparedStatement pst = null;
         ResultSet resp = null;
@@ -94,7 +94,7 @@ public class ActorDAO {
         }
         return data;
     }
-    
+
     public Object[][] getTableActores(String nombActor) {
         int registros = 0;
         String sql = "";
@@ -140,7 +140,6 @@ public class ActorDAO {
         return data;
     }
 
-    
     public Actor consultarActor(int codigo) {
         String sql = "SELECT * FROM actor WHERE actor_id =" + codigo + "";
         ResultSet resultado = null;
@@ -149,7 +148,7 @@ public class ActorDAO {
         try {
             st = con.getConexion().createStatement();
             resultado = st.executeQuery(sql);
-            
+
             if (resultado.next()) {
                 actor = new Actor();
                 actor.setActorId(resultado.getInt(1));
@@ -173,9 +172,9 @@ public class ActorDAO {
             }
         }
         return actor;
-        
+
     }
-    
+
     public ArrayList<Actor> listadoActores() {
         PreparedStatement pstm = null;
         ResultSet rs = null;
@@ -192,7 +191,44 @@ public class ActorDAO {
                 actor.setLastName(rs.getString(3));
                 listado.add(actor);
             }
-            
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Código : "
+                    + ex.getErrorCode() + "\nError :" + ex.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstm != null) {
+                    pstm.close();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Código : "
+                        + ex.getErrorCode() + "\nError :" + ex.getMessage());
+            }
+        }
+        return listado;
+    }
+
+    public ArrayList<Actor> getListFilmActor(int film_id) {
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        ArrayList<Actor> listado = new ArrayList<>();
+        try {
+            String sql = "SELECT c.actor_id, c.first_name, c.last_name, c.last_update FROM film_actor m,  film f, actor c\n"
+                    + "where m.film_id=f.film_id and m.actor_id=c.actor_id and m.film_id=" + film_id + "";
+            pstm = con.getConexion().prepareStatement(sql);
+            rs = pstm.executeQuery();
+            Actor actor = null;
+            while (rs.next()) {
+                actor = new Actor();
+                actor.setActorId(rs.getInt(1));
+                actor.setFirstName(rs.getString(2));
+                actor.setLastName(rs.getString(3));
+                listado.add(actor);
+            }
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Código : "
                     + ex.getErrorCode() + "\nError :" + ex.getMessage());

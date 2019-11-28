@@ -9,12 +9,9 @@ import Eventos.ActorListMouseListener;
 import Eventos.ActorTecladoListener;
 import Modelo.Actor;
 import Modelo.Dao.DAOManager;
-import Modelo.FilmActor;
+import ModeloGUI.ListModeloActorFilm;
 import Vista.FrmFilmActor;
 import Vista.FrmListActores;
-import Vista.ListFilActorModelo;
-import Vista.ListModeloActorFilm;
-import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 
 public class ActorListController {
@@ -55,8 +52,6 @@ public class ActorListController {
         int actor_id = Integer.parseInt((String) vista.getTablaActores().getValueAt(vista.getTablaActores().getSelectedRow(), 0));
         Actor actor = modelo.getActorDAO().consultarActor(actor_id);
         modeloActor.setSelectedItem(actor);
-        filmActor.modificarAction();
-
     }
 
    

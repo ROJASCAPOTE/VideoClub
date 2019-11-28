@@ -10,7 +10,7 @@ import Eventos.FilmMouseListener;
 import Modelo.Category;
 import Modelo.Dao.DAOManager;
 import Modelo.Film;
-import Vista.FilmTableModel;
+import ModeloGUI.FilmTableModel;
 import Vista.FrmFilm;
 import Vista.FrmListFilm;
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class FilmListController {
         this.vista.addaddKeyListenerBuscar(new CategoryFilmListListener(this));
         this.vista.addMouseListenerCountry(new FilmMouseListener(this));
         ArrayList<Film> lista;
-        lista = modelo.getFilmDAO().getListFilm("");
+        lista = modelo.getFilmDAO().getListFilm(0, "");
         filmTableModel = new FilmTableModel(lista);
         vista.setModel(filmTableModel);
 
@@ -61,10 +61,33 @@ public class FilmListController {
             vista.setModel(filmTableModel);
         }
     }
+    
+    public void buscarPorCodigoNombre() {
+        int codigo = 0;
+        String titulo = "";
+        String film_id = vista.getTextoNombreFilm();
+        try {
+            codigo = Integer.parseInt(film_id);
+        } catch (NumberFormatException e) {
+        }
+        if (codigo > 0) {
+            ArrayList<Film> listaPeliculas;
+            listaPeliculas = modelo.getFilmDAO().getListFilm(codigo, "");
+            filmTableModel = new FilmTableModel(listaPeliculas);
+            vista.setModel(filmTableModel);
+        } else {
+            titulo = vista.getTextoNombreFilm();
+            ArrayList<Film> listaPeliculas;
+            listaPeliculas = modelo.getFilmDAO().getListFilm(0, titulo);
+            filmTableModel = new FilmTableModel(listaPeliculas);
+            vista.setModel(filmTableModel);
+        }
+
+    }
 
     public void buscarPorNombreFilm() {
         String nombre = vista.getTextoNombreFilm();
-        ArrayList<Film> listNameFilm = modelo.getFilmDAO().getListFilm(nombre);
+        ArrayList<Film> listNameFilm = modelo.getFilmDAO().getListFilm(0, nombre);
         filmTableModel = new FilmTableModel(listNameFilm);
         vista.setModel(filmTableModel);
     }

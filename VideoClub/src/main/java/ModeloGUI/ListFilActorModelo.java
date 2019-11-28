@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Vista;
+package ModeloGUI;
 
+import Modelo.Actor;
 import Modelo.Dao.DAOManager;
-import Modelo.FilmActor;
 import java.util.ArrayList;
 import javax.swing.AbstractListModel;
 
@@ -16,12 +16,13 @@ import javax.swing.AbstractListModel;
  */
 public class ListFilActorModelo extends AbstractListModel {
 
-    private ArrayList<FilmActor> lista;
+    private ArrayList<Actor> lista;
     private DAOManager modelo;
 
-    public ListFilActorModelo(ArrayList<FilmActor> lista) {
+    public ListFilActorModelo(ArrayList<Actor> lista) {
         this.lista = lista;
     }
+
     @Override
     public int getSize() {
         return lista.size();
@@ -32,13 +33,12 @@ public class ListFilActorModelo extends AbstractListModel {
         return lista.get(index);
     }
 
-    public void addElement(FilmActor f) {
+    public void addElement(Actor f) {
         lista.add(f);
     }
-    
 
-    public void addElement(ArrayList<FilmActor> filmActors) {
-        for (FilmActor film : filmActors) {
+    public void addElement(ArrayList<Actor> actors) {
+        for (Actor film : actors) {
             lista.add(film);
         }
     }

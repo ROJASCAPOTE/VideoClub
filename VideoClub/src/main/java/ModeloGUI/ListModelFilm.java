@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Vista;
+package ModeloGUI;
 
+import Vista.*;
 import Modelo.Dao.DAOManager;
 import Modelo.Film;
 import java.util.ArrayList;

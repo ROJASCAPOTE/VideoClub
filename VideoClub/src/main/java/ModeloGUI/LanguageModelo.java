@@ -1,4 +1,4 @@
-package Vista;
+package ModeloGUI;
 
 import Modelo.Language;
 import java.util.ArrayList;

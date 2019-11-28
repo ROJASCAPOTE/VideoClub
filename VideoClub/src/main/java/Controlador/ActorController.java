@@ -47,6 +47,8 @@ public class ActorController {
         if (resultado == 1) {
             vista.gestionMensajes("Registro Grabado con éxito",
                     "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+            dtActores = modelo.getActorDAO().getTableActor();
+            vista.tableActores(dtActores);
             vista.activarControles(false);
             vista.nuevoAction();
             vista.limpiarCampos();
@@ -63,11 +65,14 @@ public class ActorController {
         Actor actor = modelo.getActorDAO().consultarActor(actor_id);
         vista.cargarDatosActor(actor);
         vista.modificarAction();
-        
+
     }
 
     public void nuevoAction() {
         vista.nuevoAction();
+        codigoActor();
+        dtActores = modelo.getActorDAO().getTableActor();
+        vista.tableActores(dtActores);
     }
 
     public void cerrarAction() {

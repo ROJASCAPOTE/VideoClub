@@ -36,9 +36,8 @@ public class CustomerController {
         listaTiendas = modelo.getStoreDAO().listadoStore();
         vista.cargarStore(listaTiendas);
 
-        ArrayList<Address> listadoDirecciones;
-        listadoDirecciones = modelo.getAddressDAO().listadoAddress();
-        vista.cargarDireccioneCustomer(listadoDirecciones);
+//        ArrayList<Address> listadoDirecciones;
+//        listadoDirecciones = modelo.getAddressDAO().listadoAddress();
 
         this.vista.activarControles(false);
         customerId();
@@ -123,7 +122,7 @@ public class CustomerController {
     public void eliminarCustomer() {
         int codigo = 0;
         vista.salveData();
-        if (vista.getCustomer().getCustomerId()==0) {
+        if (vista.getCustomer().getCustomerId() == 0) {
             vista.gestionMensajes(
                     "Ingrese el codigo del customer",
                     "Mensaje de Advertencia ",

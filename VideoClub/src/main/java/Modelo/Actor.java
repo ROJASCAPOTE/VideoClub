@@ -13,6 +13,9 @@ public class Actor {
 
     public Actor() {
         lastUpdate = new Date();
+        this.actorId = 0;
+        firstName = "";
+        lastName = "";
     }
 
     public Actor(int actorId, String firstName, String lastName, Date lastUpdate, ArrayList<Film> filmActors) {

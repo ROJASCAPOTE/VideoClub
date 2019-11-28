@@ -1,5 +1,6 @@
 package Modelo;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Film {
@@ -18,8 +19,12 @@ public class Film {
     private String specialFeatures;
     private Date lastUpdate;
 
+    private ArrayList<Actor> listActoresFilm;
+    private ArrayList<Category> listCategoryFilm;
+
     public Film() {
         lastUpdate = new Date();
+
     }
 
     public Film(Language languageByLanguageId, String title, int rentalDuration, double rentalRate, double replacementCost, Date lastUpdate) {
@@ -151,9 +156,25 @@ public class Film {
         this.lastUpdate = lastUpdate;
     }
 
+    public ArrayList<Actor> getListActoresFilm() {
+        return listActoresFilm;
+    }
+
+    public void setListActoresFilm(ArrayList<Actor> listActoresFilm) {
+        this.listActoresFilm = listActoresFilm;
+    }
+
+    public ArrayList<Category> getListCategoryFilm() {
+        return listCategoryFilm;
+    }
+
+    public void setListCategoryFilm(ArrayList<Category> listCategoryFilm) {
+        this.listCategoryFilm = listCategoryFilm;
+    }
+
     @Override
     public String toString() {
-        return filmId + " - " + title ;
+        return filmId + " - " + title;
     }
 
 }

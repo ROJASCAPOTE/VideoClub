@@ -5,25 +5,23 @@
  */
 package Eventos;
 
-import Controlador.FilmActorController;
+import Controlador.CatalogoPeliculasController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- *
- * @author ACER E5
- */
-public class ListFilmListener implements ActionListener {
+public class CatalogoPeliculasListener implements ActionListener {
 
-    private FilmActorController controller;
+    private CatalogoPeliculasController controller;
 
-    public ListFilmListener(FilmActorController controller) {
+    public CatalogoPeliculasListener(CatalogoPeliculasController controller) {
         this.controller = controller;
     }
-    
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equalsIgnoreCase("Consultar Todos")) {
+            controller.consultarCatalogoPeliculas();
+        }
     }
 
 }

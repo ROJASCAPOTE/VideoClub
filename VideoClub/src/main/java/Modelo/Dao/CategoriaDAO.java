@@ -91,6 +91,43 @@ public class CategoriaDAO {
         return listado;
     }
 
+    public ArrayList<Category> getFilmCategory(int film_id) {
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        ArrayList<Category> listado = new ArrayList<>();
+        try {
+            String sql = "SELECT c.category_id, c.name, c.last_update FROM film_category m,  film f, category c\n"
+                    + "where m.category_id=f.film_id and m.category_id=c.category_id and m.film_id=" + film_id + "";
+            pstm = con.getConexion().prepareStatement(sql);
+            rs = pstm.executeQuery();
+            Category category = null;
+            while (rs.next()) {
+                category = new Category();
+                category.setCategoryId(rs.getInt(1));
+                category.setName(rs.getString(2));
+                category.setLastUpdate(rs.getDate(3));
+                listado.add(category);
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Código : "
+                    + ex.getErrorCode() + "\nError :" + ex.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstm != null) {
+                    pstm.close();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Código : "
+                        + ex.getErrorCode() + "\nError :" + ex.getMessage());
+            }
+        }
+        return listado;
+    }
+
     public Object[][] getTableCategory() {
         int registros = 0;
         String sql = "SELECT * FROM category ORDER BY category_id ASC";

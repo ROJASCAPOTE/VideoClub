@@ -30,6 +30,6 @@ public class CategoryFilmListListener extends KeyAdapter  implements ActionListe
 
     @Override
     public void keyReleased(KeyEvent evento) {
-        controller.buscarPorNombreFilm();
+        controller.buscarPorCodigoNombre();
     }
 }

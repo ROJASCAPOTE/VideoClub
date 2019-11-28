@@ -5,7 +5,6 @@
  */
 package Modelo.Dao;
 
-import Modelo.Film;
 import Modelo.FilmActor;
 import Servisios.ConnectionBD;
 import java.sql.PreparedStatement;
@@ -15,6 +14,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Map;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -57,25 +58,7 @@ public class FilmActorDAO {
         return rtdo;
     }
 
-    public int modificarFilmActor(FilmActor fa, FilmActor filmActor) {
-        PreparedStatement pstm;
-        pstm = null;
-        int rtdo;
-        rtdo = 0;
-        try {
-            String sql = "UPDATE film_actor SET actor_id=?, film_id=? WHERE actor_id=? and film_id=?";
-            pstm = con.getConexion().prepareStatement(sql);
-            pstm.setInt(1, filmActor.getActor_id().getActorId());
-            pstm.setInt(2, filmActor.getFilm().getFilmId());
-            pstm.setInt(3, fa.getActor_id().getActorId());
-            pstm.setInt(4, fa.getFilm().getFilmId());
-            rtdo = pstm.executeUpdate();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Código : "
-                    + ex.getErrorCode() + "\nError :" + ex.getMessage());
-        }
-        return rtdo;
-    }
+    
 
     public int borrarFilmActor(FilmActor filmActor) {
         PreparedStatement pstm = null;
@@ -183,7 +166,24 @@ public class FilmActorDAO {
         return filmActor;
     }
 
-    public static void main(String[] args) {
+    public DefaultComboBoxModel ListaFilmActor(Map carrito_compra) {
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        Iterator it = carrito_compra.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry e = (Map.Entry) it.next();
+            FilmActor itm = (FilmActor) e.getValue();
+            model.addElement(itm.getActor_id().getActorId() + " | " + itm.getActor_id().getFirstName() + "   " + itm.getActor_id().getLastName() + " | " + itm.getFilm().getFilmId() + "  |   " + itm.getFilm().getTitle());
+        }
+        return model;
+    }
 
+    public DefaultComboBoxModel ListaFilmActor(ArrayList<FilmActor> filmActors) {
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        Iterator<FilmActor> FilmIterator = filmActors.iterator();
+        while (FilmIterator.hasNext()) {
+            FilmActor elemento = FilmIterator.next();
+            model.addElement(elemento.getActor_id().getActorId() + "   |    " + elemento.getActor_id().getFirstName() + "       " + elemento.getActor_id().getLastName());
+        }
+        return model;
     }
 }

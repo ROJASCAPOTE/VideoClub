@@ -5,6 +5,8 @@
  */
 package Vista;
 
+import ModeloGUI.LanguageModelo;
+
 /**
  *
  * @author ACER E5
