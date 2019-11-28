@@ -11,6 +11,7 @@ import Modelo.Category;
 import Modelo.Dao.DAOManager;
 import Modelo.Film;
 import ModeloGUI.FilmTableModel;
+import Vista.FrmCatalogoInventory;
 import Vista.FrmFilm;
 import Vista.FrmListFilm;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class FilmListController {
     private DAOManager modelo;
     private FilmTableModel filmTableModel;
     private FrmFilm frmFilm;
+    private FrmCatalogoInventory catalogoInventory;
 
     public FilmListController(FrmListFilm vista, DAOManager modelo) {
         this.vista = vista;
@@ -48,6 +50,10 @@ public class FilmListController {
         this.frmFilm = frmFilm;
     }
 
+    public FrmFilm getFrmFilm() {
+        return frmFilm;
+    }
+
     public void buscarFilm() {
         Category category = (Category) vista.getCombCategory().getSelectedItem();
         ArrayList<Film> listaFilmCategoria = modelo.getFilmDAO().getListFilmCategoria(category.getCategoryId());
@@ -61,7 +67,7 @@ public class FilmListController {
             vista.setModel(filmTableModel);
         }
     }
-    
+
     public void buscarPorCodigoNombre() {
         int codigo = 0;
         String titulo = "";
@@ -83,6 +89,22 @@ public class FilmListController {
             vista.setModel(filmTableModel);
         }
 
+    }
+
+    public FrmCatalogoInventory getCatalogoInventory() {
+        return catalogoInventory;
+    }
+
+    public void setCatalogoInventory(FrmCatalogoInventory catalogoInventory) {
+        this.catalogoInventory = catalogoInventory;
+    }
+
+    public void optenerVista() {
+        if (getFrmFilm() != null) {
+            seleccionarPelicula();
+        } else if (getCatalogoInventory() != null) {
+
+        }
     }
 
     public void buscarPorNombreFilm() {

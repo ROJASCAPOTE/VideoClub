@@ -23,7 +23,7 @@ public class FilmMouseListener extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent evento) {
-        controller.seleccionarPelicula();
+        controller.optenerVista();
         controller.cerrarAction();
     }
 }

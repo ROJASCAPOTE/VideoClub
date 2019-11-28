@@ -6,15 +6,11 @@
 package Vista;
 
 import Controlador.ActorController;
-import Controlador.FilmActorController;
-import Controlador.AddressController;
 import Controlador.CatalogoPeliculasController;
 import Controlador.CategoryController;
 import Controlador.CityController;
 import Controlador.CountryController;
 import Controlador.CustomerController;
-import Controlador.FilmCategoryController;
-import Controlador.FilmController;
 import Controlador.LanguageController;
 import Controlador.StaffController;
 import Controlador.StoreController;
@@ -53,7 +49,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     public void category() {
         FrmCategory frmCategory = new FrmCategory();
-        CategoryController categoryController=new CategoryController(frmCategory, manager);
+        CategoryController categoryController = new CategoryController(frmCategory, manager);
         int x = (jDesktopPane.getWidth() / 2) - frmCategory.getWidth() / 2;
         int y = (jDesktopPane.getHeight() / 2) - frmCategory.getHeight() / 2;
         if (frmCategory.isShowing()) {
@@ -126,7 +122,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jSeparator17 = new javax.swing.JPopupMenu.Separator();
         jMenuItem3 = new javax.swing.JMenuItem();
         jSeparator18 = new javax.swing.JPopupMenu.Separator();
-        jMenu3 = new javax.swing.JMenu();
+        jMenuItem8 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -294,10 +290,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
         helpMenu.add(jMenuItem3);
         helpMenu.add(jSeparator18);
 
-        jMenu3.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\Inventary4.png")); // NOI18N
-        jMenu3.setText("Inventory");
-        jMenu3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        helpMenu.add(jMenu3);
+        jMenuItem8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jMenuItem8.setText("Inventory");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        helpMenu.add(jMenuItem8);
 
         menuBar.add(helpMenu);
 
@@ -426,6 +426,21 @@ public class FrmPrincipal extends javax.swing.JFrame {
         language();
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        FrmCatalogoInventory frmInventory = new FrmCatalogoInventory();
+        frmInventory.setManager(manager);
+        int x = (jDesktopPane.getWidth() / 2) - frmInventory.getWidth() / 2;
+        int y = (jDesktopPane.getHeight() / 2) - frmInventory.getHeight() / 2;
+
+        if (frmInventory.isShowing()) {
+            frmInventory.setLocation(x, y);
+        } else {
+            jDesktopPane.add(frmInventory);
+            frmInventory.setLocation(x, y);
+            frmInventory.setVisible(true);
+        }
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
@@ -435,7 +450,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu helpMenu;
     public static javax.swing.JDesktopPane jDesktopPane;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
@@ -443,6 +457,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JSeparator jSeparator15;
     private javax.swing.JPopupMenu.Separator jSeparator17;
