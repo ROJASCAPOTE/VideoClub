@@ -35,4 +35,6 @@ public interface DAOManager {
 
     FilmCategoryDAO getFilCategoryDAO();
 
+    InventoryDAO getInventoryDAO();
+
 }

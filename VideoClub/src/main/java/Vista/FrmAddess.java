@@ -29,6 +29,7 @@ public class FrmAddess extends javax.swing.JInternalFrame {
         texIDaddress.setText(numCadena);
     }
     
+    
     public DAOManager getManager() {
         return manager;
     }
@@ -136,6 +137,8 @@ public class FrmAddess extends javax.swing.JInternalFrame {
     public void cerrarAction() {
         dispose();
     }
+    
+    
     
     public void limpiarCampos() {
         texAddress.setText("");
@@ -246,7 +249,6 @@ public class FrmAddess extends javax.swing.JInternalFrame {
         texPhone = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         texLastUpdate = new com.toedter.calendar.JDateChooser();
-        jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
@@ -303,9 +305,6 @@ public class FrmAddess extends javax.swing.JInternalFrame {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Last Update");
 
-        jButton1.setText("Buscar");
-        jButton1.setBorder(null);
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -330,10 +329,7 @@ public class FrmAddess extends javax.swing.JInternalFrame {
                     .addComponent(texCodigoPostal)
                     .addComponent(texPhone)
                     .addComponent(texLastUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(texIDaddress, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(texIDaddress))
                 .addContainerGap(109, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -342,8 +338,7 @@ public class FrmAddess extends javax.swing.JInternalFrame {
                 .addGap(30, 30, 30)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(texIDaddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -463,7 +458,6 @@ public class FrmAddess extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> comCity;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

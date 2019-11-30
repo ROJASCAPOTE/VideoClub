@@ -29,11 +29,14 @@ public class FilmListener implements ActionListener {
             controller.nuevoAction();
         } else if (e.getActionCommand().equalsIgnoreCase("Grabar")) {
             controller.guardarFilm();
-        } else if (e.getActionCommand().equalsIgnoreCase("Adicionar")) {
+        } else if (e.getActionCommand().equalsIgnoreCase("Actualizar")) {
+            controller.actualizarFilm();
         } else if (e.getActionCommand().equalsIgnoreCase("Buscar")) {
             controller.buscarFilm();
+        } else if (e.getActionCommand().equalsIgnoreCase("Eliminar")) {
+            controller.eliminarFilm();
         } else if (e.getActionCommand().equalsIgnoreCase("Salir")) {
-
+            controller.cerrarAction();
         }
     }
 

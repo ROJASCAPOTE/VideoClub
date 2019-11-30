@@ -103,7 +103,9 @@ public class FilmListController {
         if (getFrmFilm() != null) {
             seleccionarPelicula();
         } else if (getCatalogoInventory() != null) {
-
+       
+        }else{
+            vista.inventory();
         }
     }
 

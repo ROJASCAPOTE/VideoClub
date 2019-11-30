@@ -5,10 +5,13 @@
  */
 package Vista;
 
+import Modelo.Actor;
 import Modelo.Category;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,7 +26,7 @@ public class FrmCategory extends javax.swing.JInternalFrame {
         initComponents();
     }
 
-    public void salveDate() {
+    public void salveData() {
         if (category == null) {
             category = new Category();
         }
@@ -40,6 +43,10 @@ public class FrmCategory extends javax.swing.JInternalFrame {
 
     public Category getCategory() {
         return category;
+    }
+
+    public JTable getTablaCategory() {
+        return tablaCategory;
     }
 
     public void cerrarAction() {
@@ -71,12 +78,27 @@ public class FrmCategory extends javax.swing.JInternalFrame {
         btnModificar.addActionListener(listenerCategory);
     }
 
+    public void addMouseListenerCategory(MouseListener keyListenerCategory) {
+        tablaCategory.addMouseListener(keyListenerCategory);
+    }
+
+    public void addListenerBtnEliminarCategory(ActionListener listenerCategory) {
+        btnEliminar.addActionListener(listenerCategory);
+    }
+
     public void activarControles(boolean estado) {
         textIdCategory.setEnabled(false);
         texNameCategory.setEnabled(estado);
 
         btnModificar.setEnabled(estado);
         btnEliminar.setEnabled(estado);
+    }
+
+    public void activarControlesModificar(boolean estado) {
+        texNameCategory.setEnabled(estado);
+        btnModificar.setEnabled(estado);
+        btnEliminar.setEnabled(estado);
+
     }
 
     public void nuevoAction() {
@@ -106,6 +128,20 @@ public class FrmCategory extends javax.swing.JInternalFrame {
             btnModificar.setIcon(new ImageIcon(getClass().
                     getResource("/Modify.png"))); // NOI18N
         }
+    }
+
+    public void modificarAction() {
+        activarControlesModificar(true);
+        btnNuevo.setText("Actualizar");
+        btnNuevo.setActionCommand("Actualizar");
+        btnModificar.setText("Cancelar");
+        btnModificar.setActionCommand("Cancelar");
+        btnNuevo.setIcon(new ImageIcon(getClass().
+                getResource("/Modify.png"))); // NOI18N
+        btnModificar.setIcon(new ImageIcon(getClass().
+                getResource("/Cancel.png"))); // NOI18N
+        texNameCategory.requestFocusInWindow();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -148,7 +184,7 @@ public class FrmCategory extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(44, 44, 44)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1))
@@ -156,12 +192,12 @@ public class FrmCategory extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(texNameCategory)
                     .addComponent(textIdCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(60, 60, 60)
+                .addGap(32, 32, 32)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(textIdCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -169,7 +205,7 @@ public class FrmCategory extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(texNameCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(102, 102, 102));
@@ -202,7 +238,7 @@ public class FrmCategory extends javax.swing.JInternalFrame {
                 .addComponent(btnModificar)
                 .addGap(18, 18, 18)
                 .addComponent(btnEliminar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 300, Short.MAX_VALUE)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -226,13 +262,10 @@ public class FrmCategory extends javax.swing.JInternalFrame {
 
         tablaCategory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jScrollPane1.setViewportView(tablaCategory);
@@ -249,7 +282,7 @@ public class FrmCategory extends javax.swing.JInternalFrame {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -274,7 +307,7 @@ public class FrmCategory extends javax.swing.JInternalFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -308,4 +341,10 @@ public class FrmCategory extends javax.swing.JInternalFrame {
     private javax.swing.JTextField texNameCategory;
     private javax.swing.JTextField textIdCategory;
     // End of variables declaration//GEN-END:variables
+
+    public void cargarDatosCategory(Category category) {
+        String numCadena = String.valueOf(category.getCategoryId());
+        textIdCategory.setText(numCadena);
+        texNameCategory.setText(category.getName());
+    }
 }

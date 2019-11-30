@@ -5,7 +5,10 @@
  */
 package Vista;
 
+import Controlador.InventoryController;
 import Modelo.Category;
+import Modelo.Dao.DAOManager;
+import Modelo.Film;
 import ModeloGUI.FilmTableModel;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
@@ -22,8 +25,14 @@ import javax.swing.JTable;
  */
 public class FrmListFilm extends javax.swing.JInternalFrame {
 
+    private DAOManager manager;
+
     public FrmListFilm() {
         initComponents();
+    }
+
+    public void setManager(DAOManager manager) {
+        this.manager = manager;
     }
 
     public void setModel(FilmTableModel modelo) {
@@ -50,7 +59,6 @@ public class FrmListFilm extends javax.swing.JInternalFrame {
         return tableListFilm;
     }
 
-    
     public void addListenerBuscar(ActionListener listenerFilm) {
         btnBuscar.addActionListener(listenerFilm);
     }
@@ -69,6 +77,23 @@ public class FrmListFilm extends javax.swing.JInternalFrame {
 
     public void cerrarAction() {
         dispose();
+    }
+
+    public void inventory() {
+        FrmInventory frmInventory = new FrmInventory();
+        InventoryController controller = new InventoryController(frmInventory, manager);
+        controller.setFrmListFilm(this);
+        controller.cargarFilmInventory();
+        int x = (FrmPrincipal.jDesktopPane.getWidth() / 2) - frmInventory.getWidth() / 2;
+        int y = (FrmPrincipal.jDesktopPane.getHeight() / 2) - frmInventory.getHeight() / 2;
+
+        if (frmInventory.isShowing()) {
+            frmInventory.setLocation(x, y);
+        } else {
+            FrmPrincipal.jDesktopPane.add(frmInventory);
+            frmInventory.setLocation(x, y);
+            frmInventory.setVisible(true);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -97,7 +122,7 @@ public class FrmListFilm extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Buscar Por Nombre");
+        jLabel1.setText("Buscar Por Titulo o Codigo");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -123,7 +148,7 @@ public class FrmListFilm extends javax.swing.JInternalFrame {
                         .addComponent(combCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnBuscar)))
-                .addContainerGap(169, Short.MAX_VALUE))
+                .addContainerGap(129, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -230,4 +255,5 @@ public class FrmListFilm extends javax.swing.JInternalFrame {
     private javax.swing.JTable tableListFilm;
     private javax.swing.JTextField textBuscarNombreFilm;
     // End of variables declaration//GEN-END:variables
+
 }

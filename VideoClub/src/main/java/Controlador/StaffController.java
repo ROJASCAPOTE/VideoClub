@@ -67,8 +67,7 @@ public class StaffController {
             staff.setStaff_id(codigo);
             staff.setFirst_name(vista.getTextFirstName());
             staff.setLast_name(vista.getTexLastName());
-            address = (Address) vista.getCombAddress().getSelectedItem();
-            staff.setAddressId(address.getAddressId());
+            staff.setAddressId(vista.getAddress().getAddressId());
             staff.setEmail(vista.getTexEmail());
             store = (Store) vista.getCmbStore().getSelectedItem();
             staff.setStore_id(store.getStore_id());
@@ -103,8 +102,7 @@ public class StaffController {
         staff.setStaff_id(codigo);
         staff.setFirst_name(vista.getTextFirstName());
         staff.setLast_name(vista.getTexLastName());
-        address = (Address) vista.getCombAddress().getSelectedItem();
-        staff.setAddressId(address.getAddressId());
+        staff.setAddressId(vista.getAddress().getAddressId());
         staff.setEmail(vista.getTexEmail());
         store = (Store) vista.getCmbStore().getSelectedItem();
         staff.setStore_id(store.getStore_id());

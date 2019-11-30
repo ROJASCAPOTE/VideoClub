@@ -11,6 +11,8 @@ import Modelo.Dao.DAOManager;
 import Modelo.Film;
 import Modelo.FilmCategory;
 import ModeloGUI.ModeloFilmCategory;
+import Vista.FrmCatalogoPeliculas;
+import Vista.FrmFilmActor;
 import Vista.FrmFilmCategory;
 
 import java.util.ArrayList;
@@ -20,10 +22,14 @@ import javax.swing.JOptionPane;
 public class FilmCategoryController {
 
     private FrmFilmCategory vista;
+    private FrmCatalogoPeliculas catalogoPeliculas;
     private DAOManager modelo;
     private ArrayList<FilmCategory> listaFilmCategory;
     private Film film;
     private ModeloFilmCategory modeloFilmCategory;
+
+    private FrmFilmActor frmFilmActor;
+    private FrmFilmCategory frmFilmCategory;
 
     public FilmCategoryController(FrmFilmCategory vista, DAOManager modelo) {
         this.vista = vista;
@@ -41,6 +47,10 @@ public class FilmCategoryController {
         vista.cargarCategory(listadoCategory);
     }
 
+    public void setCatalogoPeliculas(FrmCatalogoPeliculas catalogoPeliculas) {
+        this.catalogoPeliculas = catalogoPeliculas;
+    }
+
     public void sacarLista() {
         int selectedIndex = vista.getDetalleFilmCategory().getSelectedIndex();
         if (selectedIndex != -1) {
@@ -54,29 +64,34 @@ public class FilmCategoryController {
 
     public void adiccionarFilmCategory() {
         FilmCategory filmCategory = new FilmCategory();
-        int seleccion = vista.getConbCategory().getSelectedIndex();
-        if (seleccion == 0) {
-            vista.gestionMensajes("Seleccione una categoria",
-                    "Confirmación", JOptionPane.ERROR_MESSAGE);
-        } else {
-            Category category = (Category) vista.getConbCategory().getSelectedItem();
-            if (category != null) {
-                FilmCategory fc = buscarItemFilmCategory(category.getCategoryId());
-                if (fc == null) {
-                    filmCategory.setFilm(film);
-                    filmCategory.setCategory_id(category);
-                    listaFilmCategory.add(filmCategory);
-                    modeloFilmCategory = new ModeloFilmCategory(listaFilmCategory);
-                    vista.getDetalleFilmCategory().setModel(modeloFilmCategory);
-                    seleccionar(listaFilmCategory.size() - 1);
+        if (vista.getFilm() != null) {
+            int seleccion = vista.getConbCategory().getSelectedIndex();
+            if (seleccion == 0) {
+                vista.gestionMensajes("Seleccione una categoria",
+                        "Confirmación", JOptionPane.ERROR_MESSAGE);
+            } else {
+                Category category = (Category) vista.getConbCategory().getSelectedItem();
+                if (category != null) {
+                    FilmCategory fc = buscarItemFilmCategory(category.getCategoryId());
+                    if (fc == null) {
+                        filmCategory.setFilm(vista.getFilm());
+                        filmCategory.setCategory_id(category);
+                        listaFilmCategory.add(filmCategory);
+                        modeloFilmCategory = new ModeloFilmCategory(listaFilmCategory);
+                        vista.getDetalleFilmCategory().setModel(modeloFilmCategory);
+                        seleccionar(listaFilmCategory.size() - 1);
+                    } else {
+                        vista.gestionMensajes("La categoria ya se encuentra en la lista",
+                                "Confirmación", JOptionPane.ERROR_MESSAGE);
+                    }
                 } else {
-                    vista.gestionMensajes("La categoria ya se encuentra en la lista",
+                    vista.gestionMensajes("Seleccione un actor",
                             "Confirmación", JOptionPane.ERROR_MESSAGE);
                 }
-            } else {
-                vista.gestionMensajes("Seleccione un actor",
-                        "Confirmación", JOptionPane.ERROR_MESSAGE);
             }
+        } else {
+            vista.gestionMensajes("Seleccione un actor",
+                    "Confirmación", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -91,7 +106,6 @@ public class FilmCategoryController {
                 vista.activarControles(false);
                 vista.nuevoAction();
                 vista.getDetalleFilmCategory().setModel(new DefaultComboBoxModel());
-                vista.cerrarAction();
                 this.listaFilmCategory.clear();
             } else {
                 vista.gestionMensajes("Ya esta registrado el actor de la pelicula",
@@ -152,11 +166,6 @@ public class FilmCategoryController {
 
     public void cerrarAction() {
         vista.cerrarAction();
-    }
-
-    public void setFilm(Film film) {
-        this.film = film;
-        vista.setFilmCategory(film);
     }
 
     public Film getFilm() {

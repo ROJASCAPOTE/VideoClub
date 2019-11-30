@@ -5,7 +5,7 @@
  */
 package Eventos;
 
-import Controlador.AddressListController;
+import Controlador.CategoryController;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -13,17 +13,16 @@ import java.awt.event.MouseEvent;
  *
  * @author ACER E5
  */
-public class AddressMouseListener extends MouseAdapter {
+public class CategoryMouseListener extends MouseAdapter {
 
-    private AddressListController controller;
+    private CategoryController controller;
 
-    public AddressMouseListener(AddressListController controller) {
+    public CategoryMouseListener(CategoryController controller) {
         this.controller = controller;
     }
 
     @Override
     public void mouseClicked(MouseEvent evento) {
-        controller.seleccionarVista();
-        controller.cerrarAction();
+        controller.seleccionarCategory();
     }
 }

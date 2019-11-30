@@ -5,6 +5,7 @@ import Servisios.ConnectionBD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -49,6 +50,45 @@ public class CategoriaDAO {
             pstm.setString(2, category.getName());
             pstm.setString(3, last_update);
             rtdo = pstm.executeUpdate();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Código : "
+                    + ex.getErrorCode() + "\nError :" + ex.getMessage());
+        }
+        return rtdo;
+    }
+
+    public int modificarCategory(Category category) {
+        PreparedStatement pstm;
+        pstm = null;
+        int rtdo;
+        rtdo = 0;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String last_update = sdf.format(category.getLastUpdate());
+        try {
+            String sql = "UPDATE category "
+                    + "SET name=?,  last_update=?  WHERE category_id=?";
+            pstm = con.getConexion().prepareStatement(sql);
+            pstm.setString(1, category.getName());
+            pstm.setString(2, last_update);
+            pstm.setInt(3, category.getCategoryId());
+            rtdo = pstm.executeUpdate();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Código : "
+                    + ex.getErrorCode() + "\nError :" + ex.getMessage());
+        }
+        return rtdo;
+    }
+
+    public int borrarCategory(int category_id) {
+        PreparedStatement pstm = null;
+        int rtdo;
+        rtdo = 0;
+        try {
+            String sql = "DELETE FROM category WHERE category_id = ? ";
+            pstm = con.getConexion().prepareStatement(sql);
+            pstm.setInt(1, category_id);
+            rtdo = pstm.executeUpdate();
+            return rtdo;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Código : "
                     + ex.getErrorCode() + "\nError :" + ex.getMessage());
@@ -126,6 +166,41 @@ public class CategoriaDAO {
             }
         }
         return listado;
+    }
+
+    public Category consultarCategory(int codigo) {
+        String sql = "SELECT * FROM category WHERE category_id =" + codigo + "";
+        ResultSet resultado = null;
+        Statement st = null;
+        Category category = null;
+        try {
+            st = con.getConexion().createStatement();
+            resultado = st.executeQuery(sql);
+
+            if (resultado.next()) {
+                category = new Category();
+                category.setCategoryId(resultado.getInt(1));
+                category.setName(resultado.getString(2));
+                category.setLastUpdate(resultado.getDate(3));
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Código : "
+                    + ex.getErrorCode() + "\nError :" + ex.getMessage());
+        } finally {
+            try {
+                if (resultado != null) {
+                    resultado.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Código : "
+                        + ex.getErrorCode() + "\nError :" + ex.getMessage());
+            }
+        }
+        return category;
+
     }
 
     public Object[][] getTableCategory() {

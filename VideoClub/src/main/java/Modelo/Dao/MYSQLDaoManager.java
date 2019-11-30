@@ -25,6 +25,7 @@ public class MYSQLDaoManager implements DAOManager {
     private CustomerDAO customer;
     private FilmActorDAO filmActor;
     private FilmCategoryDAO filmCategory;
+    private InventoryDAO inventory;
     private ConnectionBD conn = null;
 
     public MYSQLDaoManager(ConnectionBD conn) {
@@ -125,6 +126,14 @@ public class MYSQLDaoManager implements DAOManager {
             customer = new CustomerDAO(conn);
         }
         return customer;
+    }
+
+    @Override
+    public InventoryDAO getInventoryDAO() {
+        if (inventory == null) {
+            inventory = new InventoryDAO(conn);
+        }
+        return inventory;
     }
 
 }

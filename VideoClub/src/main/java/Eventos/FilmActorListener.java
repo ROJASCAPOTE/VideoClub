@@ -26,7 +26,7 @@ public class FilmActorListener implements ActionListener {
         if (e.getActionCommand().equalsIgnoreCase("Nuevo")) {
             controller.nuevoAction();
         } else if (e.getActionCommand().equalsIgnoreCase("Cancelar")) {
-//            controller.nuevoAction();
+            controller.nuevoAction();
             controller.cerrarAction();
         } else if (e.getActionCommand().equalsIgnoreCase("Actualizar")) {
             controller.modificarCity();

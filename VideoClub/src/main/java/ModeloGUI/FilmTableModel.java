@@ -15,29 +15,33 @@ import javax.swing.table.AbstractTableModel;
  * @author ACER E5
  */
 public class FilmTableModel extends AbstractTableModel {
-
+    
     private final ArrayList<Film> listaFilms;
     private final Object[] columnas = {"Film Id", "Title", "Release year", "Rental Duration", "Rental Rate", "length", "rating"};
-
+    
     public FilmTableModel(ArrayList<Film> listaFilms) {
         this.listaFilms = listaFilms;
     }
-
+    
     @Override
     public int getRowCount() {
         return listaFilms.size();
     }
-
+    
     @Override
     public int getColumnCount() {
         return columnas.length;
     }
-
+    
     @Override
     public String getColumnName(int column) {
         return columnas[column].toString();
     }
-
+    
+    public Film getFilm(int index) {
+        return listaFilms.get(index);
+    }
+    
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
@@ -59,5 +63,5 @@ public class FilmTableModel extends AbstractTableModel {
                 return null;
         }
     }
-
+    
 }

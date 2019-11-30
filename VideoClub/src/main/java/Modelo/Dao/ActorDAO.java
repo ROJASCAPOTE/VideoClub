@@ -58,6 +58,46 @@ public class ActorDAO {
         return rtdo;
     }
 
+    public int modificarActor(Actor actor) {
+        PreparedStatement pstm;
+        pstm = null;
+        int rtdo;
+        rtdo = 0;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String last_update = sdf.format(actor.getLastUpdate());
+        try {
+            String sql = "UPDATE actor "
+                    + "SET first_name=?, last_name=?, last_update=?  WHERE actor_id=?";
+            pstm = con.getConexion().prepareStatement(sql);
+            pstm.setString(1, actor.getFirstName());
+            pstm.setString(2, actor.getLastName());
+            pstm.setString(3, last_update);
+            pstm.setInt(4, actor.getActorId());
+            rtdo = pstm.executeUpdate();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Código : "
+                    + ex.getErrorCode() + "\nError :" + ex.getMessage());
+        }
+        return rtdo;
+    }
+    
+    public int borrarActor(int actor_id) {
+        PreparedStatement pstm = null;
+        int rtdo;
+        rtdo = 0;
+        try {
+            String sql = "DELETE FROM actor WHERE actor_id = ? ";
+            pstm = con.getConexion().prepareStatement(sql);
+            pstm.setInt(1, actor_id);
+            rtdo = pstm.executeUpdate();
+            return rtdo;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Código : "
+                    + ex.getErrorCode() + "\nError :" + ex.getMessage());
+        }
+        return rtdo;
+    }
+
     public Object[][] getTableActor() {
         int registros = 0;
         String sql = "SELECT * FROM actor ORDER BY actor_id ASC";

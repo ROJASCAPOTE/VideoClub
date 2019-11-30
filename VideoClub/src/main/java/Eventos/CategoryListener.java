@@ -29,7 +29,10 @@ public class CategoryListener implements ActionListener {
             controller.nuevoAction();
         } else if (e.getActionCommand().equalsIgnoreCase("Grabar")) {
             controller.guardarCategory();
-        } else if (e.getActionCommand().equalsIgnoreCase("Adicionar")) {
+        } else if (e.getActionCommand().equalsIgnoreCase("Actualizar")) {
+            controller.actualizarCategory();
+        } else if (e.getActionCommand().equalsIgnoreCase("Eliminar")) {
+            controller.borrarCategory();
         } else if (e.getActionCommand().equalsIgnoreCase("Salir")) {
             controller.cerrarAction();
         }

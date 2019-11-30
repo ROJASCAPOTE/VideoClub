@@ -29,7 +29,7 @@ public class AddressDAO {
     public AddressDAO(ConnectionBD con) {
         this.con = con;
     }
-    
+
     public int grtCodigo() {
         String sql = "SELECT MAX(address_id) as total FROM address";
         PreparedStatement st = null;
@@ -47,7 +47,6 @@ public class AddressDAO {
         }
         return cant;
     }
-    
 
     public int grabarAddress(Address address) {
         PreparedStatement pstm;
@@ -68,6 +67,23 @@ public class AddressDAO {
             pstm.setString(7, address.getPhone());
             pstm.setString(8, last_update);
             rtdo = pstm.executeUpdate();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Código : "
+                    + ex.getErrorCode() + "\nError :" + ex.getMessage());
+        }
+        return rtdo;
+    }
+
+    public int borrarAddress(int address_id) {
+        PreparedStatement pstm = null;
+        int rtdo;
+        rtdo = 0;
+        try {
+            String sql = "DELETE FROM address WHERE address_id = ? ";
+            pstm = con.getConexion().prepareStatement(sql);
+            pstm.setInt(1, address_id);
+            rtdo = pstm.executeUpdate();
+            return rtdo;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Código : "
                     + ex.getErrorCode() + "\nError :" + ex.getMessage());

@@ -9,6 +9,8 @@ import Modelo.Dao.DAOManager;
 import Modelo.Film;
 import ModeloGUI.CatalogoPeliculaTablaModelo;
 import Vista.FrmCatalogoPeliculas;
+import Vista.FrmFilmActor;
+import Vista.FrmFilmCategory;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -17,19 +19,21 @@ public class CatalogoPeliculasController {
     private FrmCatalogoPeliculas vista;
     private DAOManager modelo;
     private CatalogoPeliculaTablaModelo modeloCatalogoPeliculas;
-    private boolean p;
+
+    private FrmFilmActor frmFilmActor;
+    private FrmFilmCategory frmFilmCategory;
 
     public CatalogoPeliculasController(FrmCatalogoPeliculas vista, DAOManager modelo) {
         this.vista = vista;
         this.modelo = modelo;
 
         vista.addMouseListenerCatalogoPeliculas(new CatalogoPeliculasMouseListener(this));
-        vista.addListenerBtnSeleccionar(new CatalogoPeliculasListener(this));
         vista.addListenerBtnConsultar(new CatalogoPeliculasListener(this));
         vista.addaddKeyListener(new CatalogoFilmEventoTeclado(this));
+        vista.addMouseListenerCatalogoPeliculas(new CatalogoPeliculasMouseListener(this));
         ArrayList<Category> listCategory;
         listCategory = modelo.getCategoriaDAO().listadoCategory();
-        vista.cargarCategorias(listCategory);
+        consultarCatalogoPeliculas();
     }
 
     public void detallePelucula() {
@@ -41,7 +45,7 @@ public class CatalogoPeliculasController {
             ArrayList<Category> listCategory = modelo.getCategoriaDAO().getFilmCategory(film.getFilmId());
             film.setListActoresFilm(listActores);
             film.setListCategoryFilm(listCategory);
-            vista.cargarInformacionPelicula(film);
+//            vista.cargarInformacionPelicula(film);
         } else {
             vista.gestionMensajes("Debe buscar una pelicula",
                     "Confirmación", JOptionPane.ERROR_MESSAGE);
@@ -71,6 +75,9 @@ public class CatalogoPeliculasController {
 
     }
 
+    public void abrirVentana() {
+        seleccionarVista();
+    }
 
     public void consultarCatalogoPeliculas() {
         ArrayList<Film> listaPeliculas;
@@ -79,8 +86,46 @@ public class CatalogoPeliculasController {
         vista.setModel(modeloCatalogoPeliculas);
     }
 
+    public FrmFilmActor getFrmFilmActor() {
+        return frmFilmActor;
+    }
+
+    public void setFrmFilmActor(FrmFilmActor frmFilmActor) {
+        this.frmFilmActor = frmFilmActor;
+    }
+
+    public FrmFilmCategory getFrmFilmCategory() {
+        return frmFilmCategory;
+    }
+
+    public void setFrmFilmCategory(FrmFilmCategory frmFilmCategory) {
+        this.frmFilmCategory = frmFilmCategory;
+    }
+
+    public void seleccionarDatosFilmActor() {
+        CatalogoPeliculaTablaModelo mtc = (CatalogoPeliculaTablaModelo) vista.getTablaCatalogoPeliculas().getModel();
+        Film film = mtc.getFilm(vista.getTablaCatalogoPeliculas().getSelectedRow());
+        frmFilmActor.setCodigoPelicula(film);
+        vista.modificarAction();
+    }
+
+    public void seleccionarFilmCategory() {
+        CatalogoPeliculaTablaModelo mtc = (CatalogoPeliculaTablaModelo) vista.getTablaCatalogoPeliculas().getModel();
+        Film film = mtc.getFilm(vista.getTablaCatalogoPeliculas().getSelectedRow());
+        frmFilmCategory.setFilmCategory(film);
+        vista.modificarAction();
+    }
+
+    public void seleccionarVista() {
+        if (frmFilmActor != null) {
+            seleccionarDatosFilmActor();
+        } else if (frmFilmCategory != null) {
+            seleccionarFilmCategory();
+        }
+    }
+
     public void buscarPelicula() {
-       buscarPorCodigoNombre();
+        buscarPorCodigoNombre();
     }
 
     public void abrirFilmActor() {

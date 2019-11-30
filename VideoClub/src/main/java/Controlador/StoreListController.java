@@ -61,14 +61,13 @@ public class StoreListController {
         return modelo.getAddressDAO().consultarDireccion(address_id);
     }
     
+    
     public void obtenerDatosStore() {
-        DefaultComboBoxModel modelocbxStore;
-        modelocbxStore = (DefaultComboBoxModel) frmStore.getCombAddressStore().getModel();
         String store_id = (String) vista.getTableStore().getValueAt(vista.getTableStore().getSelectedRow(), 0);
         int staff_id = Integer.parseInt((String) vista.getTableStore().getValueAt(vista.getTableStore().getSelectedRow(), 1));
         frmStore.setTextIdStore(store_id);
         Address address = obtenerSeleccionAddress();
-        modelocbxStore.setSelectedItem(address);
+        frmStore.AddressStore(address);
         frmStore.setTextAdministrador(staff_id);
         Staff staff = modelo.getStaffDAO().obtenerStaff(staff_id);
         if (staff != null) {

@@ -81,6 +81,55 @@ public class FilmDAO {
         return rtdo;
     }
 
+    public int modificarFilm(Film f) {
+        PreparedStatement pstm;
+        pstm = null;
+        int rtdo;
+        rtdo = 0;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String last_update = sdf.format(f.getLastUpdate());
+        try {
+            String sql = "UPDATE film "
+                    + "SET title=?, description=?, language_id=?, original_language_id=?, rental_duration=?, rental_rate=?, length=?, replacement_cost=?,rating=?, special_features=?,last_update=? WHERE film_id=?";
+            pstm = con.getConexion().prepareStatement(sql);
+
+            pstm.setString(1, f.getTitle());
+            pstm.setString(2, f.getDescription());
+            pstm.setInt(3, f.getLanguageByLanguageId().getLanguageId());
+            pstm.setInt(4, f.getLanguageByOriginalLanguageId().getLanguageId());
+            pstm.setInt(5, f.getRentalDuration());
+            pstm.setBigDecimal(6, new BigDecimal(f.getRentalRate()));
+            pstm.setInt(7, f.getLength());
+            pstm.setBigDecimal(8, new BigDecimal(f.getReplacementCost()));
+            pstm.setString(9, f.getRating());
+            pstm.setString(10, f.getSpecialFeatures());
+            pstm.setString(11, last_update);
+            pstm.setInt(12, f.getFilmId());
+            rtdo = pstm.executeUpdate();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Código : "
+                    + ex.getErrorCode() + "\nError :" + ex.getMessage());
+        }
+        return rtdo;
+    }
+
+    public int eliminarFilm(int film_id) {
+        PreparedStatement pstm = null;
+        int rtdo;
+        rtdo = 0;
+        try {
+            String sql = "DELETE FROM film WHERE film_id = ? ";
+            pstm = con.getConexion().prepareStatement(sql);
+            pstm.setInt(1, film_id);
+            rtdo = pstm.executeUpdate();
+            return rtdo;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Código : "
+                    + ex.getErrorCode() + "\nError :" + ex.getMessage());
+        }
+        return rtdo;
+    }
+
     public ArrayList<Film> getDetallePelicula() {
         LanguageDAO languageDAO = new LanguageDAO(con);
         String sql = "SELECT * FROM film";
@@ -298,7 +347,7 @@ public class FilmDAO {
         ResultSet rs = null;
         Film film = null;
         try {
-            String sql = "SELECT * FROM film WHERE film_id=" + codigo + "";
+            String sql = "SELECT film_id, title, description, release_year, rental_duration, rental_rate, length FROM film WHERE film_id=" + codigo + "";
             pstm = con.getConexion().prepareStatement(sql);
             rs = pstm.executeQuery();
 
@@ -308,6 +357,9 @@ public class FilmDAO {
                 film.setTitle(rs.getString(2));
                 film.setDescription(rs.getString(3));
                 film.setReleaseYear(rs.getDate(4));
+                film.setRentalDuration(rs.getInt(5));
+                film.setRentalRate(rs.getInt(6));
+                film.setLength(rs.getInt(7));
             }
 
         } catch (SQLException ex) {

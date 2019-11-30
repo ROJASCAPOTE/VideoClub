@@ -20,13 +20,66 @@ import javax.swing.JOptionPane;
  * @author ACER E5
  */
 public class LanguageDAO {
-
+    
     private ConnectionBD con;
-
+    
     public LanguageDAO(ConnectionBD con) {
         this.con = con;
     }
-
+    
+    public int grtCodigo() {
+        String sql = "SELECT MAX(language_id) as total FROM language";
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        int cant = 0;
+        try {
+            st = con.getConexion().prepareStatement(sql);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                cant = rs.getInt("total") + 1;
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+        }
+        return cant;
+    }
+    
+    public Language consultarLanguage(int codigo) {
+        String sql = "SELECT * FROM language WHERE language_id =" + codigo + "";
+        ResultSet resultado = null;
+        Statement st = null;
+        Language language = null;
+        try {
+            st = con.getConexion().createStatement();
+            resultado = st.executeQuery(sql);
+            
+            if (resultado.next()) {
+                language = new Language();
+                language.setLanguageId(resultado.getInt(1));
+                language.setName(resultado.getString(2));
+                language.setLastUpdate(resultado.getDate(3));
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Código : "
+                    + ex.getErrorCode() + "\nError :" + ex.getMessage());
+        } finally {
+            try {
+                if (resultado != null) {
+                    resultado.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Código : "
+                        + ex.getErrorCode() + "\nError :" + ex.getMessage());
+            }
+        }
+        return language;
+        
+    }
+    
     public ArrayList<Language> listLanguage() {
         PreparedStatement pstm = null;
         ResultSet rs = null;
@@ -43,7 +96,7 @@ public class LanguageDAO {
                 language.setLastUpdate(rs.getDate(3));
                 listado.add(language);
             }
-
+            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Código : "
                     + ex.getErrorCode() + "\nError :" + ex.getMessage());
@@ -62,7 +115,7 @@ public class LanguageDAO {
         }
         return listado;
     }
-
+    
     public ArrayList<Language> listOriginalLanguage() {
         PreparedStatement pstm = null;
         ResultSet rs = null;
@@ -79,7 +132,7 @@ public class LanguageDAO {
                 language.setLastUpdate(rs.getDate(3));
                 listado.add(language);
             }
-
+            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Código : "
                     + ex.getErrorCode() + "\nError :" + ex.getMessage());
@@ -98,7 +151,7 @@ public class LanguageDAO {
         }
         return listado;
     }
-
+    
     public Language buscarLanguage(int codigo) {
         String sql = "SELECT * FROM language WHERE language_id =" + codigo + "";
         ResultSet resultado = null;
@@ -107,7 +160,7 @@ public class LanguageDAO {
         try {
             st = con.getConexion().createStatement();
             resultado = st.executeQuery(sql);
-
+            
             if (resultado.next()) {
                 language = new Language();
                 language.setLanguageId(resultado.getInt(1));

@@ -5,11 +5,11 @@
  */
 package Vista;
 
+import Controlador.AddressController;
 import Modelo.Dao.DAOManager;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -69,6 +69,7 @@ public class FrmListAddress extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         barra = new javax.swing.JScrollPane();
         tablaAddress = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -120,19 +121,33 @@ public class FrmListAddress extends javax.swing.JInternalFrame {
         ));
         barra.setViewportView(tablaAddress);
 
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton1.setText("Adiccionar Address");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(barra)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(barra, javax.swing.GroupLayout.DEFAULT_SIZE, 791, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(barra, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(barra, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -171,9 +186,25 @@ public class FrmListAddress extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        FrmAddess frmAddess = new FrmAddess();
+        AddressController addressListController = new AddressController(frmAddess, manager);
+        int x = (FrmPrincipal.jDesktopPane.getWidth() / 2) - frmAddess.getWidth() / 2;
+        int y = (FrmPrincipal.jDesktopPane.getHeight() / 2) - frmAddess.getHeight() / 2;
+
+        if (frmAddess.isShowing()) {
+            frmAddess.setLocation(x, y);
+        } else {
+            FrmPrincipal.jDesktopPane.add(frmAddess);
+            frmAddess.setLocation(x, y);
+            frmAddess.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane barra;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

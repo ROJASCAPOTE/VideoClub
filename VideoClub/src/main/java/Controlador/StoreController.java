@@ -23,7 +23,6 @@ public class StoreController {
         vista.activarControles(false);
         vista.setTextIdStore(cargarCodigoStore() + "");
         this.vista.setTextAdministrador(cargarCodigoStaff());
-        obtenerDireccionStore();
 
     }
 
@@ -31,11 +30,7 @@ public class StoreController {
         vista.nuevoAction();
     }
 
-    public void obtenerDireccionStore() {
-        ArrayList<Address> listadoDirecciones;
-        listadoDirecciones = modelo.getAddressDAO().listadoAddress();
-        vista.cargarDireccionStore(listadoDirecciones);
-    }
+    
 
     public int cargarCodigoStore() {
         int codigo = 0;
@@ -61,8 +56,7 @@ public class StoreController {
         vista.saveData();
         store.setManager_staff(vista.getStaff());
         Address address = null;
-        address = (Address) vista.getCombAddressStore().getSelectedItem();
-        store.setAddress_id(address);
+        store.setAddress_id(vista.getAddressStore());
         store.setManager_staff(vista.getStaff());
 
         int resulStaff = 0, resultadoStore = 0;

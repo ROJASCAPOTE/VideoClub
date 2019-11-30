@@ -23,7 +23,7 @@ public class CatalogoPeliculasMouseListener extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent evento) {
-        controller.detallePelucula();
+        controller.abrirVentana();
     }
 
 }

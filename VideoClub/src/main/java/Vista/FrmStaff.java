@@ -5,6 +5,7 @@
  */
 package Vista;
 
+import Controlador.AddressListController;
 import Controlador.StaffListController;
 import Modelo.Address;
 import Modelo.Dao.DAOManager;
@@ -17,7 +18,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 
 /**
  *
@@ -28,6 +28,7 @@ public class FrmStaff extends javax.swing.JInternalFrame {
     File fichero = null;
     private JPanel contentPane;
     private DAOManager manager;
+    private Address address;
 
     public FrmStaff() {
         initComponents();
@@ -55,10 +56,6 @@ public class FrmStaff extends javax.swing.JInternalFrame {
 
     public void setTexLastName(String texLastName) {
         this.texLastName.setText(texLastName);
-    }
-
-    public JComboBox<String> getCombAddress() {
-        return combAddress;
     }
 
     public String getTexEmail() {
@@ -126,7 +123,16 @@ public class FrmStaff extends javax.swing.JInternalFrame {
         for (Object direcciones : ListAddress) {
             modelo.addElement(direcciones);
         }
-        combAddress.setModel(modelo);
+//        combAddress.setModel(modelo);
+    }
+
+    public void setAddressStaff(Address address) {
+        this.address = address;
+        texAddress.setText(address.getAddress());
+    }
+
+    public Address getAddress() {
+        return address;
     }
 
     public void addListenerNuevo(ActionListener listenerStaff) {
@@ -148,7 +154,6 @@ public class FrmStaff extends javax.swing.JInternalFrame {
     public void activarControlesModificar(boolean estado) {
         textFirstName.setEnabled(estado);
         texLastName.setEnabled(estado);
-        combAddress.setEnabled(estado);
         texEmail.setEnabled(estado);
         cmbStore.setEnabled(estado);
         rdbSi.setEnabled(estado);
@@ -163,13 +168,13 @@ public class FrmStaff extends javax.swing.JInternalFrame {
     public void activarControles(boolean estado) {
         textFirstName.setEnabled(estado);
         texLastName.setEnabled(estado);
-        combAddress.setEnabled(estado);
         texEmail.setEnabled(estado);
         cmbStore.setEnabled(estado);
         rdbSi.setEnabled(estado);
         rdbNo.setEnabled(estado);
         texUserName.setEnabled(estado);
         texPassword.setEnabled(estado);
+        btnAddressManager.setEnabled(estado);
         btnModificar.setEnabled(estado);
         btnEliminar.setEnabled(estado);
 
@@ -178,7 +183,6 @@ public class FrmStaff extends javax.swing.JInternalFrame {
     public void limpiarCampos() {
         textFirstName.setText("");
         texLastName.setText("");
-        combAddress.setSelectedIndex(0);
         texEmail.setText("");
         cmbStore.setSelectedIndex(0);
         texUserName.setText("");
@@ -190,7 +194,6 @@ public class FrmStaff extends javax.swing.JInternalFrame {
         if (btnNuevo.getText().equals("Nuevo")) {
             textFirstName.setText("");
             texLastName.setText("");
-            combAddress.setSelectedIndex(0);
             texEmail.setText("");
             cmbStore.setSelectedIndex(0);
             texUserName.setText("");
@@ -261,12 +264,13 @@ public class FrmStaff extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
         texPassword = new javax.swing.JPasswordField();
         jButton3 = new javax.swing.JButton();
-        combAddress = new javax.swing.JComboBox<>();
         rdbSi = new javax.swing.JRadioButton();
         rdbNo = new javax.swing.JRadioButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         texIdStaff = new javax.swing.JTextField();
+        btnAddressManager = new javax.swing.JButton();
+        texAddress = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
@@ -347,8 +351,6 @@ public class FrmStaff extends javax.swing.JInternalFrame {
             }
         });
 
-        combAddress.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         rdbSi.setBackground(new java.awt.Color(102, 102, 102));
         buttonGroup1.add(rdbSi);
         rdbSi.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -369,7 +371,15 @@ public class FrmStaff extends javax.swing.JInternalFrame {
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("ID");
 
-        texIdStaff.setText("jTextField1");
+        btnAddressManager.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\Dir.png")); // NOI18N
+        btnAddressManager.setBorder(null);
+        btnAddressManager.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddressManagerActionPerformed(evt);
+            }
+        });
+
+        texAddress.setEnabled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -398,15 +408,18 @@ public class FrmStaff extends javax.swing.JInternalFrame {
                     .addComponent(texUserName)
                     .addComponent(cmbStore, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(texEmail)
-                    .addComponent(combAddress, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(texLastName)
                     .addComponent(textFirstName)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(texCodigoStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton3))
-                    .addComponent(texIdStaff))
-                .addContainerGap(155, Short.MAX_VALUE))
+                    .addComponent(texIdStaff)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(texAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAddressManager, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -430,9 +443,11 @@ public class FrmStaff extends javax.swing.JInternalFrame {
                     .addComponent(jLabel3)
                     .addComponent(texLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(combAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAddressManager, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(texAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(texEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -454,7 +469,7 @@ public class FrmStaff extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(texPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addGap(45, 45, 45))
         );
 
         jPanel4.setBackground(new java.awt.Color(102, 102, 102));
@@ -490,7 +505,7 @@ public class FrmStaff extends javax.swing.JInternalFrame {
                 .addComponent(btnModificar)
                 .addGap(18, 18, 18)
                 .addComponent(btnEliminar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 276, Short.MAX_VALUE)
                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(65, 65, 65))
         );
@@ -516,9 +531,7 @@ public class FrmStaff extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -572,15 +585,32 @@ public class FrmStaff extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_texPasswordActionPerformed
 
+    private void btnAddressManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddressManagerActionPerformed
+        FrmListAddress frmListAddress = new FrmListAddress();
+        AddressListController controller = new AddressListController(frmListAddress, manager);
+        controller.setFrmStaff(this);
+        frmListAddress.setManager(manager);
+        int x = (FrmPrincipal.jDesktopPane.getWidth() / 2) - frmListAddress.getWidth() / 2;
+        int y = (FrmPrincipal.jDesktopPane.getHeight() / 2) - frmListAddress.getHeight() / 2;
+
+        if (frmListAddress.isShowing()) {
+            frmListAddress.setLocation(x, y);
+        } else {
+            FrmPrincipal.jDesktopPane.add(frmListAddress);
+            frmListAddress.setLocation(x, y);
+            frmListAddress.setVisible(true);
+        }
+    }//GEN-LAST:event_btnAddressManagerActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddressManager;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JComboBox<String> cmbStore;
-    private javax.swing.JComboBox<String> combAddress;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
@@ -598,6 +628,7 @@ public class FrmStaff extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JRadioButton rdbNo;
     private javax.swing.JRadioButton rdbSi;
+    private javax.swing.JTextField texAddress;
     private javax.swing.JTextField texCodigoStaff;
     private javax.swing.JTextField texEmail;
     private javax.swing.JTextField texIdStaff;

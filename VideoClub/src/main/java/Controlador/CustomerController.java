@@ -6,7 +6,6 @@
 package Controlador;
 
 import Eventos.CustomerListener;
-import Modelo.Address;
 import Modelo.Customer;
 import Modelo.Dao.DAOManager;
 import Modelo.Store;
@@ -38,7 +37,6 @@ public class CustomerController {
 
 //        ArrayList<Address> listadoDirecciones;
 //        listadoDirecciones = modelo.getAddressDAO().listadoAddress();
-
         this.vista.activarControles(false);
         customerId();
     }
@@ -79,12 +77,12 @@ public class CustomerController {
                     "Error de Entrada", JOptionPane.ERROR_MESSAGE);
 
         } else {
-
             int resultado = 0;
             resultado = modelo.getCustomerDAO().grabarCustomer(vista.getCustomer());
             if (resultado == 1) {
                 vista.gestionMensajes("Registro Grabado con éxito",
                         "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+
                 vista.activarControles(false);
                 vista.nuevoAction();
                 vista.limpiarCampos();
@@ -130,7 +128,7 @@ public class CustomerController {
         } else {
             int respuesta = JOptionPane.showConfirmDialog(null,
                     "¿Desea Eliminar el cliente  de codigo : "
-                    + codigo + " ?",
+                    + vista.getCustomer().getCustomerId() + " ?",
                     "Confirmación de Acción", JOptionPane.YES_NO_OPTION);
 
             if (respuesta == JOptionPane.YES_OPTION) {

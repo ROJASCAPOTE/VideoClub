@@ -6,7 +6,10 @@
 package Vista;
 
 import Controlador.FilmListController;
+import Controlador.InventoryController;
 import Modelo.Dao.DAOManager;
+import static Vista.FrmPrincipal.jDesktopPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -24,6 +27,14 @@ public class FrmCatalogoInventory extends javax.swing.JInternalFrame {
         this.manager = manager;
     }
 
+    public void tableInventory(Object[][] dtCity) {
+        String[] columNames = {"Inventory id", "Film", "Store", "Last Update"};
+        DefaultTableModel datos = new DefaultTableModel(dtCity, columNames);
+        tablaInventory.setModel(datos);
+    }
+
+   
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -34,7 +45,7 @@ public class FrmCatalogoInventory extends javax.swing.JInternalFrame {
         jTextField1 = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaInventory = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jButton2 = new javax.swing.JButton();
@@ -76,7 +87,7 @@ public class FrmCatalogoInventory extends javax.swing.JInternalFrame {
         jPanel3.setBackground(new java.awt.Color(102, 102, 102));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inventory", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(255, 255, 255))); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaInventory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -87,7 +98,7 @@ public class FrmCatalogoInventory extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaInventory);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -181,6 +192,7 @@ public class FrmCatalogoInventory extends javax.swing.JInternalFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         FrmListFilm frmInventory = new FrmListFilm();
         FilmListController controller = new FilmListController(frmInventory, manager);
+        frmInventory.setManager(manager);
         int x = (FrmPrincipal.jDesktopPane.getWidth() / 2) - frmInventory.getWidth() / 2;
         int y = (FrmPrincipal.jDesktopPane.getHeight() / 2) - frmInventory.getHeight() / 2;
         if (frmInventory.isShowing()) {
@@ -201,8 +213,9 @@ public class FrmCatalogoInventory extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JTable tablaInventory;
     // End of variables declaration//GEN-END:variables
+
 }

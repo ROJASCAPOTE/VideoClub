@@ -28,7 +28,7 @@ public class AddressListener implements ActionListener {
         } else if (e.getActionCommand().equalsIgnoreCase("Cancelar")) {
             addressController.nuevoAction();
         } else if (e.getActionCommand().equalsIgnoreCase("Grabar")) {
-            addressController.cargarDireccion();
+            addressController.guardarAddress();
         } else if (e.getActionCommand().equalsIgnoreCase("Actualizar")) {
         } else if (e.getActionCommand().equalsIgnoreCase("Eliminar")) {
         } else if (e.getActionCommand().equalsIgnoreCase("Buscar")) {

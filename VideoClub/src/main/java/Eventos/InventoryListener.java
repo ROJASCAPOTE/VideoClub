@@ -5,19 +5,15 @@
  */
 package Eventos;
 
-import Controlador.StoreController;
+import Controlador.InventoryController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- *
- * @author ACER E5
- */
-public class StoreListener implements ActionListener {
+public class InventoryListener implements ActionListener {
 
-    private StoreController controller;
+    private InventoryController controller;
 
-    public StoreListener(StoreController controller) {
+    public InventoryListener(InventoryController controller) {
         this.controller = controller;
     }
 
@@ -27,14 +23,12 @@ public class StoreListener implements ActionListener {
             controller.nuevoAction();
         } else if (e.getActionCommand().equalsIgnoreCase("Cancelar")) {
             controller.nuevoAction();
-            controller.cambiarCodigo();
         } else if (e.getActionCommand().equalsIgnoreCase("Grabar")) {
-           controller.registrarTienda();
+            controller.guardarInventario();
         } else if (e.getActionCommand().equalsIgnoreCase("Actualizar")) {
         } else if (e.getActionCommand().equalsIgnoreCase("Eliminar")) {
-            controller.registrarTienda();
         } else if (e.getActionCommand().equalsIgnoreCase("Salir")) {
-            controller.registrarTienda();
+            controller.cerrarAction();
         }
     }
 

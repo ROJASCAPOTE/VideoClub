@@ -6,11 +6,17 @@
 package Vista;
 
 import Controlador.ActorController;
+import Controlador.AddressController;
+import Controlador.CatalogoInventoryController;
 import Controlador.CatalogoPeliculasController;
 import Controlador.CategoryController;
 import Controlador.CityController;
 import Controlador.CountryController;
 import Controlador.CustomerController;
+import Controlador.FilmActorController;
+import Controlador.FilmCategoryController;
+import Controlador.FilmController;
+import Controlador.InventoryController;
 import Controlador.LanguageController;
 import Controlador.StaffController;
 import Controlador.StoreController;
@@ -33,17 +39,17 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }
 
     public void film() {
-        FrmCatalogoPeliculas frmCatalogoPeliculas = new FrmCatalogoPeliculas();
-        CatalogoPeliculasController controller = new CatalogoPeliculasController(frmCatalogoPeliculas, manager);
-        frmCatalogoPeliculas.setManager(manager);
-        int x = (jDesktopPane.getWidth() / 2) - frmCatalogoPeliculas.getWidth() / 2;
-        int y = (jDesktopPane.getHeight() / 2) - frmCatalogoPeliculas.getHeight() / 2;
-        if (frmCatalogoPeliculas.isShowing()) {
-            frmCatalogoPeliculas.setLocation(x, y);
+        FrmFilm frmFilm = new FrmFilm();
+        FilmController controller = new FilmController(frmFilm, manager);
+        frmFilm.setManager(manager);
+        int x = (jDesktopPane.getWidth() / 2) - frmFilm.getWidth() / 2;
+        int y = (jDesktopPane.getHeight() / 2) - frmFilm.getHeight() / 2;
+        if (frmFilm.isShowing()) {
+            frmFilm.setLocation(x, y);
         } else {
-            jDesktopPane.add(frmCatalogoPeliculas);
-            frmCatalogoPeliculas.setLocation(x, y);
-            frmCatalogoPeliculas.setVisible(true);
+            jDesktopPane.add(frmFilm);
+            frmFilm.setLocation(x, y);
+            frmFilm.setVisible(true);
         }
     }
 
@@ -98,6 +104,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
+        jSeparator12 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem11 = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         saveAsMenuItem = new javax.swing.JMenuItem();
@@ -113,6 +121,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jSeparator10 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jSeparator11 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem10 = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         contentMenuItem = new javax.swing.JMenuItem();
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
@@ -162,6 +174,20 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
         fileMenu.add(openMenuItem);
+        fileMenu.add(jSeparator12);
+
+        jMenuItem11.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jMenuItem11.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\Address.png")); // NOI18N
+        jMenuItem11.setText("Address");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        fileMenu.add(jMenuItem11);
+
+        jSeparator1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         fileMenu.add(jSeparator1);
         fileMenu.add(jSeparator2);
 
@@ -208,6 +234,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu1.setText("Inventario");
         jMenu1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
+        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jMenuItem4.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\Category.png")); // NOI18N
         jMenuItem4.setText("Category");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
@@ -218,6 +246,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu1.add(jMenuItem4);
         jMenu1.add(jSeparator4);
 
+        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jMenuItem5.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\Film3.png")); // NOI18N
         jMenuItem5.setText("Film");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
@@ -228,6 +258,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu1.add(jMenuItem5);
         jMenu1.add(jSeparator5);
 
+        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jMenuItem6.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\Actor.png")); // NOI18N
         jMenuItem6.setText("Actor");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
@@ -238,6 +270,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu1.add(jMenuItem6);
         jMenu1.add(jSeparator6);
 
+        jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jMenuItem7.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\Language.png")); // NOI18N
         jMenuItem7.setText("Language");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
@@ -246,6 +280,28 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem7);
+        jMenu1.add(jSeparator10);
+
+        jMenuItem9.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jMenuItem9.setText("Film Category");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem9);
+        jMenu1.add(jSeparator11);
+
+        jMenuItem10.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jMenuItem10.setText("Film Actor");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem10);
 
         menuBar.add(jMenu1);
 
@@ -254,6 +310,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         helpMenu.setText("Negocio");
         helpMenu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
+        contentMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK));
         contentMenuItem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         contentMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Staff.png"))); // NOI18N
         contentMenuItem.setMnemonic('c');
@@ -266,6 +323,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         helpMenu.add(contentMenuItem);
         helpMenu.add(jSeparator7);
 
+        aboutMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.ALT_MASK));
         aboutMenuItem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         aboutMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/store.png"))); // NOI18N
         aboutMenuItem.setMnemonic('a');
@@ -278,19 +336,23 @@ public class FrmPrincipal extends javax.swing.JFrame {
         helpMenu.add(aboutMenuItem);
         helpMenu.add(jSeparator8);
 
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Payment2.png"))); // NOI18N
         jMenuItem1.setText("Payment");
         helpMenu.add(jMenuItem1);
         helpMenu.add(jSeparator17);
 
+        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jMenuItem3.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\Rental.png")); // NOI18N
         jMenuItem3.setText("Rental");
         helpMenu.add(jMenuItem3);
         helpMenu.add(jSeparator18);
 
+        jMenuItem8.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jMenuItem8.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\Inventary4.png")); // NOI18N
         jMenuItem8.setText("Inventory");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -428,6 +490,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         FrmCatalogoInventory frmInventory = new FrmCatalogoInventory();
+        CatalogoInventoryController controller = new CatalogoInventoryController(frmInventory, manager);
         frmInventory.setManager(manager);
         int x = (jDesktopPane.getWidth() / 2) - frmInventory.getWidth() / 2;
         int y = (jDesktopPane.getHeight() / 2) - frmInventory.getHeight() / 2;
@@ -441,6 +504,53 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        FrmFilmCategory frmFilmCategory = new FrmFilmCategory();
+        FilmCategoryController categoryController = new FilmCategoryController(frmFilmCategory, manager);
+        frmFilmCategory.setManager(manager);
+        int x = (jDesktopPane.getWidth() / 2) - frmFilmCategory.getWidth() / 2;
+        int y = (jDesktopPane.getHeight() / 2) - frmFilmCategory.getHeight() / 2;
+
+        if (frmFilmCategory.isShowing()) {
+            frmFilmCategory.setLocation(x, y);
+        } else {
+            jDesktopPane.add(frmFilmCategory);
+            frmFilmCategory.setLocation(x, y);
+            frmFilmCategory.setVisible(true);
+        }
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        FrmFilmActor frmFilmActor = new FrmFilmActor();
+        FilmActorController actorController = new FilmActorController(frmFilmActor, manager);
+        frmFilmActor.setManager(manager);
+        int x = (jDesktopPane.getWidth() / 2) - frmFilmActor.getWidth() / 2;
+        int y = (jDesktopPane.getHeight() / 2) - frmFilmActor.getHeight() / 2;
+
+        if (frmFilmActor.isShowing()) {
+            frmFilmActor.setLocation(x, y);
+        } else {
+            jDesktopPane.add(frmFilmActor);
+            frmFilmActor.setLocation(x, y);
+            frmFilmActor.setVisible(true);
+        }
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        FrmAddess frmAddess = new FrmAddess();
+        AddressController controller = new AddressController(frmAddess, manager);
+        int x = (jDesktopPane.getWidth() / 2) - frmAddess.getWidth() / 2;
+        int y = (jDesktopPane.getHeight() / 2) - frmAddess.getHeight() / 2;
+
+        if (frmAddess.isShowing()) {
+            frmAddess.setLocation(x, y);
+        } else {
+            jDesktopPane.add(frmAddess);
+            frmAddess.setLocation(x, y);
+            frmAddess.setVisible(true);
+        }
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
@@ -451,6 +561,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     public static javax.swing.JDesktopPane jDesktopPane;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -458,7 +570,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator10;
+    private javax.swing.JPopupMenu.Separator jSeparator11;
+    private javax.swing.JPopupMenu.Separator jSeparator12;
     private javax.swing.JSeparator jSeparator15;
     private javax.swing.JPopupMenu.Separator jSeparator17;
     private javax.swing.JPopupMenu.Separator jSeparator18;

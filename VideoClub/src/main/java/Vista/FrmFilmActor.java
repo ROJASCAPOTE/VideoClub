@@ -6,6 +6,7 @@
 package Vista;
 
 import Controlador.ActorListController;
+import Controlador.CatalogoPeliculasController;
 import Modelo.Actor;
 import Modelo.Dao.DAOManager;
 import Modelo.Film;
@@ -30,7 +31,7 @@ public class FrmFilmActor extends javax.swing.JInternalFrame {
     private ListModelFilm modelo;
     private ListModeloActorFilm listModelo;
     private DAOManager manager;
-    private Actor actor;
+    private Film film;
 
     public FrmFilmActor() {
         initComponents();
@@ -51,10 +52,17 @@ public class FrmFilmActor extends javax.swing.JInternalFrame {
     }
 
     public void setCodigoPelicula(Film film) {
+        this.film = film;
         String film_id = String.valueOf(film.getFilmId());
         texCodigoFilm.setText(film_id);
         texCodigoPelicula.setText(film.getTitle());
     }
+
+    public Film getFilm() {
+        return film;
+    }
+    
+    
 
     public JComboBox<String> getCobActores() {
         return cobActores;
@@ -79,10 +87,10 @@ public class FrmFilmActor extends javax.swing.JInternalFrame {
     public void addListenerBtnAdiccionar(ActionListener listenerFilmActor) {
         brtnSacarDeLista.addActionListener(listenerFilmActor);
     }
+
     public void addListenerBtnSacarLista(ActionListener listenerFilmActor) {
         btnSacarLista.addActionListener(listenerFilmActor);
     }
-  
 
     public void cerrarAction() {
         dispose();
@@ -110,6 +118,7 @@ public class FrmFilmActor extends javax.swing.JInternalFrame {
         listFilmActor.setEnabled(estado);
         btnBuscarActor.setEnabled(estado);
         brtnSacarDeLista.setEnabled(estado);
+        btnCatalogoPeliculas.setEnabled(estado);
         btnModificar.setEnabled(estado);
         btnEliminar.setEnabled(estado);
 
@@ -198,6 +207,7 @@ public class FrmFilmActor extends javax.swing.JInternalFrame {
         texCodigoFilm = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         textLastUpdate = new com.toedter.calendar.JDateChooser();
+        btnCatalogoPeliculas = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         btnNuevo = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -250,6 +260,13 @@ public class FrmFilmActor extends javax.swing.JInternalFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Last Update");
 
+        btnCatalogoPeliculas.setText(".....");
+        btnCatalogoPeliculas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCatalogoPeliculasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -265,39 +282,44 @@ public class FrmFilmActor extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(texCodigoFilm, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(texCodigoPelicula))
+                        .addComponent(texCodigoPelicula, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(cobActores, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBuscarActor, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(textLastUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(57, 57, 57)
-                .addComponent(brtnSacarDeLista)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(brtnSacarDeLista))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCatalogoPeliculas)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(texCodigoPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(texCodigoFilm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(brtnSacarDeLista)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(texCodigoPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(texCodigoFilm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCatalogoPeliculas))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnBuscarActor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel1)
-                                .addComponent(cobActores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel1)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnBuscarActor, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cobActores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(textLastUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(brtnSacarDeLista)))
+                            .addComponent(textLastUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(50, 50, 50))
         );
 
@@ -435,10 +457,27 @@ public class FrmFilmActor extends javax.swing.JInternalFrame {
     private void texCodigoPeliculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_texCodigoPeliculaActionPerformed
     }//GEN-LAST:event_texCodigoPeliculaActionPerformed
 
+    private void btnCatalogoPeliculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatalogoPeliculasActionPerformed
+        FrmCatalogoPeliculas frmCatalogoPeliculas = new FrmCatalogoPeliculas();
+        CatalogoPeliculasController catalogoPeliculasController = new CatalogoPeliculasController(frmCatalogoPeliculas, manager);
+        catalogoPeliculasController.setFrmFilmActor(this);
+        int x = (jDesktopPane.getWidth() / 2) - frmCatalogoPeliculas.getWidth() / 2;
+        int y = (jDesktopPane.getHeight() / 2) - frmCatalogoPeliculas.getHeight() / 2;
+
+        if (frmCatalogoPeliculas.isShowing()) {
+            frmCatalogoPeliculas.setLocation(x, y);
+        } else {
+            jDesktopPane.add(frmCatalogoPeliculas);
+            frmCatalogoPeliculas.setLocation(x, y);
+            frmCatalogoPeliculas.setVisible(true);
+        }
+    }//GEN-LAST:event_btnCatalogoPeliculasActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton brtnSacarDeLista;
     private javax.swing.JButton btnBuscarActor;
+    private javax.swing.JButton btnCatalogoPeliculas;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;

@@ -7,12 +7,6 @@ import Modelo.Staff;
 import Modelo.Store;
 import Vista.FrmListStaff;
 import Vista.FrmStaff;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 
 public class StaffListController {
@@ -53,8 +47,6 @@ public class StaffListController {
         Staff staff = null;
         Address address = null;
         Store store = null;
-        DefaultComboBoxModel modelocbxaAddress;
-        modelocbxaAddress = (DefaultComboBoxModel) frmStaff.getCombAddress().getModel();
 
         DefaultComboBoxModel modelocbxaStore;
         modelocbxaStore = (DefaultComboBoxModel) frmStaff.getCmbStore().getModel();
@@ -63,7 +55,7 @@ public class StaffListController {
         frmStaff.setTextFirstName(staff.getFirst_name());
         frmStaff.setTexLastName(staff.getLast_name());
         address = obtenerSeleccionAddress();
-        modelocbxaAddress.setSelectedItem(address);
+        frmStaff.setAddressStaff(address);
         frmStaff.setTexEmail(staff.getEmail());
         store = obtenerSeleccionStore();
         modelocbxaStore.setSelectedItem(store);

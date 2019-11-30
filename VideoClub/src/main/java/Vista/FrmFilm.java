@@ -136,9 +136,17 @@ public class FrmFilm extends javax.swing.JInternalFrame {
     public void addListenerBtnBuscar(ActionListener listenerFilm) {
         btnBiscarFilm.addActionListener(listenerFilm);
     }
+    
+    public void addListenerBtnEliminar(ActionListener listenerFilm) {
+        btnEliminar.addActionListener(listenerFilm);
+    }
 
     public void gestionMensajes(String mensaje, String titulo, int icono) {
         JOptionPane.showMessageDialog(this, mensaje, titulo, icono);
+    }
+
+    public void cerrarAction() {
+        dispose();
     }
 
     public void limpiarCampos() {

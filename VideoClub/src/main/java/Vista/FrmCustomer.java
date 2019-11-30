@@ -6,6 +6,7 @@
 package Vista;
 
 import Controlador.AddressController;
+import Controlador.AddressListController;
 import Modelo.Address;
 import Modelo.Customer;
 import Modelo.Dao.DAOManager;
@@ -27,6 +28,7 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
     private Customer customer;
     private DAOManager manager;
     private Address address;
+    private AddressController addressController;
 
     public FrmCustomer() {
         initComponents();
@@ -89,6 +91,7 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
 //    }
 //    
     public void mostrarCustomer(Customer c) {
+        this.address = c.getAddress();
         DefaultComboBoxModel modeloStore;
         modeloStore = (DefaultComboBoxModel) getCmbStore().getModel();
 
@@ -111,13 +114,12 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
     public void setAddresCustomer(Address address) {
         this.address = address;
         textAddess.setText(address.getAddress());
+
     }
 
     public Address getAddress() {
         return address;
     }
-    
-    
 
     public JComboBox<String> getCmbStore() {
         return cmbStore;
@@ -347,14 +349,16 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
             }
         });
 
-        btnAdicionarAddress.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\buscar.png")); // NOI18N
-        btnAdicionarAddress.setText(" ");
+        btnAdicionarAddress.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnAdicionarAddress.setIcon(new javax.swing.ImageIcon("C:\\Users\\ACER E5\\Desktop\\ProyectoJava\\VideoClub\\VideoClub\\src\\main\\resources\\Dir.png")); // NOI18N
         btnAdicionarAddress.setBorder(null);
         btnAdicionarAddress.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAdicionarAddressActionPerformed(evt);
             }
         });
+
+        textAddess.setEnabled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -569,17 +573,19 @@ public class FrmCustomer extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnAdicionarAddressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarAddressActionPerformed
-        FrmAddess frmAddess = new FrmAddess();
-        AddressController addressController = new AddressController(frmAddess, manager);
-        addressController.setCustomer(this);
-        int x = (FrmPrincipal.jDesktopPane.getWidth() / 2) - frmAddess.getWidth() / 2;
-        int y = (FrmPrincipal.jDesktopPane.getHeight() / 2) - frmAddess.getHeight() / 2;
-        if (frmAddess.isShowing()) {
-            frmAddess.setLocation(x, y);
+        FrmListAddress frmListAddress = new FrmListAddress();
+        AddressListController controller = new AddressListController(frmListAddress, manager);
+        controller.setCustomer(this);
+        frmListAddress.setManager(manager);
+        int x = (FrmPrincipal.jDesktopPane.getWidth() / 2) - frmListAddress.getWidth() / 2;
+        int y = (FrmPrincipal.jDesktopPane.getHeight() / 2) - frmListAddress.getHeight() / 2;
+
+        if (frmListAddress.isShowing()) {
+            frmListAddress.setLocation(x, y);
         } else {
-            FrmPrincipal.jDesktopPane.add(frmAddess);
-            frmAddess.setLocation(x, y);
-            frmAddess.setVisible(true);
+            FrmPrincipal.jDesktopPane.add(frmListAddress);
+            frmListAddress.setLocation(x, y);
+            frmListAddress.setVisible(true);
         }
     }//GEN-LAST:event_btnAdicionarAddressActionPerformed
 

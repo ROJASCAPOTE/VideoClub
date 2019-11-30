@@ -5,10 +5,12 @@
  */
 package Vista;
 
+import Controlador.CatalogoPeliculasController;
 import Modelo.Category;
 import Modelo.Dao.DAOManager;
 import Modelo.Film;
 import ModeloGUI.ListModelFilm;
+import static Vista.FrmPrincipal.jDesktopPane;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,6 +29,7 @@ public class FrmFilmCategory extends javax.swing.JInternalFrame {
     private ListModelFilm modelo;
     private Category category;
     private DAOManager manager;
+    private Film film;
 
     public FrmFilmCategory() {
         initComponents();
@@ -54,10 +57,18 @@ public class FrmFilmCategory extends javax.swing.JInternalFrame {
     }
 
     public void setFilmCategory(Film film) {
+        this.film = film;
         String film_id = String.valueOf(film.getFilmId());
         texFilmId.setText(film_id);
         texTitleFilm.setText(film.getTitle());
     }
+
+    public Film getFilm() {
+        return film;
+    }
+
+    
+    
 
     public void addListenerNuevo(ActionListener listenerCategory) {
         btnNuevo.addActionListener(listenerCategory);
@@ -74,6 +85,7 @@ public class FrmFilmCategory extends javax.swing.JInternalFrame {
     public void addListenerAdicionar(ActionListener listenerCategory) {
         btnAdiccionar.addActionListener(listenerCategory);
     }
+
     public void addListenerBtnSacarLista(ActionListener listenerFilmCategory) {
         btnSacarLista.addActionListener(listenerFilmCategory);
     }
@@ -86,7 +98,7 @@ public class FrmFilmCategory extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(this, mensaje, titulo, icono);
     }
 
-     public void activarControles(boolean estado) {
+    public void activarControles(boolean estado) {
 //        ListaFilm.setEnabled(estado);
         texFilmId.setEnabled(false);
         texTitleFilm.setEnabled(false);
@@ -95,6 +107,7 @@ public class FrmFilmCategory extends javax.swing.JInternalFrame {
         texLastUpdate.setEnabled(estado);
         btnAdiccionar.setEnabled(estado);
         DetalleFilmCategory.setEnabled(estado);
+        btnCatalogoFilmCategory.setEnabled(estado);
         btnModificar.setEnabled(estado);
         btnEliminar.setEnabled(estado);
 
@@ -141,6 +154,7 @@ public class FrmFilmCategory extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         texLastUpdate = new com.toedter.calendar.JDateChooser();
         btnAdiccionar = new javax.swing.JButton();
+        btnCatalogoFilmCategory = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
@@ -183,6 +197,13 @@ public class FrmFilmCategory extends javax.swing.JInternalFrame {
         btnAdiccionar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnAdiccionar.setText("Adiccionar");
 
+        btnCatalogoFilmCategory.setText("....");
+        btnCatalogoFilmCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCatalogoFilmCategoryActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -201,27 +222,35 @@ public class FrmFilmCategory extends javax.swing.JInternalFrame {
                         .addComponent(texTitleFilm))
                     .addComponent(conbCategory, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(texLastUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(64, 64, 64)
-                .addComponent(btnAdiccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(176, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addComponent(btnAdiccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCatalogoFilmCategory)))
+                .addContainerGap(163, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(texFilmId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(texTitleFilm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(conbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAdiccionar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(texLastUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnAdiccionar)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(texFilmId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(texTitleFilm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCatalogoFilmCategory))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(conbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(texLastUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(0, 60, Short.MAX_VALUE))
         );
 
@@ -345,10 +374,27 @@ public class FrmFilmCategory extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCatalogoFilmCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatalogoFilmCategoryActionPerformed
+        FrmCatalogoPeliculas frmCatalogoPeliculas = new FrmCatalogoPeliculas();
+        CatalogoPeliculasController catalogoPeliculasController = new CatalogoPeliculasController(frmCatalogoPeliculas, manager);
+        catalogoPeliculasController.setFrmFilmCategory(this);
+        int x = (jDesktopPane.getWidth() / 2) - frmCatalogoPeliculas.getWidth() / 2;
+        int y = (jDesktopPane.getHeight() / 2) - frmCatalogoPeliculas.getHeight() / 2;
+
+        if (frmCatalogoPeliculas.isShowing()) {
+            frmCatalogoPeliculas.setLocation(x, y);
+        } else {
+            jDesktopPane.add(frmCatalogoPeliculas);
+            frmCatalogoPeliculas.setLocation(x, y);
+            frmCatalogoPeliculas.setVisible(true);
+        }
+    }//GEN-LAST:event_btnCatalogoFilmCategoryActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> DetalleFilmCategory;
     private javax.swing.JButton btnAdiccionar;
+    private javax.swing.JButton btnCatalogoFilmCategory;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
@@ -368,4 +414,8 @@ public class FrmFilmCategory extends javax.swing.JInternalFrame {
     private com.toedter.calendar.JDateChooser texLastUpdate;
     private javax.swing.JTextField texTitleFilm;
     // End of variables declaration//GEN-END:variables
+
+    public void setCodigoPelicula(Film film) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

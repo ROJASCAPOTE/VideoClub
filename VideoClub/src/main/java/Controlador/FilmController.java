@@ -25,6 +25,8 @@ public class FilmController {
         this.vista.addListenerNuevo(new FilmListener(this));
         this.vista.addListenerBtnModificar(new FilmListener(this));
         this.vista.addListenerBtnBuscar(new FilmListener(this));
+        vista.addListenerCerrar(new FilmListener(this));
+        this.vista.addListenerBtnEliminar(new FilmListener(this));
         this.vista.activarControles(false);
         language();
         languageOrginal();
@@ -55,8 +57,73 @@ public class FilmController {
         if (resultado == 1) {
             vista.gestionMensajes("Registro Grabado con éxito",
                     "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+            vista.activarControles(false);
+            vista.nuevoAction();
+            vista.limpiarCampos();
+            codigoFilm();
+        } else {
+            vista.gestionMensajes("Error al grabar",
+                    "Confirmación", JOptionPane.ERROR_MESSAGE);
         }
 
+    }
+
+    public void actualizarFilm() {
+        vista.salveDate();
+        int resultado = 0;
+        resultado = modelo.getFilmDAO().modificarFilm(vista.getFilm());
+        if (resultado == 1) {
+            vista.gestionMensajes(
+                    "Actualización exitosa",
+                    "Confirmación ",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+            vista.activarControles(false);
+            vista.nuevoAction();
+            vista.limpiarCampos();
+            codigoFilm();
+        } else {
+            vista.gestionMensajes(
+                    "Actualización Falida",
+                    "Confirmación ",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void eliminarFilm() {
+        int codigo = 0;
+        vista.salveDate();
+        codigo = vista.getFilm().getFilmId();
+        if (codigo == 0) {
+            vista.gestionMensajes(
+                    "Por favor ",
+                    "Mensaje de Advertencia ",
+                    JOptionPane.ERROR_MESSAGE);
+        } else {
+            int respuesta = JOptionPane.showConfirmDialog(null,
+                    "¿Desea Eliminar la pelicula de codigo : "
+                    + codigo + " ?",
+                    "Confirmación de Acción", JOptionPane.YES_NO_OPTION);
+
+            if (respuesta == JOptionPane.YES_OPTION) {
+
+                if (modelo.getFilmDAO().eliminarFilm(vista.getFilm().getFilmId()) == 1) {
+                    JOptionPane.showMessageDialog(null,
+                            "Registro Borrado con éxtio",
+                            "Confirmación de acción",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    vista.activarControles(false);
+                    vista.nuevoAction();
+                    vista.limpiarCampos();
+                    codigoFilm();
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                            "Error al borrar",
+                            "Confirmación de acción",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
     }
 
     public void buscarFilm() {
@@ -85,6 +152,10 @@ public class FilmController {
 
     public void nuevoAction() {
         vista.nuevoAction();
+    }
+
+    public void cerrarAction() {
+        vista.cerrarAction();
     }
 
 }

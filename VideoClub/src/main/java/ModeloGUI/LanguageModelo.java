@@ -13,6 +13,10 @@ public class LanguageModelo extends AbstractTableModel {
         this.listLanguage = listLanguage;
     }
 
+    public LanguageModelo() {
+        listLanguage = new ArrayList<>();
+    }
+
     @Override
     public int getRowCount() {
         return listLanguage.size();

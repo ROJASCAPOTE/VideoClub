@@ -111,11 +111,7 @@
                           <Component id="texCodigoPostal" max="32767" attributes="0"/>
                           <Component id="texPhone" max="32767" attributes="0"/>
                           <Component id="texLastUpdate" pref="330" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="texIDaddress" min="-2" pref="263" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jButton1" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="texIDaddress" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="109" max="32767" attributes="0"/>
                   </Group>
@@ -128,7 +124,6 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="texIDaddress" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton1" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -290,14 +285,6 @@
               </Properties>
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="texLastUpdate">
-            </Component>
-            <Component class="javax.swing.JButton" name="jButton1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Buscar"/>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
-                </Property>
-              </Properties>
             </Component>
           </SubComponents>
         </Container>
